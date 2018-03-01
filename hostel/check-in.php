@@ -37,6 +37,10 @@ if(isset($_POST['submit']))
     {
         echo"<script>alert('You cant check-out more than an one time! You are already CHECKED in!');</script>";
     }
+    elseif($row->CheckoutStatus == true)
+    {
+       echo"<script>alert('You are already Checked out! you can\'t check in anymore');</script>";
+    }
 
 
     else{
