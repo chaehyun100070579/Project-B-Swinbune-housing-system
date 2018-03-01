@@ -1,0 +1,111 @@
+.isotope-item{z-index:2}
+.isotope-hidden.isotope-item {pointer-events:none;z-index:1}
+.isotope, .isotope .isotope-item {-webkit-transition-duration:0.8s;-moz-transition-duration:0.8s;-ms-transition-duration:0.8s;-o-transition-duration:0.8s;transition-duration:0.8s}
+.isotope{-webkit-transition-property:height;-moz-transition-property:height;-ms-transition-property:height;-o-transition-property:height;transition-property:height}
+.isotope .isotope-item{-webkit-transition-property:-webkit-transform, opacity;-moz-transition-property:-moz-transform, opacity;-ms-transition-property:-ms-transform, opacity;-o-transition-property:-o-transform, opacity;transition-property:transform, opacity}
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition{-webkit-transition-duration:0s;-moz-transition-duration:0s;-ms-transition-duration:0s;-o-transition-duration:0s;transition-duration:0s}
+
+.postgrid {
+	margin-bottom: 20px;
+}
+
+/* clear fix */
+.postgrid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .postgrid-item ---- */
+
+
+.postgrid-item {
+  width: 25%;
+  height: auto;	
+  float: left;
+ padding:10px;
+}
+
+
+
+.postgrid-item h2 {
+	font-size: 12px;
+	margin-top: 0;
+	padding-top: 0;
+	font-weight: bold !important;
+}
+
+.postgrid-item small {
+	font-size: 75%;
+}
+
+.postgrid-item .thumbnail {
+	border: 0;
+	margin-bottom: 5px;
+	padding: 0;
+}
+
+.postgrid-inner {
+	padding-left: 0;
+	padding-right: 0;
+
+  background: #fff;
+  -webkit-box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0;
+}
+
+.postgrid-innercontent {
+	padding: 10px;
+	line-height: 100%;
+}
+
+.postgrid-item img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ---- table-like ---- */
+
+.table-like {
+  max-width: 1200px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* clear fix */
+.table-like:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- vertical table-like ---- */
+
+.table-like__item {
+  width: 100%;
+  clear: both;
+  border-top: 1px solid #e6e6e6;
+}
+
+
+.table-like__item > * {
+  display: inline-block;
+  padding: 7px;
+}
+
+.table-like__item .tenantname, .btntenantname { width:25%; }
+.table-like__item .tenantlot, .btntenantlot { width: 40%; }
+.table-like__item .tenantcontact { width: 20%; }
+.table-like__item .tenantcategory, .btntenantcategory { width: 20%; }
+.popover {
+	max-width: 500px;
+}
+
+.popover img {
+	width: 100%;
+	height: auto;
+}
