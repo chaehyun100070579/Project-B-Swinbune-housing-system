@@ -211,9 +211,9 @@ if(isset($_POST['submit']))
                                                 $rs=$stmt->fetch();
                                                 $stmt->close();
                                                 if($rs)
-                                                { ?>
-                                                <h3 style="color: red" align="left">Hostel already booked by you</h3>
-                                                <?php }
+                                                { 
+                                                    echo "<h3 style='color: red' align='left'>Hostel already booked by you</h3>";
+                                                }
                                                 else{
                                                     echo "";
                                                 }			
@@ -225,8 +225,8 @@ if(isset($_POST['submit']))
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Room Type: </label>
                                                     <div class="col-sm-8">
-                                                        <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);" onBlur="checkAvailability()" required> 
-                                                            <option value="">Select Room</option>
+                                                        <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);checkAvailability()" onBlur="" required> 
+                                                            <option value="" disabled selected>Select Room</option>
                                                             <?php $query ="SELECT * FROM rooms";
                                                             $stmt2 = $mysqli->prepare($query);
                                                             $stmt2->execute();
@@ -237,10 +237,12 @@ if(isset($_POST['submit']))
                                                             <option value="<?php echo $row->room_no;?>"> <?php echo $row->RoomType;?></option>
                                                             <?php } ?>
                                                         </select> 
-                                                        <span id="room-availability-status" style="font-size:12px;"></span>
+                                                        <span id="room-availability-status" style="font-size:12px;color:red"></span>
 
                                                     </div>
                                                 </div>
+
+                                                <span id="hide-if-full">
 
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Single or Sharing:</label>
@@ -545,6 +547,7 @@ if(isset($_POST['submit']))
 
                                                 <input type="submit" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">
                                             </form>
+                                            </span> <!-- span id hide-if-full -->
 
                                         </div>
                                     </div>
@@ -595,6 +598,14 @@ if(isset($_POST['submit']))
                 success:function(data){
                     $("#room-availability-status").html(data);
                     $("#loaderIcon").hide();
+                    if(data > 0)
+                    {
+                        $("#hide-if-full").hide();
+                        $("#room-availability-status").html(data+"room full");
+                    } else {
+                        $("#hide-if-full").show();
+                        $("#room-availability-status").html(data+"room can be booked");
+                    }
                 },
                 error:function (){}
             });

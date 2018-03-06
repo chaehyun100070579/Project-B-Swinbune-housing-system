@@ -51,8 +51,6 @@ $stmt->bind_result($count);
 $stmt->fetch();
 $stmt->close();
 if($count>0)
-echo "<span style='color:red'>$count. Rooms already full.</span>";
-else
-	echo "<span style='color:red'>All Beds are Available</span>";
+echo $count;
 }
 ?>
