@@ -81,7 +81,9 @@ if(isset($_POST['submit']))
 
 
             $mail = new PHPMailer;
-
+            
+            // $mail->SMTPDebug = 3;  showing debug output
+            
             $mail->isSMTP();                                   // Set mailer to use SMTP
             $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                            // Enable SMTP authentication
@@ -106,7 +108,18 @@ if(isset($_POST['submit']))
 
             $mail->Subject = 'Email from  Swinbune housing';
             $mail->Body    = $bodyContent;
-
+            
+                $mail->smtpConnect([
+                    'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                ]
+                ]);
+            
+            
+            
+            
             if(!$mail->send()) {
                 echo 'Message could not be sent.';
                 echo 'Mailer Error: ' . $mail->ErrorInfo;
@@ -114,7 +127,7 @@ if(isset($_POST['submit']))
                 echo 'Message has been sent';
             }
 
-
+             $mail->smtpClose();
 
 
 
