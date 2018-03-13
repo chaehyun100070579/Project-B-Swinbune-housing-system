@@ -28,87 +28,82 @@ if(isset($_POST['submit']))
             echo"<script>alert('You cant make a booking! You have to pay booking fee first!');</script>";
         }
         else{
-            
         
-        if ($row->BookedStatus == true)
-        {
-            echo"<script>alert('You cant make a booking! You are already booked!');</script>";
-        }
-        else{
+            if ($row->BookedStatus == true)
+            {
+                echo"<script>alert('You cant make a booking! You are already booked!');</script>";
+            }
+            else{
 
-            $roomno=$_POST['room'];
-            $seater=$_POST['seater'];
-            $feespm=$_POST['fpm'];
+                $roomno=$_POST['room'];
+                $seater=$_POST['seater'];
+                $feespm=$_POST['fpm'];
 
-            $stayfrom=$_POST['stayf'];
-            $duration=$_POST['duration'];
-            $course=$_POST['course'];
-            $studentid=$_POST['studentid'];
-            $fname=$_POST['fname'];
-            $mname=$_POST['mname'];
-            $lname=$_POST['lname'];
-            $gender=$_POST['gender'];
-            $contactno=$_POST['contact'];
-            $emailid=$_POST['email'];
-            $emcntno=$_POST['econtact'];
-            $gurname=$_POST['gname'];
-            $gurrelation=$_POST['grelation'];
-            $gurcntno=$_POST['gcontact'];
-            $caddress=$_POST['address'];
-            $ccity=$_POST['city'];
-            $cstate=$_POST['state'];
-            $cpincode=$_POST['pincode'];
-            $paddress=$_POST['paddress'];
-            $pcity=$_POST['pcity'];
-            $pstate=$_POST['pstate'];
-            $ppincode=$_POST['ppincode'];
-            $PreferPerson = $_POST['PreferPerson'];
-            
-            
-            $query="insert into  registration(roomno,seater,feespm,stayfrom,duration,course,studentid,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode,PreferPerson) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            $rc=$stmt->bind_param('iiisisissssisississsisssis',$roomno,$seater,$feespm,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode,$PreferPerson);
-            $stmt->execute();
-
-
-            $query2 = "update userregistration SET BookedStatus = '1' WHERE studentid = '$row->studentid' ";
-            $stmt2 = $mysqli->prepare($query2);
-            $stmt2->execute();
+                $stayfrom=$_POST['stayf'];
+                $duration=$_POST['duration'];
+                $course=$_POST['course'];
+                $studentid=$_POST['studentid'];
+                $fname=$_POST['fname'];
+                $mname=$_POST['mname'];
+                $lname=$_POST['lname'];
+                $gender=$_POST['gender'];
+                $contactno=$_POST['contact'];
+                $emailid=$_POST['email'];
+                $emcntno=$_POST['econtact'];
+                $gurname=$_POST['gname'];
+                $gurrelation=$_POST['grelation'];
+                $gurcntno=$_POST['gcontact'];
+                $caddress=$_POST['address'];
+                $ccity=$_POST['city'];
+                $cstate=$_POST['state'];
+                $cpincode=$_POST['pincode'];
+                $paddress=$_POST['paddress'];
+                $pcity=$_POST['pcity'];
+                $pstate=$_POST['pstate'];
+                $ppincode=$_POST['ppincode'];
+                $PreferPerson = $_POST['PreferPerson'];                
+                
+                $query="insert into  registration(roomno,seater,feespm,stayfrom,duration,course,studentid,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode,PreferPerson) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                $stmt = $mysqli->prepare($query);
+                $rc=$stmt->bind_param('iiisisissssisississsisssis',$roomno,$seater,$feespm,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode,$PreferPerson);
+                $stmt->execute();
 
 
-            echo"<script>alert('Student Succssfully register Please kindly refer to your email');</script>";
+                $query2 = "update userregistration SET BookedStatus = '1' WHERE studentid = '$row->studentid' ";
+                $stmt2 = $mysqli->prepare($query2);
+                $stmt2->execute();
 
+                echo"<script>alert('Student Succssfully register Please kindly refer to your email');</script>";
 
+                $mail = new PHPMailer;
+                
+                // $mail->SMTPDebug = 3;  showing debug output
+                
+                $mail->isSMTP();                                   // Set mailer to use SMTP
+                $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
+                $mail->SMTPAuth = true;                            // Enable SMTP authentication
+                $mail->Username = 'samuelo0otiong1996@gmail.com';          // SMTP username
+                $mail->Password = 'stck1996'; // SMTP password
+                $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
+                $mail->Port = 587;                                 // TCP port to connect to
 
-            $mail = new PHPMailer;
-            
-            // $mail->SMTPDebug = 3;  showing debug output
-            
-            $mail->isSMTP();                                   // Set mailer to use SMTP
-            $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                            // Enable SMTP authentication
-            $mail->Username = 'samuelo0otiong1996@gmail.com';          // SMTP username
-            $mail->Password = 'stck1996'; // SMTP password
-            $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                 // TCP port to connect to
+                $mail->setFrom('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
+                $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
+                $mail->addAddress($emailid);   // Add a recipient
+                //$mail->addCC('cc@example.com');
+                //$mail->addBCC('bcc@example.com');
 
-            $mail->setFrom('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
-            $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
-            $mail->addAddress($emailid);   // Add a recipient
-            //$mail->addCC('cc@example.com');
-            //$mail->addBCC('bcc@example.com');
+                $mail->isHTML(true);  // Set email format to HTML
 
-            $mail->isHTML(true);  // Set email format to HTML
+                $bodyContent = '<h1>Swinburne Hosuing - your booking has been successfully made</h1>';
+                $bodyContent .= '<p>hello</b></p>';
+                $bodyContent .= "You have received a new message. ".
+                    " Here are the details:\n Room: $roomno \n ".
+                    "You can Now pay the total rental fee under Room Details category with button";
 
-            $bodyContent = '<h1>Swinburne Hosuing - your booking has been successfully made</h1>';
-            $bodyContent .= '<p>hello</b></p>';
-            $bodyContent .= "You have received a new message. ".
-                " Here are the details:\n Room: $roomno \n ".
-                "You can Now pay the total rental fee under Room Details category with button";
-
-            $mail->Subject = 'Email from  Swinbune housing';
-            $mail->Body    = $bodyContent;
-            
+                $mail->Subject = 'Email from  Swinbune housing';
+                $mail->Body    = $bodyContent;
+                
                 $mail->smtpConnect([
                     'ssl' => [
                     'verify_peer' => false,
@@ -116,23 +111,17 @@ if(isset($_POST['submit']))
                     'allow_self_signed' => true
                 ]
                 ]);
-            
-            
-            
-            
-            if(!$mail->send()) {
-                echo 'Message could not be sent.';
-                echo 'Mailer Error: ' . $mail->ErrorInfo;
-            } else {
-                echo 'Message has been sent';
+
+                if(!$mail->send()) {
+                    echo 'Message could not be sent.';
+                    echo 'Mailer Error: ' . $mail->ErrorInfo;
+                } else {
+                    echo 'Message has been sent';
+                }
+
+                $mail->smtpClose();
             }
-
-             $mail->smtpClose();
-
-
-
         }
-     }
     }
 }
 ?>

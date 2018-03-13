@@ -49,13 +49,9 @@ if(isset($_POST['submit']))
         $CheckinStatus="0";
         $CheckoutDate = $_POST['CheckoutDate'];
 
-
-
         $query = "update registration SET CheckoutStatus = '$CheckoutStatus', CheckinStatus = '$CheckinStatus',  CheckoutDate='$CheckoutDate'  WHERE studentid = '$studentid' ";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();
-
-
 
         echo"<script>alert('You have sucessfully CHECKED OUT! please kindly refer to your e-mail');</script>";
 
@@ -84,6 +80,14 @@ if(isset($_POST['submit']))
 
         $mail->Subject = 'Email from  Swinbune housing';
         $mail->Body    = $bodyContent;
+        
+        $mail->smtpConnect([
+            'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        ]
+        ]);
 
         if(!$mail->send()) {
             echo 'Message could not be sent.';
@@ -91,10 +95,7 @@ if(isset($_POST['submit']))
         } else {
             echo 'Message has been sent';
         }
-
     }
-
-
 }
 
 
