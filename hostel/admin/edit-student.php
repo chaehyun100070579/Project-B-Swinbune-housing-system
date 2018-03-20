@@ -139,7 +139,7 @@ if($_POST['submit'])
                                                     <label class="col-sm-2 control-label">Room no </label>
                                                     <div class="col-sm-8">
                                                         <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);" onBlur="checkAvailability()" required> 
-                                                            <option value=""><?php echo $row->roomno;?></option>
+                                                            <option value="<?php echo $row->roomno;?>"><?php echo $row->roomno;?></option>
                                                             <?php $query ="SELECT * FROM rooms";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
@@ -215,7 +215,7 @@ if($_POST['submit'])
                                                     <label class="col-sm-2 control-label">Course </label>
                                                     <div class="col-sm-8">
                                                         <select name="course" id="course" class="form-control" required> 
-                                                            <option value=""><?php echo $row->course;?></option>
+                                                            <option value="<?php echo $row->course;?>"><?php echo $row->course;?></option>
                                                             <?php $query ="SELECT * FROM courses";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
@@ -337,7 +337,7 @@ if($_POST['submit'])
                                                     <label class="col-sm-2 control-label">State </label>
                                                     <div class="col-sm-8">
                                                         <select name="state" id="state"class="form-control" required> 
-                                                            <option value=""><?php echo $row->corresState;?></option>
+                                                            <option value="<?php echo $row->corresState;?>"><?php echo $row->corresState;?></option>
                                                             <?php $query ="SELECT * FROM states";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
@@ -388,7 +388,7 @@ if($_POST['submit'])
                                                     <label class="col-sm-2 control-label">State </label>
                                                     <div class="col-sm-8">
                                                         <select name="pstate" id="pstate"class="form-control" required > 
-                                                            <option value=""><?php echo $row->pmnatetState;?></option>
+                                                            <option value="<?php echo $row->pmnatetState;?>"><?php echo $row->pmnatetState;?></option>
                                                             <?php $query ="SELECT * FROM states";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
