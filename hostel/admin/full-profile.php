@@ -43,7 +43,7 @@ window.print();
   </tr>
 			
 			<tr>
-			  <td colspan="2"  class="font"><?php echo ucfirst($row['firstName']);?> <?php echo ucfirst($row['lastName']);?>'S <span class="font1"> information &raquo;</span> </td>
+			  <td colspan="2"  class="font"><?php echo ucfirst($row['firstName']);?> <?php echo ucfirst($row['lastName']);?>'s <span class="font1"> information &raquo;</span> </td>
   </tr>
 			<tr>
 			  <td colspan="2"  class="font">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -57,12 +57,12 @@ window.print();
                 <tr>
                   <td width="32%" valign="top" class="heading">Room no : </td>
                   
-                      <td class="comb-value1"><span class="comb-value"><?php echo $row['roomno'];?></span></td>
+                      <td class="comb-value1"><!--<span class="comb-value">--><?php echo $row['roomno'];?></span></td>
                     </tr>
                   <tr>
-                  <td width="22%" valign="top" class="heading">Persons : </td>
+                  <td width="22%" valign="top" class="heading">Persons(Seater) : </td>
                   
-                      <td class="comb-value1"><span class="comb-value"><?php echo $row['person'];?></span></td>
+                      <td class="comb-value1"><!--<span class="comb-value">--><?php echo $row['seater'];?></span></td>
                     </tr>
                   
                     <tr>
@@ -129,7 +129,7 @@ window.print();
 
 <tr>
 <td width="12%" valign="top" class="heading">Emergency Contact: </td>
-<td class="comb-value1"><?php echo $row['emergencycontactno'];?></td>
+<td class="comb-value1"><?php echo $row['egycontactno'];?></td>
 </tr>
 
 <tr>
