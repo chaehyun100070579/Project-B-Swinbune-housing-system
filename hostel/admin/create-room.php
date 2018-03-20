@@ -6,7 +6,15 @@ check_login();
 //code for add courses
 if($_POST['submit'])
 {
-$seater=$_POST['seater'];
+$roomtype=$_POST['seater'];
+if(in_array($roomtype, array('Single room with fan', 'Single room with air-conditioning'))) {
+    $seater= 1;
+}
+else
+{
+    $seater = 2;
+}
+    
 $roomno=$_POST['rmno'];
 $fees=$_POST['fee'];
 $sql="SELECT room_no FROM rooms where room_no=?";
@@ -21,9 +29,9 @@ echo"<script>alert('Room alreadt exist');</script>";
 }
 else
 {
-$query="insert into  rooms (seater,room_no,fees) values(?,?,?)";
+$query="insert into  rooms (seater,room_no,fees,RoomType) values(?,?,?,?)";
 $stmt = $mysqli->prepare($query);
-$rc=$stmt->bind_param('isi',$seater,$roomno,$fees);
+$rc=$stmt->bind_param('isis',$seater,$roomno,$fees,$roomtype);
 $stmt->execute();
 echo"<script>alert('Room has been added successfully');</script>";
 }
@@ -88,10 +96,10 @@ echo"<script>alert('Room has been added successfully');</script>";
 												<div class="col-sm-8">
 												<Select name="seater" class="form-control" required>
 <option value="">Select Room options</option>
-<option value="1">Single room with fan</option>
-<option value="2">Twin Sharing with fan</option>
-<option value="1">Single room with air-conditioning</option>
-<option value="2">Two sharing with air-conditioning</option>
+<option value="Single room with fan">Single room with fan</option>
+<option value="Twin Sharing with fan">Twin Sharing with fan</option>
+<option value="Single room with air-conditioning">Single room with air-conditioning</option>
+<option value="Two sharing with air-conditioning">Two sharing with air-conditioning</option>
 
 </Select>
 </div>
