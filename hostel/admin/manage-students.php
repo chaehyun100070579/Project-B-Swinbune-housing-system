@@ -181,7 +181,7 @@ function getBaseURL() // dynamic url for localhost
 														<a href='manage-students.php?del=$row->id' title='Delete Record' onclick='return confirm('Do you want to delete');'>
 															<i class='fa fa-close'></i>
 														</a>
-														<a href='edit-student.php?id=$row->id'><i class=fa fa-edit'></i>
+														<a href='edit-student.php?id=$row->id'><i class='fa fa-edit'></i>
 														</a>
 													  </td>";
 												echo "</tr>";
