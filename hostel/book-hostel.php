@@ -6,7 +6,6 @@ include('PHPMailer/PHPMailerAutoload.php');
 check_login();
 //code for registration
 
-$duration2=$_POST['duration'];
 
 
 
@@ -22,13 +21,13 @@ if(isset($_POST['submit']))
 
     while ($row=$res->fetch_object()) {
 
-        
+
         if ($row->BookingFeeStatus == false)
-        {
+        {   
             echo"<script>alert('You cant make a booking! You have to pay booking fee first!');</script>";
         }
         else{
-        
+
             if ($row->BookedStatus == true)
             {
                 echo"<script>alert('You cant make a booking! You are already booked!');</script>";
@@ -41,6 +40,7 @@ if(isset($_POST['submit']))
 
                 $stayfrom=$_POST['stayf'];
                 $duration=$_POST['duration'];
+                $totalfee = $feespm*$duration;
                 $course=$_POST['course'];
                 $studentid=$_POST['studentid'];
                 $fname=$_POST['fname'];
@@ -62,7 +62,7 @@ if(isset($_POST['submit']))
                 $pstate=$_POST['pstate'];
                 $ppincode=$_POST['ppincode'];
                 $PreferPerson = $_POST['PreferPerson'];                
-                
+
                 $query="insert into  registration(roomno,seater,feespm,stayfrom,duration,course,studentid,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode,PreferPerson) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 $stmt = $mysqli->prepare($query);
                 $rc=$stmt->bind_param('iiisisissssisississsisssis',$roomno,$seater,$feespm,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode,$PreferPerson);
@@ -76,9 +76,9 @@ if(isset($_POST['submit']))
                 echo"<script>alert('Student Succssfully register Please kindly refer to your email');</script>";
 
                 $mail = new PHPMailer;
-                
+
                 // $mail->SMTPDebug = 3;  showing debug output
-                
+
                 $mail->isSMTP();                                   // Set mailer to use SMTP
                 $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                            // Enable SMTP authentication
@@ -98,12 +98,113 @@ if(isset($_POST['submit']))
                 $bodyContent = '<h1>Swinburne Hosuing - your booking has been successfully made</h1>';
                 $bodyContent .= '<p>hello</b></p>';
                 $bodyContent .= "You have received a new message. ".
-                    " Here are the details:\n Room: $roomno \n ".
+                    " Here are the details:".
+                    
+                    "
+                    <table id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
+                     <tbody>
+
+
+                                            <tr>
+                                                <td colspan='4'><h4>Room Realted Info</h4></td>
+                                            </tr>
+                        
+
+                                            <tr>
+                                                <td><b>Room no :</b></td>
+                                                <td>$roomno</td>
+                                                <td><b>Single or Twin:</b></td>
+                                                <td>$seater</td>
+                                                <td><b>Fees PM :</b></td>
+                                                <td>$feespm</td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td><b>Stay From :</b></td>
+                                                <td>$stayfrom</td>
+                                                <td><b>Duration:</b></td>
+                                                <td>$duration Weeks</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan='6'><b>Total Fee : 
+                                                    $totalfee                                        
+                                            </b></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan='6'><h4>Personal Info Info</h4></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Student ID. :</b></td>
+                                                <td>$studentid</td>
+                                                <td><b>Full Name :</b></td>
+                                                <td>$fname&nbsp;$mname;&nbsp;$lname;</td>
+                                                <td><b>Email :</b></td>
+                                                <td>$emailid</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td><b>Contact No. :</b></td>
+                                                <td>$contactno</td>
+                                                <td><b>Gender :</b></td>
+                                                <td>$gender</td>
+                                                <td><b>Course :</b></td>
+                                                <td>$course</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td><b>Emergency Contact No. :</b></td>
+                                                <td>$emcntno</td>
+                                                <td><b>Guardian Name :</b></td>
+                                                <td>$gurname</td>
+                                                <td><b>Guardian Relation :</b></td>
+                                                <td>$gurrelation</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Guardian Contact No. :</b></td>
+                                                <td colspan='6'>$gurcntno</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan='6'><h4>Addresses</h4></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Correspondense Address</b></td>
+                                                <td colspan='2'>
+                                                    $caddress<br />
+                                                    $ccity, $cpincode<br />
+                                                    $cstate
+                                                </td>
+                                                
+                                                <td><b>Permanent Address</b></td>
+                                                <td colspan='2'>
+                                                    $paddress<br />
+                                                    $pcity, $ppincode<br />
+                                                    $pstate
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td><b>Preference Person</b></td>
+                                                <td colspan='6'>$PreferPerson</td>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                    ".
+
                     "You can Now pay the total rental fee under Room Details category with button";
 
                 $mail->Subject = 'Email from  Swinbune housing';
                 $mail->Body    = $bodyContent;
-                
+
                 $mail->smtpConnect([
                     'ssl' => [
                     'verify_peer' => false,
@@ -246,310 +347,310 @@ if(isset($_POST['submit']))
 
                                                 <span id="hide-if-full">
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Single or Sharing:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="seater" id="seater"  class="form-control"  readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Single or Sharing:</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="seater" id="seater"  class="form-control"  readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Fees Per Week:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Fees Per Week:</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
+
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Stay From</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="date" name="stayf" id="stayf"  class="form-control" required>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+
+                                                        <label class="col-sm-2 control-label">Duration:</label>
+
+                                                        <div class="col-sm-8">
+                                                            <select name="duration" id="duration" class="form-control" required>
+                                                                <option value="">Select Duration in weeks</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                                <option value="10">10</option>
+                                                                <option value="11">11</option>
+                                                                <option value="16">16</option>
+                                                                <option value="17">17</option>
+
+                                                            </select>
+
+                                                        </div>
 
                                                     </div>
-                                                </div>
 
 
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Stay From</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="date" name="stayf" id="stayf"  class="form-control" required>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Total Amount:</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="form-group">
-                                                    
-                                                    <label class="col-sm-2 control-label">Duration:</label>
-                                                    
-                                                    <div class="col-sm-8">
-                                                        <select name="duration" id="duration" class="form-control" required>
-                                                            <option value="">Select Duration in weeks</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="16">16</option>
-                                                            <option value="17">17</option>
-                                                    
-                                                        </select>
-                                                        
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label"><h4 style="color: green" align="left">Personal info </h4> </label>
                                                     </div>
-                                                   
-                                                </div>
-                                                   
-                                           
-                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Total Amount:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">course </label>
+                                                        <div class="col-sm-8">
+                                                            <select name="course" id="course" class="form-control" required> 
+                                                                <option value="">Select Course</option>
+                                                                <?php $query ="SELECT * FROM courses";
+                                                                $stmt2 = $mysqli->prepare($query);
+                                                                $stmt2->execute();
+                                                                $res=$stmt2->get_result();
+                                                                while($row=$res->fetch_object())
+                                                                {
+                                                                ?>
+                                                                <option value="<?php echo $row->course_fn;?>"><?php echo $row->course_fn;?>&nbsp;&nbsp;(<?php echo $row->course_sn;?>)</option>
+                                                                <?php } ?>
+                                                            </select> </div>
                                                     </div>
-                                                </div>
 
-                                                
+                                                    <?php	
+                                                    $aid=$_SESSION['id'];
+                                                    $ret="select * from userregistration where id=?";
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->bind_param('i',$aid);
+                                                    $stmt->execute() ;//ok
+                                                    $res=$stmt->get_result();
+                                                    //$cnt=1;
+                                                    while($row=$res->fetch_object())
+                                                    {
+                                                    ?>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label"><h4 style="color: green" align="left">Personal info </h4> </label>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">course </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="course" id="course" class="form-control" required> 
-                                                            <option value="">Select Course</option>
-                                                            <?php $query ="SELECT * FROM courses";
-                                                            $stmt2 = $mysqli->prepare($query);
-                                                            $stmt2->execute();
-                                                            $res=$stmt2->get_result();
-                                                            while($row=$res->fetch_object())
-                                                            {
-                                                            ?>
-                                                            <option value="<?php echo $row->course_fn;?>"><?php echo $row->course_fn;?>&nbsp;&nbsp;(<?php echo $row->course_sn;?>)</option>
-                                                            <?php } ?>
-                                                        </select> </div>
-                                                </div>
-
-                                                <?php	
-                                                $aid=$_SESSION['id'];
-                                                $ret="select * from userregistration where id=?";
-                                                $stmt= $mysqli->prepare($ret) ;
-                                                $stmt->bind_param('i',$aid);
-                                                $stmt->execute() ;//ok
-                                                $res=$stmt->get_result();
-                                                //$cnt=1;
-                                                while($row=$res->fetch_object())
-                                                {
-                                                ?>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Student ID : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="studentid" id="studentid"  class="form-control" value="<?php echo $row->studentid;?>" readonly >
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Student ID : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="studentid" id="studentid"  class="form-control" value="<?php echo $row->studentid;?>" readonly >
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">First Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="fname" id="fname"  class="form-control" value="<?php echo $row->firstName;?>" readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">First Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="fname" id="fname"  class="form-control" value="<?php echo $row->firstName;?>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Middle Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="mname" id="mname"  class="form-control" value="<?php echo $row->middleName;?>"  readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Middle Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="mname" id="mname"  class="form-control" value="<?php echo $row->middleName;?>"  readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Last Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="lname" id="lname"  class="form-control" value="<?php echo $row->lastName;?>" readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Last Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="lname" id="lname"  class="form-control" value="<?php echo $row->lastName;?>" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Gender : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="gender" value="<?php echo $row->gender;?>" class="form-control" readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Gender : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="gender" value="<?php echo $row->gender;?>" class="form-control" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Contact No : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="contact" id="contact" value="<?php echo $row->contactNo;?>"  class="form-control" readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Contact No : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="contact" id="contact" value="<?php echo $row->contactNo;?>"  class="form-control" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Email id : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="email" name="email" id="email"  class="form-control" value="<?php echo $row->email;?>"  readonly>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Email id : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="email" name="email" id="email"  class="form-control" value="<?php echo $row->email;?>"  readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <?php } ?>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Emergency Contact: </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="econtact" id="econtact"  class="form-control" required="required">
+                                                    <?php } ?>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Emergency Contact: </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="econtact" id="econtact"  class="form-control" required="required">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Guardian  Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="gname" id="gname"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Guardian  Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="gname" id="gname"  class="form-control" required="required">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Guardian  Relation : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Guardian  Relation : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Guardian Contact no : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Guardian Contact no : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Current Address </h4> </label>
                                                     </div>
-                                                </div>	
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Current Address </h4> </label>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Address : </label>
-                                                    <div class="col-sm-8">
-                                                        <textarea  rows="5" name="address"  id="address" class="form-control" required="required"></textarea>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Address : </label>
+                                                        <div class="col-sm-8">
+                                                            <textarea  rows="5" name="address"  id="address" class="form-control" required="required"></textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">City : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="city" id="city"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">City : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="city" id="city"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">State </label>
+                                                        <div class="col-sm-8">
+                                                            <select name="state" id="state"class="form-control" required> 
+                                                                <option value="">Select State</option>
+                                                                <?php $query ="SELECT * FROM states";
+                                                                $stmt2 = $mysqli->prepare($query);
+                                                                $stmt2->execute();
+                                                                $res=$stmt2->get_result();
+                                                                while($row=$res->fetch_object())
+                                                                {
+                                                                ?>
+                                                                <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+                                                                <?php } ?>
+                                                            </select> </div>
+                                                    </div>							
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Postcode : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Permanent Address </h4> </label>
                                                     </div>
-                                                </div>	
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">State </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="state" id="state"class="form-control" required> 
-                                                            <option value="">Select State</option>
-                                                            <?php $query ="SELECT * FROM states";
-                                                            $stmt2 = $mysqli->prepare($query);
-                                                            $stmt2->execute();
-                                                            $res=$stmt2->get_result();
-                                                            while($row=$res->fetch_object())
-                                                            {
-                                                            ?>
-                                                            <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
-                                                            <?php } ?>
-                                                        </select> </div>
-                                                </div>							
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Postcode : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-5 control-label">Permanent Address same as Current address : </label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="checkbox" name="adcheck" value="1"/>
+                                                        </div>
                                                     </div>
-                                                </div>	
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Permanent Address </h4> </label>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-5 control-label">Permanent Address same as Current address : </label>
-                                                  
-                                                    <div class="col-sm-4">
-                                                        <input type="checkbox" name="adcheck" value="1"/>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Address : </label>
+                                                        <div class="col-sm-8">
+                                                            <textarea  rows="5" name="paddress"  id="paddress" class="form-control" required="required"></textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
 
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">City : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="pcity" id="pcity"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Address : </label>
-                                                    <div class="col-sm-8">
-                                                        <textarea  rows="5" name="paddress"  id="paddress" class="form-control" required="required"></textarea>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">State </label>
+                                                        <div class="col-sm-8">
+                                                            <select name="pstate" id="pstate"class="form-control" required> 
+                                                                <option value="">Select State</option>
+                                                                <?php $query ="SELECT * FROM states";
+                                                                $stmt2 = $mysqli->prepare($query);
+                                                                $stmt2->execute();
+                                                                $res=$stmt2->get_result();
+                                                                while($row=$res->fetch_object())
+                                                                {
+                                                                ?>
+                                                                <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+                                                                <?php } ?>
+                                                            </select> </div>
+                                                    </div>							
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Postcode : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Accommodation preference </h4> </label>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">City : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="pcity" id="pcity"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">i would prefer to share with : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PreferPerson" id="PreferPerson"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+
+                                                    <div class="col-sm-6 col-sm-offset-4">
+                                                        <button class="btn btn-default" type="submit">Cancel</button>
+                                                        <input type="submit" name="submit" Value="Book Now" class="btn btn-primary">
                                                     </div>
-                                                </div>	
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">State </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="pstate" id="pstate"class="form-control" required> 
-                                                            <option value="">Select State</option>
-                                                            <?php $query ="SELECT * FROM states";
-                                                            $stmt2 = $mysqli->prepare($query);
-                                                            $stmt2->execute();
-                                                            $res=$stmt2->get_result();
-                                                            while($row=$res->fetch_object())
-                                                            {
-                                                            ?>
-                                                            <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
-                                                            <?php } ?>
-                                                        </select> </div>
-                                                </div>							
+                                                    </form>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Postcode : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
-                                                    </div>
-                                                </div>	
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Accommodation preference </h4> </label>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">i would prefer to share with : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="PreferPerson" id="PreferPerson"  class="form-control" required="required">
-                                                    </div>
-                                                </div>	
+                                                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
 
-                                                <div class="col-sm-6 col-sm-offset-4">
-                                                    <button class="btn btn-default" type="submit">Cancel</button>
-                                                    <input type="submit" name="submit" Value="Book Now" class="btn btn-primary">
-                                                </div>
+                                                    <input type="hidden" name="cmd" value="_xclick">
 
-                                            </form>
+                                                    <input type="hidden" name="business" value="swinburnehousing@gmail.com">
 
-                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                                    <input type="hidden" name="item_name" value="Booking fee">
 
+                                                    <input type="hidden" name="item_number" value="0001">
 
-                                                <input type="hidden" name="cmd" value="_xclick">
+                                                    <input type="hidden" name="currency_code" value="MYR">
 
-                                                <input type="hidden" name="business" value="swinburnehousing@gmail.com">
+                                                    <input type="hidden" name="amount" value="500">
 
-                                                <input type="hidden" name="item_name" value="Booking fee">
+                                                    <input type="hidden" name="custom" value="">
 
-                                                <input type="hidden" name="item_number" value="0001">
+                                                    <input type="hidden" name="charset" value="UTF-8">
 
-                                                <input type="hidden" name="currency_code" value="MYR">
-
-                                                <input type="hidden" name="amount" value="500">
-
-                                                <input type="hidden" name="custom" value="">
-
-                                                <input type="hidden" name="charset" value="UTF-8">
-
-                                                <input type="submit" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">
-                                            </form>
-                                            </span> <!-- span id hide-if-full -->
+                                                    <input type="submit" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">
+                                                </form>
+                                                </span> <!-- span id hide-if-full -->
 
                                         </div>
                                     </div>
