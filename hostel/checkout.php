@@ -115,7 +115,7 @@ if(isset($_POST['submit']))
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="theme-color" content="#3e454c">
-        <title>Room Transfer</title>
+        <title>Check Out</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
@@ -151,7 +151,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
 -->
         <style type="text/css">
-            <!--
+            /*
             .content_black {font-size: 12px;
                 line-height: 20px;
             }
@@ -168,7 +168,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
             .title {font-size: 18px;
                 font-weight: bold;
             }
-            -->
+            */
         </style>
 
 
@@ -210,18 +210,18 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 $row=$res->fetch_object();
 
                                 if($row->CheckoutStatus == true)
-                                { ?>
-                                <h3 style="color: red" align="left">You are alraedy CHECK OUT!</h3>
-                                <?php }
-                                else{
-                                    echo "";
-                                }			
-                                ?>	
-
-
+                                { 
+                                ?>
+                                <h3 style="color: red" align="left">You are already CHECK OUT!</h3>
+                                <?php 
+                                }
+                                else
+                                {
+                                    // <!-- enclose table(form) in php to hide if already checked out (and also escape \')-->
+                                    echo '
 
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
-                                    <tr><h3>FACILTIES PROVIDED (Retruend Condition)</h3></tr>
+                                    <tr><h3>FACILTIES PROVIDED (Returned Condition)</h3></tr>
                                     <tr>
                                         <th>No</th>
                                         <th>Item</th> 
@@ -295,10 +295,10 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 <table class="Form_Table" border="1" width="650" cellspacing="0">
                                     <tr><h3>ROOM CHECKLIST</h3></tr>
                                     <?php	
-                                    $aid=$_SESSION['id'];
+                                    $aid=$_SESSION[\'id\'];
                                     $ret="select * from userregistration where id=?";
                                     $stmt= $mysqli->prepare($ret) ;
-                                    $stmt->bind_param('i',$aid);
+                                    $stmt->bind_param(\'i\',$aid);
                                     $stmt->execute() ;//ok
                                     $res=$stmt->get_result();
                                     //$cnt=1;
@@ -419,13 +419,13 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             <tr>
                                                 <td width="10" valign="top" class="content_black1"></td>
                                                 <td width="10" valign="top" class="content_black1">(2)</td>
-                                                <td width="540" class="content_black_small"><i>If you choose Telegraphic Transfer (TT), the cost of bank charges and GST for TT shall be borne by you. Foreign currency T/T shall be translated by the Universtity's bank at the prevailing exchange rate on the day of transaction. <b>Please provide a copy of your passport as a bank's supporting document for TT</b>.
+                                                <td width="540" class="content_black_small"><i>If you choose Telegraphic Transfer (TT), the cost of bank charges and GST for TT shall be borne by you. Foreign currency T/T shall be translated by the Universtity\'s bank at the prevailing exchange rate on the day of transaction. <b>Please provide a copy of your passport as a bank\'s supporting document for TT</b>.
                                                     </i></td>
                                             </tr>
                                             <tr>
                                                 <td width="10" valign="top" class="content_black1"></td>
                                                 <td width="10" valign="top" class="content_black1">(3)</td>
-                                                <td width="540" class="content_black_small"><i>For the safety of your money, refund to third party other than yourself or your parents is not encouraged unless you are able to prove that you don't have a Malaysian bank account <u>AND</u> when the University's bank is unable to TT the refund to your home country from Malaysia. In this case, a handwritten authorization letter is required from you, e-mail authorization is not accepted.
+                                                <td width="540" class="content_black_small"><i>For the safety of your money, refund to third party other than yourself or your parents is not encouraged unless you are able to prove that you don\'t have a Malaysian bank account <u>AND</u> when the University\'s bank is unable to TT the refund to your home country from Malaysia. In this case, a handwritten authorization letter is required from you, e-mail authorization is not accepted.
                                                     </i></td>
                                             </tr>
                                             </table>
@@ -433,7 +433,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                                 <tr>
                                                     <td width="30" valign="top"><input type="checkbox" name="Refund_Bank_FName" value="Payee Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(1,this.form.Refund_Bank_FName)" disabled="disabled" /></td>
                                                     <td width="280" valign="top" class="content_black1"><b>Payee Name</b><br />
-                                                        <span class="content_black_small">(<b><u>Student's name</u></b> stated as in their Own bank book)</span></td>
+                                                        <span class="content_black_small">(<b><u>Student\'s name</u></b> stated as in their Own bank book)</span></td>
                                                     <td width="270" class="content_black1"><input type="text" name="Bank_FullName" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
                                                 </tr>
                                                 <tr>
@@ -443,7 +443,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                                 </tr>
                                                 <tr>
                                                     <td width="30" valign="top"><input type="checkbox" name="Refund_Bank_FName" value="Parent Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(2,this.form.Refund_Bank_FName)" disabled="disabled" /></td>
-                                                    <td width="280" valign="top" class="content_black1"><b>Please prepare the cheque under my <u><i>Father's / Mother's</i></u> Name</b><br />
+                                                    <td width="280" valign="top" class="content_black1"><b>Please prepare the cheque under my <u><i>Father\'s / Mother\'s</i></u> Name</b><br />
                                                         <span class="content_black_small">(As stated in their bank book)</span></td>
                                                     <td width="270" class="content_black1"><input type="text" name="Bank_ParentName" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
                                                 </tr>
@@ -551,18 +551,17 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                         <td colspan="3" class="content_black1">
                                             Date &nbsp;
-                                            <input type="text" name="Submission_Date" style="width:80px" value="<?php echo date('Y/m/d');?>" readonly="readonly" /></td>
+                                            <input type="text" name="Submission_Date" style="width:80px" value="<?php echo date(\'Y/m/d\');?>" readonly="readonly" /></td>
                                     </tr>
                                 </table>
+
                                 <input type="hidden" name="Location_field" value="" />
                                 <input type="hidden" name="Checkout_field" value="" />
                                 <input type="hidden" name="Refund_MOP_field" value="" />
                                 <input type="hidden" name="Refund_Name_field" value="" />
                                 <br />
+
                                 <table border="0" width="600" cellpadding="0" cellspacing="2">
-
-
-
                                     <tr>
                                         <td><p align="center">
                                             <input type="submit" value="Submit" name="submit" />
@@ -570,17 +569,15 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             <input type="reset" value="Reset" name="B2" />
                                             </p></td>
                                     </tr>
-                                </table>
+                                </table>';
+                            }
+                            ?>	<!-- enclose table(form) in php to hide if already checked out (and also escape \') -->
                             </form>
-
-
-
                         </div>
 
                     </div>
 
                     <div class="clearing"></div>     
-
 
                 </div>
             </div>
