@@ -17,7 +17,8 @@ $res=$stmt->get_result();
 //$cnt=1;
 while($row=$res->fetch_object())
 {  
-    $_SESSION['studentid'] = $row->studentid;    
+    $_SESSION['studentid'] = $row->studentid;   
+    $BookedStatus = $row->BookedStatus;
 }
 
 
@@ -344,7 +345,13 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 //$cnt=1;
                                 $row=$res->fetch_object();
 
-                                if($row->CheckoutStatus == true)
+                                
+                                
+                                if($BookedStatus == 0)
+                                {
+                                    echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
+                                }
+                                elseif($row->CheckoutStatus == true)
                                 { 
                                     echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
                                 }
