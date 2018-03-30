@@ -35,11 +35,11 @@ if(isset($_POST['submit']))
 
     if($row->CheckinStatus == true)
     {
-        echo"<script>alert('You cant check-out more than an one time! You are already CHECKED in!');</script>";
+        echo"<script>alert('You cant check-in more than an one time! You are already CHECKED in!');</script>";
     }
     elseif($row->CheckoutStatus == true)
     {
-        echo"<script>alert('You are already Checked out! you can\'t check in anymore');</script>";
+       echo"<script>alert('You are already Checked out! you can\'t check in anymore');</script>";
     }
 
 
@@ -59,9 +59,9 @@ if(isset($_POST['submit']))
         echo"<script>alert('You have sucessfully checked in! please kindly refer to your e-mail');</script>";
 
         $mail = new PHPMailer;
-
+        
         // $mail->SMTPDebug = 3;  showing debug output
-
+        
         $mail->isSMTP();                                   // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                            // Enable SMTP authentication
@@ -85,7 +85,7 @@ if(isset($_POST['submit']))
 
         $mail->Subject = 'Email from Swinbune housing';
         $mail->Body    = $bodyContent;
-
+        
         $mail->smtpConnect([
             'ssl' => [
             'verify_peer' => false,
@@ -159,7 +159,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
 -->
         <style type="text/css">
-            <!--
+            /*
             .content_black {font-size: 12px;
                 line-height: 20px;
             }
@@ -176,26 +176,10 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
             .title {font-size: 18px;
                 font-weight: bold;
             }
-            -->
+            */
         </style>
 
-
-
         <meta name="Microsoft Border" content="b">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </head>
 
@@ -207,12 +191,11 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
             <div class="content-wrapper">
                 <div class="container-fluid">
 
-
                     <div id="top_navigation"></div>
                     <div class="page_positioning">
                         <div id="content" class="no_small">
-                            <h1><br />
-                                Check-In form
+                            <h1>
+                                <br />Check-In form
                             </h1>
 
                             <p class="title">&nbsp;</p>
@@ -230,17 +213,14 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 $row=$res->fetch_object();
 
 
-
+                                
                                 if($row->CheckinStatus == 1)
-                                { ?>
-                                <h3 style="color: red" align="left">You are alraedy CHECK IN!</h3>
-                                <?php }
-                                else{
-                                    echo "";
-                                }			
-                                ?>	
-
-
+                                { 
+                                    echo '<h3 style="color: red" align="left">You are alreaedy CHECKED IN!</h3>';
+                                }
+                                else
+                                {
+                                    echo '
 
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>FACILTIES PROVIDED</h3></tr>
@@ -305,49 +285,32 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                         <td><input type="text" name="Others" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" /></td>
                                     </tr>
 
-
                                 </table>
                                 <br>
                                 <br>
 
-
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
-                                    <tr><h3>STUDENT'S DECLARATION</h3></tr>
+                                    <tr><h3>STUDENT\'S DECLARATION</h3></tr>
+                                        
+               
+                                        <tr>
+                                            <td width="160" class="content_black1">Student Name</td>
+                                            <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->firstName.' readonly    /></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="160" class="content_black1">Student ID</td>
+                                            <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" name="studentid" value='.$row->studentid.' readonly /></td>
 
-                                    <?php	
-
-
-                                    $aid=$_SESSION['studentid'];
-                                    $ret="select * from registration where studentid=?";
-                                    $stmt= $mysqli->prepare($ret) ;
-                                    $stmt->bind_param('i',$aid);
-                                    $stmt->execute() ;//ok
-                                    $res=$stmt->get_result();
-                                    //$cnt=1;
-
-
-                                    while($row=$res->fetch_object())
-                                    {  
-
-                                    ?>
-
-                                    <tr>
-                                        <td width="160" class="content_black1">Student Name</td>
-                                        <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value="<?php echo $row->firstName;?>" readonly    /></td>
-                                    </tr>
-                                    <tr>
-                                        <td width="160" class="content_black1">Student ID</td>
-                                        <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" name="studentid" value="<?php echo $row->studentid;?>" readonly /></td>
-
-                                        <td width="65" class="content_black1"><center>
-                                            Contact No
-                                            </center></td>
-                                        <td width="285" colspan="3" class="content_black1"><input type="text" name="ContactNo" style="width:282px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" onkeyup="filterNonContactNo(this)" value="<?php echo $row->contactno;?>" readonly/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="content_black1">Personal E-mail Address</td>
-                                        <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value="<?php echo $row->emailid;?>" readonly /></td>
-                                    </tr>
+                                            <td width="65" class="content_black1"><center>
+                                                Contact No
+                                                </center></td>
+                                            <td width="285" colspan="3" class="content_black1"><input type="text" name="ContactNo" style="width:282px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" onkeyup="filterNonContactNo(this)" value='.$row->contactno.' readonly/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="content_black1">Personal E-mail Address</td>
+                                            <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->emailid.' readonly /></td>
+                                        </tr>
+                                  
 
                                     <tr>
                                         <td class="content_black1">Building</td>
@@ -360,10 +323,9 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             &nbsp;&nbsp;&nbsp;
 
                                         </td>
-                                    
                                     </tr>
-                                    
-                                    <tr>            
+
+                                    <tr>
                                         <td width="80" class="content_black1">
                                             House / Flat
                                             <br> A - Twin with fan 
@@ -373,19 +335,16 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                         </td>
 
-                            
-                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4"  /></td>
-                                        
-                                        <td width="60" class="content_black1"><center> Room No</center></td>
-                                        <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value="<?php echo $row->roomno;?>" readonly /></td>
-                                        <?php } ?>
+                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" /></td>
 
+                                        <td width="60" class="content_black1"><center> Room No</center></td>
+                                        <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value='.$row->roomno.' readonly/></td>
+                                       
+                                        
                                         <td width="125" class="content_black1"><center>Acess Card Number</center></td>
                                         <td width="90" class="content_black1"><input type="text" name="AcessCardNum" id="AcessCardNum" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" required /></td>
 
                                     </tr>
-
-
 
                                     <tr>
                                         <td colspan="3" class="content_black1"><b>Check In Date</b> &nbsp;
@@ -415,21 +374,15 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             </select></td>
                                     </tr>
 
-
-
                                     <tr>
-
                                         <td colspan="6" class="content_black1">
                                             Date &nbsp;
-                                            <input type="text" name="Submission_Date" style="width:80px" value="<?php echo date('Y/m/d');?>" readonly="readonly" /></td>
+                                            <input type="text" name="Submission_Date" style="width:80px" value='.date('Y/m/d').' readonly="readonly" /></td>
                                     </tr>
-
-
 
                                     <tr>
                                         <td colspan="6"> i do hereby agree to pay for any damages or loss to the items listed above due to my negligence. I also have read the hostel rules of occupancy &amp; agreed to abide by the code of behavior in hostel <br> <input type="checkbox"/>  </td>  
                                     </tr>
-
 
                                 </table>
 
@@ -439,15 +392,12 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 <input type="hidden" name="Refund_Name_field" value="" />
                                 <br />
 
-
                                 <p>Sugeestions for improvements/ Remakrk if(any):</p>
-
                                 <p>
                                     <input type="text" name="suggestions" style="width:660px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" />
                                 </p>
 
                                 <table border="0" width="600" cellpadding="0" cellspacing="2">
-
                                     <tr>
                                         <td><p align="center">
                                             <input type="submit" value="Submit" name="submit" />
@@ -455,29 +405,18 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             <input type="reset" value="Reset" name="B2" />
                                             </p></td>
                                     </tr>
-                                </table>
-
-
-
-
+                                </table>';
+                                }			
+                                ?>	<!-- enclose table(form) in php to hide if already checked out (and also escape \') -->
                             </form>
-
-
                         </div>
-
                     </div>
 
                     <div class="clearing"></div>     
 
-
                 </div>
             </div>
-
-
         </div>
-
-
-
 
         <!-- Loading Scripts -->
         <script src="js/jquery.min.js"></script>
@@ -489,10 +428,6 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
         <script src="js/fileinput.js"></script>
         <script src="js/chartData.js"></script>
         <script src="js/main.js"></script>
-
-
-
-
 
     </body>
 
