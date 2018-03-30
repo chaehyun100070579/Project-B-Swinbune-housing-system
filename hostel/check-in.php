@@ -16,7 +16,8 @@ $res=$stmt->get_result();
 //$cnt=1;
 while($row=$res->fetch_object())
 {  
-    $_SESSION['studentid'] = $row->studentid;    
+    $_SESSION['studentid'] = $row->studentid;
+    $BookedStatus = $row->BookedStatus;
 }
 
 if(isset($_POST['submit']))
@@ -53,7 +54,7 @@ if(isset($_POST['submit']))
 
         $CheckinDate = $_POST['CheckinDate'];
         $CheckinTime = $_POST['CheckinTime'];
-        
+
         $AcessCardNum = $_POST['AcessCardNum'];
 
         $Building = $_POST['Location'];
@@ -92,7 +93,7 @@ if(isset($_POST['submit']))
         $mail->setFrom('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
         $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
         $mail->addAddress($email);   // Add a recipient
-        $mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
+        //$mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
         //$mail->addBCC('bcc@example.com');
 
         $mail->isHTML(true);  // Set email format to HTML
@@ -349,11 +350,15 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 $row=$res->fetch_object();
 
 
-
-                                if($row->CheckinStatus == 1)
+                                if($BookedStatus == 0)
+                                {
+                                    echo '<h3 style="color: red" align="left">You have NO ROOM to check in!</h3>';
+                                }
+                                elseif($row->CheckinStatus == 1)
                                 { 
                                     echo '<h3 style="color: red" align="left">You are alreaedy CHECKED IN!</h3>';
                                 }
+
                                 else
                                 {
                                     echo '
