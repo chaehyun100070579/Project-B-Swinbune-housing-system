@@ -1,5 +1,13 @@
-<?php if($_SESSION['id'])
-{ ?>
+<?php
+// check that the 'id' key exists
+if (isset($_SESSION['id'])) 
+{    
+    // it does; output the message
+    //echo $_SESSION['id'];
+
+    // remove the key so we don't keep outputting the message
+    //unset($_SESSION['id']);
+?>
 
 <div class="brand clearfix">
 
@@ -47,7 +55,9 @@
 
 
 <?php
-} else { ?>
+} else 
+{ 
+?>
 <div class="brand clearfix">
     <div id="headerwrapper">
         <div id="header"  itemscope="itemscope" itemtype="//schema.org/WPHeader" > 
