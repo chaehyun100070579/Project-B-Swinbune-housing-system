@@ -39,18 +39,37 @@ if(isset($_POST['submit']))
     }
     elseif($row->CheckoutStatus == true)
     {
-       echo"<script>alert('You are already Checked out! you can\'t check in anymore');</script>";
+        echo"<script>alert('You are already Checked out! you can\'t check in anymore');</script>";
     }
 
 
     else{
+
+
         $studentid=$row->studentid;
         $email=$row->emailid;
         $CheckinStatus="1";
         $CheckoutStatus="0";
 
         $CheckinDate = $_POST['CheckinDate'];
+        $CheckinTime = $_POST['CheckinTime'];
+        
         $AcessCardNum = $_POST['AcessCardNum'];
+
+        $Building = $_POST['Location'];
+        $Bed = $_POST['Bed'];
+        $Mattress = $_POST['Mattress'];
+        $StudyTable = $_POST['Table'];
+        $BookShelf = $_POST['Bookshelf'];
+        $Chair = $_POST['Chair'];
+        $Wardrobe = $_POST['Wardrobe'];
+        $VenetianBlind = $_POST['Blind'];
+        $Curtain = $_POST['Curtain'];
+        $Fan = $_POST['Fan'];
+        $Ac = $_POST['Ac'];
+
+
+
 
         $query = "update registration SET CheckoutStatus = '$CheckoutStatus',  CheckinStatus = '1',  CheckinDate='$CheckinDate', AcessCardNum='$AcessCardNum' WHERE studentid = '$studentid' ";
         $stmt = $mysqli->prepare($query);
@@ -59,9 +78,9 @@ if(isset($_POST['submit']))
         echo"<script>alert('You have sucessfully checked in! please kindly refer to your e-mail');</script>";
 
         $mail = new PHPMailer;
-        
+
         // $mail->SMTPDebug = 3;  showing debug output
-        
+
         $mail->isSMTP();                                   // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                            // Enable SMTP authentication
@@ -73,7 +92,7 @@ if(isset($_POST['submit']))
         $mail->setFrom('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
         $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
         $mail->addAddress($email);   // Add a recipient
-        //$mail->addCC('cc@example.com');
+        $mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
         //$mail->addBCC('bcc@example.com');
 
         $mail->isHTML(true);  // Set email format to HTML
@@ -81,11 +100,128 @@ if(isset($_POST['submit']))
         $bodyContent = '<h1>Swinburne Housing System - You have checked in sucessfully</h1>';
         $bodyContent .= '<p>hello</b></p>';
         $bodyContent .= "You have received a new message. ".
-            " Here are the details:\n StudentID: $studentid \n ";
+            " Here are the details".
+            "
+                    <table id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
+                     <tbody>
+
+
+                                            <tr>
+                                                <td colspan='4'><h4>Room Realted Info</h4></td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td><b>Room no :</b></td>
+                                                <td>$row->roomno</td>
+                                                <td><b>Single or Twin:</b></td>
+                                                <td>$row->seater</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><b>Building:</b></td>
+                                                <td>$Building</td>
+                                                <td><b>Acees Card Number:</b></td>
+                                                <td>$AcessCardNum</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td colspan='6'><h4>Personal Info</h4></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Student ID :</b></td>
+                                                <td>$studentid</td>
+                                                <td><b>Full Name :</b></td>
+                                                <td>$row->firstName&nbsp;$row->middleName&nbsp;$row->lastName</td>
+                                                <td><b>Email :</b></td>
+                                                <td>$email</td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td colspan='6'><h4>Facilities Conditions(O=OK, F=Need Fxing, NA=Not Available)</h4></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Bed :</b></td>
+                                                <td>$Bed</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Clean Mattress with fitted cover :</b></td>
+                                                <td>$Mattress</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Study Table :</b></td>
+                                                <td>$StudyTable</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Book Shelf :</b></td>
+                                                <td>$BookShelf</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Chair :</b></td>
+                                                <td>$Chair</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Wardrobe :</b></td>
+                                                <td>$Wardrobe</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Venetian Blind(for non Ac room only) :</b></td>
+                                                <td>$VenetianBlind</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Curtain(for AC Room only) :</b></td>
+                                                <td>$Curtain</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Fan :</b></td>
+                                                <td>$Fan</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><b>Air-Conditioner(for AC room only) :</b></td>
+                                                <td>$Ac</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan='6'><h4>Check-in Info</h4></td>
+                                            </tr>
+                                             <tr>
+                                                <td><b>Check-in Date :</b></td>
+                                                <td>$CheckinDate</td>
+                                            </tr>
+
+                                             <tr>
+                                                <td><b>Check-in Time :</b></td>
+                                                <td>$CheckinTime</td>
+                                            </tr>
+
+
+
+
+                                        </tbody>
+                                    </table>
+
+                    ";
+
+
+
+
 
         $mail->Subject = 'Email from Swinbune housing';
         $mail->Body    = $bodyContent;
-        
+
         $mail->smtpConnect([
             'ssl' => [
             'verify_peer' => false,
@@ -161,20 +297,20 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
         <style type="text/css">
             /*
             .content_black {font-size: 12px;
-                line-height: 20px;
+            line-height: 20px;
             }
             .small_title {font-size: 12px;
-                font-weight: bold;
+            font-weight: bold;
             }
             .style2 {font-size: 12px; line-height: 20px; font-weight: bold; }
             .content_black1 {font-size: 12px;
-                line-height: 18px;
+            line-height: 18px;
             }
             .content_black_small {font-size: 10px;
-                line-height: 14px;
+            line-height: 14px;
             }
             .title {font-size: 18px;
-                font-weight: bold;
+            font-weight: bold;
             }
             */
         </style>
@@ -213,7 +349,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 $row=$res->fetch_object();
 
 
-                                
+
                                 if($row->CheckinStatus == 1)
                                 { 
                                     echo '<h3 style="color: red" align="left">You are alreaedy CHECKED IN!</h3>';
@@ -277,7 +413,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                     <tr>
                                         <td>10</td>
                                         <td>Air-Conditioner(for AC room only)</td>
-                                        <td><input type="text" name="Fan" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" /></td>
+                                        <td><input type="text" name="Ac" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" /></td>
                                     </tr>
                                     <tr>
                                         <td>11</td>
@@ -291,8 +427,8 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>STUDENT\'S DECLARATION</h3></tr>
-                                        
-               
+
+
                                         <tr>
                                             <td width="160" class="content_black1">Student Name</td>
                                             <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->firstName.' readonly    /></td>
@@ -310,7 +446,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             <td class="content_black1">Personal E-mail Address</td>
                                             <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->emailid.' readonly /></td>
                                         </tr>
-                                  
+
 
                                     <tr>
                                         <td class="content_black1">Building</td>
@@ -339,8 +475,8 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                         <td width="60" class="content_black1"><center> Room No</center></td>
                                         <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value='.$row->roomno.' readonly/></td>
-                                       
-                                        
+
+
                                         <td width="125" class="content_black1"><center>Acess Card Number</center></td>
                                         <td width="90" class="content_black1"><input type="text" name="AcessCardNum" id="AcessCardNum" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" required /></td>
 
@@ -352,7 +488,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                             <input type="date" name="CheckinDate" id="CheckinDate"  style="width:150px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);">
 
                                         <td colspan="3" class="content_black1"><b>Check In Time</b> &nbsp;
-                                            <select name="CheckoutTime" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);">
+                                            <select name="CheckinTime" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);">
                                                 <option value=""> </option>
                                                 <option value="9:00 am">9:00 am </option>
                                                 <option value="9:30 am">9:30 am </option>
