@@ -281,35 +281,25 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 <table class="Form_Table" border="1" width="650" cellspacing="0">
                                     <tr><h3>ROOM CHECKLIST</h3></tr>
-                                    
-                                    $aid=$_SESSION[\'id\'];
-                                    $ret="select * from userregistration where id=?";
-                                    $stmt= $mysqli->prepare($ret) ;
-                                    $stmt->bind_param(\'i\',$aid);
-                                    $stmt->execute() ;//ok
-                                    $res=$stmt->get_result();
-                                    //$cnt=1;
-
-                                    while($row=$res->fetch_object())
-                                    {                                    
+    
                                         <tr>
                                             <td width="160" class="content_black1">Student Name</td>
-                                            <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value="<?php echo $row->firstName;?>" readonly    /></td>
+                                            <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->firstName.' readonly    /></td>
                                         </tr>
                                         <tr>
                                             <td width="160" class="content_black1">Student ID</td>
-                                            <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" value="<?php echo $row->studentid;?>" readonly /></td>
+                                            <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" value='.$row->studentid.' readonly /></td>
 
                                             <td width="65" class="content_black1"><center>
                                                 Contact No
                                                 </center></td>
-                                            <td width="285" colspan="3" class="content_black1"><input type="text" name="ContactNo" style="width:282px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" onkeyup="filterNonContactNo(this)" value="<?php echo $row->contactNo;?>" readonly/></td>
+                                            <td width="285" colspan="3" class="content_black1"><input type="text" name="ContactNo" style="width:282px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" onkeyup="filterNonContactNo(this)" value='.$row->contactno.' readonly/></td>
                                         </tr>
                                         <tr>
                                             <td class="content_black1">Personal E-mail Address</td>
-                                            <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value="<?php echo $row->email;?>" readonly /></td>
+                                            <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->emailid.' readonly /></td>
                                         </tr>
-                                    }
+                                  
 
                                     <tr>
                                         <td class="content_black1">Location</td>
@@ -336,7 +326,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                         <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" /></td>
                                         <td width="60" class="content_black1"><center> Room No</center></td>
-                                        <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" /></td>
+                                        <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value='.$row->roomno.' readonly /></td>
                                         <td width="75" class="content_black1"><center>
                                             Key / Acess Card Returned Date 
                                             </center></td>
@@ -541,7 +531,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                         <td colspan="3" class="content_black1">
                                             Date &nbsp;
-                                            <input type="text" name="Submission_Date" style="width:80px" value="<?php echo date(\'Y/m/d\');?>" readonly="readonly" /></td>
+                                            <input type="text" name="Submission_Date" style="width:80px" value='.date('Y/m/d').' readonly="readonly" /></td>
                                     </tr>
 
                                 </table>
