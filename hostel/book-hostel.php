@@ -3,6 +3,7 @@ session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
 include('PHPMailer/PHPMailerAutoload.php');
+
 check_login();
 //code for registration
 
@@ -99,7 +100,7 @@ if(isset($_POST['submit']))
                 $bodyContent .= '<p>hello</b></p>';
                 $bodyContent .= "You have received a new message. ".
                     " Here are the details:".
-                    
+
                     "
                     <table id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
                      <tbody>
@@ -108,7 +109,7 @@ if(isset($_POST['submit']))
                                             <tr>
                                                 <td colspan='4'><h4>Room Realted Info</h4></td>
                                             </tr>
-                        
+
 
                                             <tr>
                                                 <td><b>Room no :</b></td>
@@ -133,7 +134,7 @@ if(isset($_POST['submit']))
                                             </b></td>
                                             </tr>
                                             <tr>
-                                                <td colspan='6'><h4>Personal Info Info</h4></td>
+                                                <td colspan='6'><h4>Personal Info</h4></td>
                                             </tr>
 
                                             <tr>
@@ -180,7 +181,7 @@ if(isset($_POST['submit']))
                                                     $ccity, $cpincode<br />
                                                     $cstate
                                                 </td>
-                                                
+
                                                 <td><b>Permanent Address</b></td>
                                                 <td colspan='2'>
                                                     $paddress<br />
@@ -188,7 +189,7 @@ if(isset($_POST['submit']))
                                                     $pstate
                                                 </td>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <td><b>Preference Person</b></td>
                                                 <td colspan='6'>$PreferPerson</td>
@@ -225,6 +226,108 @@ if(isset($_POST['submit']))
         }
     }
 }
+
+
+
+
+
+/*
+if(isset($_GET['tx']))
+{
+
+    $aid=$_SESSION['id'];
+    $ret="select * from userregistration where id=?";
+    $stmt= $mysqli->prepare($ret) ;
+    $stmt->bind_param('i',$aid);
+    $stmt->execute() ;//ok
+    $res=$stmt->get_result();
+    //$cnt=1;
+
+    while ($row=$res->fetch_object()) { 
+
+        $query2 = "update userregistration SET BookingFeeStatus = '1' WHERE id = '$row->id' ";
+        $stmt2 = $mysqli->prepare($query2);
+        $stmt2->execute();
+
+    }
+
+
+    $tx = $_GET['tx'];
+    // Further processing
+    $your_pdt_identity_token = 'Zl6viRQbLJkFs7GR8bzz5cKAVm-f8T0l-WOuz-N8rhCvJFY8w75lISB3y-a';
+
+    // Init cURL
+    $request = curl_init();
+
+    // Set request options
+    curl_setopt_array($request, array
+                      (
+        CURLOPT_URL => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+        CURLOPT_POST => TRUE,
+        CURLOPT_POSTFIELDS => http_build_query(array
+                                               (
+        'cmd' => '_notify-synch',
+        'tx' => $tx,
+        'at' => $your_pdt_identity_token,
+    )),
+        CURLOPT_RETURNTRANSFER => TRUE,
+        CURLOPT_HEADER => FALSE,
+        // CURLOPT_SSL_VERIFYPEER => TRUE,
+        // CURLOPT_CAINFO => 'cacert.pem',
+    ));
+
+    // Execute request and get response and status code
+    $response = curl_exec($request);
+    $status   = curl_getinfo($request, CURLINFO_HTTP_CODE);
+
+    // Close connection
+    curl_close($request);
+
+    if($status == 200 AND strpos($response, 'SUCCESS') === 0)
+    {
+        // Further processing
+
+    }
+    else
+    {
+        echo"<script>alert('transcation unsucessful');</script>";
+
+        // Log the error, ignore it, whatever 
+    }
+
+    // Remove SUCCESS part (7 characters long)
+    $response = substr($response, 7);
+
+    // URL decode
+    $response = urldecode($response);
+
+    // Turn into associative array
+    preg_match_all('/^([^=\s]++)=(.*+)/m', $response, $m, PREG_PATTERN_ORDER);
+    $response = array_combine($m[1], $m[2]);
+
+    // Fix character encoding if different from UTF-8 (in my case)
+    if(isset($response['charset']) AND strtoupper($response['charset']) !== 'UTF-8')
+    {
+        foreach($response as $key => &$value)
+        {
+            $value = mb_convert_encoding($value, 'UTF-8', $response['charset']);
+        }
+        $response['charset_original'] = $response['charset'];
+        $response['charset'] = 'UTF-8';
+    }
+
+    // Sort on keys for readability (handy when debugging)
+    ksort($response);
+    
+    echo "$response";
+
+
+
+}
+
+*/
+
+
 ?>
 
 <!doctype html>
@@ -626,31 +729,39 @@ if(isset($_POST['submit']))
                                                         <button class="btn btn-default" type="submit">Cancel</button>
                                                         <input type="submit" name="submit" Value="Book Now" class="btn btn-primary">
                                                     </div>
+                                                </span>
 
-                                                    </form>
-
-                                                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                            </form>
 
 
-                                                    <input type="hidden" name="cmd" value="_xclick">
+                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" accept-charset="utf-8">
 
-                                                    <input type="hidden" name="business" value="swinburnehousing@gmail.com">
-
-                                                    <input type="hidden" name="item_name" value="Booking fee">
-
-                                                    <input type="hidden" name="item_number" value="0001">
-
-                                                    <input type="hidden" name="currency_code" value="MYR">
-
-                                                    <input type="hidden" name="amount" value="500">
-
-                                                    <input type="hidden" name="custom" value="">
+                                                <p>
+                                                    <input type="hidden" name="cmd" value="_xclick" />
 
                                                     <input type="hidden" name="charset" value="UTF-8">
 
-                                                    <input type="submit" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">
-                                                </form>
-                                                </span> <!-- span id hide-if-full -->
+                                                    <input type="hidden" name="business" value="SwinburneHousingMerchant@gmail.com" />
+
+                                                    <input type="hidden" name="item_name" value="Booking fee" />
+
+                                                    <input type="hidden" name="item_number" value="0001" />
+
+                                                    <input type="hidden" name="amount" value="500" />
+
+                                                    <input type="hidden" name="currency_code" value="MYR" />
+
+
+                                                <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
+
+                                                   <input type="submit" name ="submitpaypal" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">  
+
+                                            </form>
+
+
+
+
+
 
                                         </div>
                                     </div>
@@ -662,9 +773,12 @@ if(isset($_POST['submit']))
             </div>
         </div> 	
 
+
         <script type="text/javascript" charset="utf-8">
             var dgFlowMini = new PAYPAL.apps.DGFlowMini({trigger: 'submitBtn'});
         </script>
+
+
 
 
 
