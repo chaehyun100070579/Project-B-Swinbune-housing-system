@@ -105,7 +105,7 @@ if(isset($_POST['submit']))
         $stmt->execute();
 
         echo"<script>alert('You have sucessfully CHECKED OUT! please kindly refer to your e-mail');</script>";
-/* EMAIL COMMENT AT HERE
+        
         $mail = new PHPMailer;
 
         $mail->isSMTP();                                   // Set mailer to use SMTP
@@ -266,7 +266,6 @@ if(isset($_POST['submit']))
         } else {
             echo 'Message has been sent';
         } 
-EMAIL COMMENT AT HERE*/ 
     }
 }
 
