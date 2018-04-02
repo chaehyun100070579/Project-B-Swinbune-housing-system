@@ -363,6 +363,10 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 {
                                     echo '<h3 style="color: red" align="left">You have NO ROOM to check in!</h3>';
                                 }
+                                elseif($row->CheckinStatus == 1 && $row->CheckoutStatus == 1)
+                                { 
+                                    echo '<h3 style="color: red" align="left">You are already permanently CHECKED OUT! You cannot check in anymore!</h3>';
+                                }
                                 elseif($row->CheckinStatus == 1)
                                 { 
                                     echo '<h3 style="color: red" align="left">You are already CHECKED IN!</h3>';
@@ -581,8 +585,3 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
     </body>
 
 </html>
-
-
-
-
-
