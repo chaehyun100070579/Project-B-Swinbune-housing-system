@@ -342,7 +342,6 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 $aid=$_SESSION['studentid'];
                                 $ret="select * from registration where studentid=?";
-
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->bind_param('i',$aid);
                                 $stmt->execute() ;//ok
@@ -352,8 +351,6 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 
                                 $roomno = $row->roomno;
-                             
-                                
                                 $ret2 = "select * from rooms where room_no=?";
                                 $stmt2= $mysqli->prepare($ret2) ;
                                 $stmt2->bind_param('s',$roomno);
@@ -368,9 +365,8 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 }
                                 elseif($row->CheckinStatus == 1)
                                 { 
-                                    echo '<h3 style="color: red" align="left">You are alreaedy CHECKED IN!</h3>';
+                                    echo '<h3 style="color: red" align="left">You are already CHECKED IN!</h3>';
                                 }
-
                                 else
                                 {
                                     echo '
