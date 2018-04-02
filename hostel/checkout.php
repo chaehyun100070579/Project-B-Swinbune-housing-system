@@ -7,7 +7,6 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 include('PHPMailer/PHPMailerAutoload.php');
 
 
-
 $aid=$_SESSION['id'];
 $ret="select * from userregistration where id=?";
 $stmt= $mysqli->prepare($ret) ;
@@ -21,14 +20,12 @@ while($row=$res->fetch_object())
     $BookedStatus = $row->BookedStatus;
 }
 
-
-
-
 if(isset($_POST['submit']))
 {
 
 
     $aid=$_SESSION['studentid'];
+
     $ret="select * from registration where studentid=?";
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i',$aid);
@@ -46,16 +43,50 @@ if(isset($_POST['submit']))
     {
         $studentid=$row->studentid;
         $email = $row->emailid;
-        $CheckoutStatus="1";
-        $CheckinStatus="0";
+        //$CheckoutStatus="1";
+        //$CheckinStatus="0";
         $CheckoutDate = $_POST['CheckoutDate'];
-        $CheckoutTime = $_POST['CheckoutTime'];
+        $CheckoutTime = $_POST['CheckoutTime'];        
         
-        
-        $CheckoutOption = $_POST['Checkout']; 
-        
+        $CheckoutOption = $_POST['Checkout'];
 
-        $KeyReturnedDate = $_POST['KeyReturnedDate'];    
+        if ($CheckoutOption == "1")
+        {
+            // Semester Break Notification
+            $CheckoutStatus="1";
+            $CheckinStatus="0";
+            //echo"<script>alert('Semester Break Notification');</script>";
+        }
+        elseif($CheckoutOption == "2")
+        {
+            // Accommodation Rental Overpayment
+            $CheckoutStatus="1";
+            $CheckinStatus="0";
+            //echo"<script>alert('Accommodation Rental Overpayment');</script>";
+        }
+        elseif($CheckoutOption == "3")
+        {
+            // End Tenancy
+            $CheckoutStatus="1";
+            $CheckinStatus="1";
+            //echo"<script>alert('End Tenancy');</script>";
+        }
+        elseif($CheckoutOption == "4")
+        {
+            // Move to Private Accommodation
+            $CheckoutStatus="1";
+            $CheckinStatus="0";
+            //echo"<script>alert('Move to Private Accommodation');</script>";
+        }
+        else
+        {
+            // if all fail (wont trigger)
+            $CheckoutStatus="1";
+            $CheckinStatus="1";
+            //echo"<script>alert('all fail');</script>";
+        }
+
+        $KeyReturnedDate = $_POST['KeyReturnedDate'];
 
         $Building = $_POST['Location'];
         $Bed = $_POST['Bed'];
@@ -68,8 +99,6 @@ if(isset($_POST['submit']))
         $Curtain = $_POST['Curtain'];
         $Fan = $_POST['Fan'];
         $Ac = $_POST['Ac'];
-
-
 
         $query = "update registration SET CheckoutStatus = '$CheckoutStatus', CheckinStatus = '$CheckinStatus',  CheckoutDate='$CheckoutDate'  WHERE studentid = '$studentid' ";
         $stmt = $mysqli->prepare($query);
@@ -351,7 +380,11 @@ EMAIL COMMENT AT HERE*/
                                 if($BookedStatus == 0)
                                 {
                                     echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
-                                }
+                                }/*
+                                elseif($row->CheckinStatus == false)
+                                {
+                                    echo '<h3 style="color: red" align="left">You are not checked in. Please check in first before checking out.</h3>';
+                                }*/
                                 elseif($row->CheckoutStatus == true)
                                 { 
                                     echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
@@ -417,7 +450,7 @@ EMAIL COMMENT AT HERE*/
                                     <tr>
                                         <td>10</td>
                                         <td>Air-Conditioner(for AC room only)</td>
-                                        <td><input type="text" name="Fan" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" /></td>
+                                        <td><input type="text" name="Ac" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" /></td>
                                     </tr>
                                     <tr>
                                         <td>11</td>
@@ -489,25 +522,31 @@ EMAIL COMMENT AT HERE*/
                                         <td class="content_black1"><b>I wish to</b></td>
                                         <td colspan="5" class="content_black1">
                                             <label>
+                                                <!-- Semester Break Notification -->
                                                 <input type="checkbox" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" checked onclick="getCheckout(1,this.form.Checkout)" />
                                                 <b>Renewal for Next Semester</b>
                                             </label>
                                             <br />
-                                            <label>				 
+                                            <label>
+                                                <!-- Accommodation Rental Overpayment -->
                                                 <input type="checkbox" name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
                                                 <b>Accommodation rental overpayment</b> 
                                             </label>
                                             <br />
                                             <label>
+                                                <!-- End Tenancy -->
                                                 <input type="checkbox" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
                                                 <b>Permanent check out - Graduated/Withdrawal</b>
                                             </label>
                                             <br />
                                             <label>
+                                                <!-- Move to Private Accommodation -->
                                                 <input type="checkbox" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
                                                 <b>Moving out to private accommodation</b>
                                             </label>
+
                                             <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                                             <label>
                                                 <b>New Address: </b>
                                                 <input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
