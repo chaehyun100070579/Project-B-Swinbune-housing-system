@@ -310,7 +310,16 @@ EMAIL COMMENT AT HERE*/
         <title>Room Transfer Request Form</title>
 
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
-
+        
+        <script type="text/javascript">
+            // function to auto call the onclick() function of first checkbox to enable ticking the T&S checkbox
+            window.onload = function() {
+                if(document.forms[0] && document.forms[0].Checkout) {
+                    document.forms[0].Checkout[0].checked = true;
+                    document.forms[0].Checkout[0].onclick();
+                }
+            }
+        </script>
         <!--
             <link media="only screen and (max-device-width: 480px)" href="local/css/iphone.css" type="text/css" rel="stylesheet" />
         -->
