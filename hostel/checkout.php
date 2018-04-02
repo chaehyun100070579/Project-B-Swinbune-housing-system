@@ -380,11 +380,11 @@ EMAIL COMMENT AT HERE*/
                                 if($BookedStatus == 0)
                                 {
                                     echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
-                                }/*
+                                }
                                 elseif($row->CheckinStatus == false)
                                 {
                                     echo '<h3 style="color: red" align="left">You are not checked in. Please check in first before checking out.</h3>';
-                                }*/
+                                }
                                 elseif($row->CheckoutStatus == true)
                                 { 
                                     echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
