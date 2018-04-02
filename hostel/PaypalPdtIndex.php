@@ -57,9 +57,9 @@ while ($row=$res->fetch_object()) {
 
 
         <?php if($payment_data)
-    printf('<p>Thank you %s and welcome back. We will pretend to ship that stuffed bear to you ASAP.</p>', $payment_data['first_name'], $payment_data['mc_gross'], $payment_data['mc_currency']); ?>
+    printf('<p>Thank you %s these are you transaction details!.</p>', $payment_data['first_name'], $payment_data['mc_gross'], $payment_data['mc_currency']); ?>
 
-
+        
 
         <?php if($_GET): ?>
         <hr/>

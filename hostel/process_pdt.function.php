@@ -1,4 +1,4 @@
-<?php define("TOKEN", "Zl6viRQbLJkFs7GR8bzz5cKAVm-f8T0l-WOuz-N8rhCvJFY8w75lISB3y-a");
+<?php define("TOKEN", "-_9tmTxkYwL6SzUCAlv-JFhu4owr-uaXsdvGM08ADbslOhxPSDSIqP1BMf8");
 
 /**
  * Processes a PDT transaction id.
