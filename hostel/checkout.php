@@ -7,6 +7,7 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 include('PHPMailer/PHPMailerAutoload.php');
 
 
+
 $aid=$_SESSION['id'];
 $ret="select * from userregistration where id=?";
 $stmt= $mysqli->prepare($ret) ;
@@ -20,12 +21,14 @@ while($row=$res->fetch_object())
     $BookedStatus = $row->BookedStatus;
 }
 
+
+
+
 if(isset($_POST['submit']))
 {
 
 
     $aid=$_SESSION['studentid'];
-
     $ret="select * from registration where studentid=?";
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i',$aid);
@@ -97,11 +100,11 @@ if(isset($_POST['submit']))
         $bodyContent .= "You have received a new message. ".
             " Here are the details".
             "
-                    <table id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
+                    <table border='1' id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
                      <tbody>
 
                                             <tr>
-                                                <td colspan='4'><h4>Room Realted Info</h4></td>
+                                                <td colspan='6'><h4>Room Realted Info</h4></td>
                                             </tr>
 
 
@@ -333,7 +336,6 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                             <form action="" method="post" name="CheckoutForm" id="CheckoutForm" onsubmit="return checkEmpty();">
 
                                 <?php
-                                
                                 $aid=$_SESSION['studentid'];
                                 $ret="select * from registration where studentid=?";
                                 $stmt= $mysqli->prepare($ret) ;
@@ -342,15 +344,12 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 $res=$stmt->get_result();
                                 //$cnt=1;
                                 $row=$res->fetch_object();
+
                                 
                                 
                                 if($BookedStatus == 0)
                                 {
                                     echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
-                                }
-                                elseif($row->CheckinStatus == false)
-                                {
-                                    echo '<h3 style="color: red" align="left">You are not checked in. Please check in first before checking out.</h3>';
                                 }
                                 elseif($row->CheckoutStatus == true)
                                 { 
@@ -729,3 +728,8 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
     </body>
 
 </html>
+
+
+
+
+

@@ -102,12 +102,12 @@ if(isset($_POST['submit']))
                     " Here are the details:".
 
                     "
-                    <table id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
+                    <table border='1' id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
                      <tbody>
 
 
                                             <tr>
-                                                <td colspan='4'><h4>Room Realted Info</h4></td>
+                                                <td colspan='6'><h4>Room Realted Info</h4></td>
                                             </tr>
 
 

@@ -103,12 +103,12 @@ if(isset($_POST['submit']))
         $bodyContent .= "You have received a new message. ".
             " Here are the details".
             "
-                    <table id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
+                    <table border='1'  id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
                      <tbody>
 
 
                                             <tr>
-                                                <td colspan='4'><h4>Room Realted Info</h4></td>
+                                                <td colspan='6'><h4>Room Realted Info</h4></td>
                                             </tr>
 
 
@@ -352,7 +352,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 
                                 $roomno = $row->roomno;
-                            
+                             
                                 
                                 $ret2 = "select * from rooms where room_no=?";
                                 $stmt2= $mysqli->prepare($ret2) ;
