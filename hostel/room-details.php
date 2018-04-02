@@ -187,7 +187,7 @@ check_login();
 
                                         <input type="hidden" name="cmd" value="_xclick">
 
-                                        <input type="hidden" name="business" value="swinburnehousing@gmail.com">
+                                        <input type="hidden" name="business" value="SwinburneHousingMerchant@gmail.com">
 
                                         <input type="hidden" name="item_name" value="Total room rental fee">
 
@@ -200,6 +200,8 @@ check_login();
                                         <input type="hidden" name="custom" value="">
 
                                         <input type="hidden" name="charset" value="UTF-8">
+                                        
+                                        <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
 
                                         <input type="submit" id ="submitBtn"value="Pay Total fee: <?php echo $dr*$fpm;?>"
                                                class="btn btn-primary" onclick="submitform()">
