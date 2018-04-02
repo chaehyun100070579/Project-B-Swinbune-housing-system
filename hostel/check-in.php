@@ -342,6 +342,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 $aid=$_SESSION['studentid'];
                                 $ret="select * from registration where studentid=?";
+
                                 $stmt= $mysqli->prepare($ret) ;
                                 $stmt->bind_param('i',$aid);
                                 $stmt->execute() ;//ok
@@ -349,6 +350,17 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 //$cnt=1;
                                 $row=$res->fetch_object();
 
+                                
+                                $roomno = $row->roomno;
+                                echo '<script>alert('.$roomno.');</script>';
+                                
+                                $ret2 = "select * from rooms where room_no=?";
+                                $stmt2= $mysqli->prepare($ret2) ;
+                                $stmt2->bind_param('s',$roomno);
+                                $stmt2->execute() ;//ok
+                                $res2=$stmt2->get_result();
+                                //$cnt=1;
+                                $row2=$res2->fetch_object();
 
                                 if($BookedStatus == 0)
                                 {
@@ -476,7 +488,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                         </td>
 
-                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" /></td>
+                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:100px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="10" value="'.$row2->RoomType.'" readonly /></td>
 
                                         <td width="60" class="content_black1"><center> Room No</center></td>
                                         <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value='.$row->roomno.' readonly/></td>
