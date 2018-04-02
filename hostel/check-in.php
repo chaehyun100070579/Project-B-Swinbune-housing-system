@@ -352,7 +352,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                 
                                 $roomno = $row->roomno;
-                                echo '<script>alert('.$roomno.');</script>';
+                            
                                 
                                 $ret2 = "select * from rooms where room_no=?";
                                 $stmt2= $mysqli->prepare($ret2) ;
