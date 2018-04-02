@@ -76,7 +76,7 @@ if(isset($_POST['submit']))
         $stmt->execute();
 
         echo"<script>alert('You have sucessfully CHECKED OUT! please kindly refer to your e-mail');</script>";
-
+/* EMAIL COMMENT AT HERE
         $mail = new PHPMailer;
 
         $mail->isSMTP();                                   // Set mailer to use SMTP
@@ -236,7 +236,8 @@ if(isset($_POST['submit']))
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {
             echo 'Message has been sent';
-        }
+        } 
+EMAIL COMMENT AT HERE*/ 
     }
 }
 
@@ -279,19 +280,19 @@ if(isset($_POST['submit']))
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <title>Room Transfer Request Form</title>
 
-
-
-
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
 
-        <!--<link media="only screen and (max-device-width: 480px)" 
-href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
-        <!--YB
-<link href="http://global.swinburne.edu.au/template/css/whats_on.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.coda-slider-2.0.js"></script>
-<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
--->
+        <!--
+            <link media="only screen and (max-device-width: 480px)" href="local/css/iphone.css" type="text/css" rel="stylesheet" />
+        -->
+        <!--
+            YB
+            <link href="http://global.swinburne.edu.au/template/css/whats_on.css" rel="stylesheet" type="text/css" />
+            <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.coda-slider-2.0.js"></script>
+            <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.easing.1.3.js"></script>
+            <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
+        -->
+
         <style type="text/css">
             /*
             .content_black {font-size: 12px;
@@ -487,23 +488,40 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                     <tr>
                                         <td class="content_black1"><b>I wish to</b></td>
                                         <td colspan="5" class="content_black1">
-                                            <input type="checkbox" name="Checkout" value="Semester Break Notification" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" checked onclick="getCheckout(1,this.form.Checkout)" />
-                                            <b>Renewal for Next Semester</b> 
-                                            <br />					 
-                                            <input type="checkbox" name="Checkout" value="Accommodation Rental Overpayment" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
-                                            <b>Accommodation rental overpayment</b> 
+                                            <label>
+                                                <input type="checkbox" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" checked onclick="getCheckout(1,this.form.Checkout)" />
+                                                <b>Renewal for Next Semester</b>
+                                            </label>
                                             <br />
-                                            <input type="checkbox" name="Checkout" value="End Tenancy" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
-                                            <b>Permanent check out - Graduated/Withdrawal</b> 
+                                            <label>				 
+                                                <input type="checkbox" name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
+                                                <b>Accommodation rental overpayment</b> 
+                                            </label>
                                             <br />
-                                            <input type="checkbox" name="Checkout" value="Move to Private Accommodation" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
-                                            <b>Moving out to private accommodation</b>
-                                            <br />								
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>New Address: </b><input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" />
+                                            <label>
+                                                <input type="checkbox" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
+                                                <b>Permanent check out - Graduated/Withdrawal</b>
+                                            </label>
                                             <br />
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Owner Name: &nbsp;</b><input type="text" name="OwnerName" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" />
-                                            <br />
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Contact:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><input type="text" name="OwnerContact" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" />
+                                            <label>
+                                                <input type="checkbox" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
+                                                <b>Moving out to private accommodation</b>
+                                            </label>
+                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label>
+                                                <b>New Address: </b>
+                                                <input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                            </label>
+                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label>
+                                                <b>Owner Name: </b>&nbsp;
+                                                <input type="text" name="OwnerName" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                            </label>
+                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label>
+                                                <b>Contact: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="text" name="OwnerContact" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                            </label>
                                         </td>
                                     </tr>
 
@@ -728,8 +746,3 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
     </body>
 
 </html>
-
-
-
-
-
