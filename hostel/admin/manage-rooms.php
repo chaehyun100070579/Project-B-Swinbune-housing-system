@@ -83,27 +83,31 @@ if(isset($_GET['del']))
 										</tr>
 									</tfoot>
 									<tbody>
-<?php	
-$aid=$_SESSION['id'];
-$ret="select * from rooms";
-$stmt= $mysqli->prepare($ret) ;
-//$stmt->bind_param('i',$aid);
-$stmt->execute() ;//ok
-$res=$stmt->get_result();
-$cnt=1;
-while($row=$res->fetch_object())
-	  {
-	  	?>
-<tr><td><?php echo $cnt;;?></td>
-<td><?php echo $row->seater;?></td>
-<td><?php echo $row->room_no;?></td>
-<td><?php echo $row->fees;?></td>
-<td><?php echo $row->posting_date;?></td>
-<td><a href="edit-room.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-<a href="manage-rooms.php?del=<?php echo $row->id;?>" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a></td>
+	<?php	
+	$aid=$_SESSION['id'];
+	$ret="select * from rooms";
+	$stmt= $mysqli->prepare($ret) ;
+	//$stmt->bind_param('i',$aid);
+	$stmt->execute() ;//ok
+	$res=$stmt->get_result();
+	$cnt=1;
+	while($row=$res->fetch_object())
+		{
+			?>
+	<tr><td><?php echo $cnt;;?></td>
+	<td><?php echo $row->seater;?></td>
+	<td><?php echo $row->room_no;?></td>
+	<td><?php echo $row->fees;?></td>
+	<td><?php echo $row->posting_date;?></td>
+	<td>
+	&nbsp;
+	<a href="edit-room.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="manage-rooms.php?del=<?php echo $row->id;?>" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a>
+	</td>
 										</tr>
 									<?php
-$cnt=$cnt+1;
+	$cnt=$cnt+1;
 									 } ?>
 											
 										
