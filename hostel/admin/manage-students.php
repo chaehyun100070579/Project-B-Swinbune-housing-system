@@ -177,12 +177,12 @@ if(isset($_GET['del']))
 														<a href='javascript:void(0);' onClick='popUpWindow(\"/hostel/admin/full-profile.php?id=$row->id\");' title='View Full Details'>
 															<i class='fa fa-desktop'></i>
 														</a>
-														&nbsp;&nbsp;
+														&nbsp;&nbsp;&nbsp;
+														<a href='edit-student.php?id=$row->id' title='Edit Student'><i class='fa fa-edit'></i>
+														</a>
+														&nbsp;&nbsp;&nbsp;
 														<a href='manage-students.php?del=$row->id' title='Delete Record' onclick='return confirm('Do you want to delete');'>
 															<i class='fa fa-close'></i>
-														</a>
-														&nbsp;&nbsp;
-														<a href='edit-student.php?id=$row->id' title='Edit Student'><i class='fa fa-edit'></i>
 														</a>
 													  </td>";
 												echo "</tr>";
