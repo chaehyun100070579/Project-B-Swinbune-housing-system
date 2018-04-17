@@ -373,6 +373,21 @@ if(isset($_GET['tx']))
                     }
                 });
             }
+
+            function getTotalFee(val) {
+
+                var test = document.getElementById("room").value;
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'rid='+test,
+                    success: function(data){
+                        //alert(data);
+                        var newdata = data * val;
+                        $('#ta').val(newdata);
+                    }
+                });
+            }
         </script>
 
         <link href="../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
@@ -480,7 +495,7 @@ if(isset($_GET['tx']))
                                                         <label class="col-sm-2 control-label">Duration:</label>
 
                                                         <div class="col-sm-8">
-                                                            <select name="duration" id="duration" class="form-control" required>
+                                                            <select name="duration" id="duration" class="form-control" onChange="getTotalFee(this.value);" required>
                                                                 <option value="">Select Duration in weeks</option>
                                                                 <option value="7">7</option>
                                                                 <option value="8">8</option>
