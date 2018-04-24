@@ -90,8 +90,9 @@ if(isset($_GET['del']))
                                                 <td><?php echo $row->course_fn;?></td>
                                                 <td><?php echo $row->numberOfWeeks;?></td>
                                                 <td><?php echo $row->posting_date;?></td>
-                                                <td><a href="edit-course.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-                                                <a href="manage-courses.php?del=<?php echo $row->id;?>" onclick="return confirm("Do you want to delete");"><i class="fa fa-close"></i></a></td>
+                                                <td><a href="edit-course.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="manage-courses.php?del=<?php echo $row->id;?>" onclick="return confirm('Do you want to delete this course?');"><i class="fa fa-close"></i></a></td>
                                             </tr>
 									    <?php
                                             $cnt=$cnt+1;    
