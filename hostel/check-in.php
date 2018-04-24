@@ -349,15 +349,17 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 //$cnt=1;
                                 $row=$res->fetch_object();
 
-                                
-                                $roomno = $row->roomno;
-                                $ret2 = "select * from rooms where room_no=?";
-                                $stmt2= $mysqli->prepare($ret2) ;
-                                $stmt2->bind_param('s',$roomno);
-                                $stmt2->execute() ;//ok
-                                $res2=$stmt2->get_result();
-                                //$cnt=1;
-                                $row2=$res2->fetch_object();
+                                if(isset($row))
+                                {
+                                    $roomno = $row->roomno;
+                                    $ret2 = "select * from rooms where room_no=?";
+                                    $stmt2= $mysqli->prepare($ret2) ;
+                                    $stmt2->bind_param('s',$roomno);
+                                    $stmt2->execute() ;//ok
+                                    $res2=$stmt2->get_result();
+                                    //$cnt=1;
+                                    $row2=$res2->fetch_object();
+                                }
 
                                 if($BookedStatus == 0)
                                 {
