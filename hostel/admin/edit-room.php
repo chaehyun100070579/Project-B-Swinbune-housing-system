@@ -94,7 +94,7 @@ if($_POST['submit'])
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Fees (PM) </label>
+                                                    <label class="col-sm-2 control-label">Rental (per week)</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" class="form-control" name="fees" value="<?php echo $row->fees;?>" >
                                                     </div>
