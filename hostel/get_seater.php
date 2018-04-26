@@ -32,4 +32,26 @@ $stmt->execute(array(':id' => $id));
  }
 }
 
+
+if(!empty($_POST["course_code"])) 
+{	
+$id=$_POST['course_code'];
+$stmt = $DB_con->prepare("SELECT * FROM courses WHERE course_code = :course_code");
+$stmt->execute(array(':course_code' => $id));
+?>
+ <?php
+ while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+ {
+  ?>
+ <?php echo htmlentities($row['numberOfWeeks']); ?>
+  <?php
+ }
+}
+
+
+
+
+
+
+
 ?>

@@ -39,9 +39,9 @@ if(isset($_POST['submit']))
                 $seater=$_POST['seater'];
                 $feespm=$_POST['fpm'];
 
-                $stayfrom=$_POST['stayf'];
+                $stayfrom="";
                 $duration=$_POST['duration'];
-                $totalfee = $feespm*$duration;
+                //$totalfee = $feespm*$duration;
                 $course=$_POST['course'];
                 $studentid=$_POST['studentid'];
                 $fname=$_POST['fname'];
@@ -124,6 +124,10 @@ if(isset($_POST['submit']))
 
                                                 <td><b>Stay From :</b></td>
                                                 <td>$stayfrom</td>
+
+                                                <td><b>Course :</b></td>
+                                                <td>$course</td>
+
                                                 <td><b>Duration:</b></td>
                                                 <td>$duration Weeks</td>
                                             </tr>
@@ -138,6 +142,7 @@ if(isset($_POST['submit']))
                                             </tr>
 
                                             <tr>
+
                                                 <td><b>Student ID. :</b></td>
                                                 <td>$studentid</td>
                                                 <td><b>Full Name :</b></td>
@@ -152,8 +157,7 @@ if(isset($_POST['submit']))
                                                 <td>$contactno</td>
                                                 <td><b>Gender :</b></td>
                                                 <td>$gender</td>
-                                                <td><b>Course :</b></td>
-                                                <td>$course</td>
+
                                             </tr>
 
 
@@ -318,7 +322,7 @@ if(isset($_GET['tx']))
 
     // Sort on keys for readability (handy when debugging)
     ksort($response);
-    
+
     echo "$response";
 
 
@@ -373,21 +377,37 @@ if(isset($_GET['tx']))
                     }
                 });
             }
-
-            function getTotalFee(val) {
-
-                var test = document.getElementById("room").value;
+            
+            function getCourse(val){
+                
+                
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'rid='+test,
+                    data:'course_code='+val,
                     success: function(data){
                         //alert(data);
-                        var newdata = data * val;
+                        $('#duration').val(data);
+                    }
+                });
+                
+                 var test = document.getElementById("fpm").value;
+                 $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'course_code='+val,
+                    success: function(data){
+                        //alert(data);
+                        newdata = data * test;
                         $('#ta').val(newdata);
                     }
                 });
+                
+                
             }
+            
+
+      
         </script>
 
         <link href="../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
@@ -482,11 +502,23 @@ if(isset($_GET['tx']))
 
 
 
+
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Stay From</label>
+                                                        <label class="col-sm-2 control-label">course </label>
                                                         <div class="col-sm-8">
-                                                            <input type="date" name="stayf" id="stayf"  class="form-control" required>
-                                                        </div>
+                                                            <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
+                                                                <option value="">Select Course</option>
+                                                                <?php $query ="SELECT * FROM courses";
+                                                                $stmt2 = $mysqli->prepare($query);
+                                                                $stmt2->execute();
+                                                                $res=$stmt2->get_result();
+                                                                while($row=$res->fetch_object())
+                                                                {
+                                                                ?>
+                                                                <option value="<?php echo $row->course_code;?>"><?php echo $row->course_code;?></option>
+        
+                                                                <?php } ?>
+                                                            </select> </div>
                                                     </div>
 
 
@@ -495,18 +527,9 @@ if(isset($_GET['tx']))
                                                         <label class="col-sm-2 control-label">Duration:</label>
 
                                                         <div class="col-sm-8">
-                                                            <select name="duration" id="duration" class="form-control" onChange="getTotalFee(this.value);" required>
-                                                                <option value="">Select Duration in weeks</option>
-                                                                <option value="7">7</option>
-                                                                <option value="8">8</option>
-                                                                <option value="9">9</option>
-                                                                <option value="10">10</option>
-                                                                <option value="11">11</option>
-                                                                <option value="16">16</option>
-                                                                <option value="17">17</option>
-
-                                                            </select>
-
+                                                            
+                                                            
+                                                            <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
                                                         </div>
 
                                                     </div>
@@ -525,22 +548,7 @@ if(isset($_GET['tx']))
                                                         <label class="col-sm-2 control-label"><h4 style="color: green" align="left">Personal info </h4> </label>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">course </label>
-                                                        <div class="col-sm-8">
-                                                            <select name="course" id="course" class="form-control" required> 
-                                                                <option value="">Select Course</option>
-                                                                <?php $query ="SELECT * FROM courses";
-                                                                $stmt2 = $mysqli->prepare($query);
-                                                                $stmt2->execute();
-                                                                $res=$stmt2->get_result();
-                                                                while($row=$res->fetch_object())
-                                                                {
-                                                                ?>
-                                                                <option value="<?php echo $row->course_fn;?>"><?php echo $row->course_fn;?>&nbsp;&nbsp;(<?php echo $row->course_sn;?>)</option>
-                                                                <?php } ?>
-                                                            </select> </div>
-                                                    </div>
+
 
                                                     <?php	
                                                     $aid=$_SESSION['id'];
@@ -767,9 +775,9 @@ if(isset($_GET['tx']))
                                                     <input type="hidden" name="currency_code" value="MYR" />
 
 
-                                                <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
+                                                    <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
 
-                                                   <input type="submit" name ="submitpaypal" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">  
+                                                    <input type="submit" name ="submitpaypal" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">  
 
                                             </form>
 
