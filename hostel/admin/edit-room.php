@@ -7,11 +7,15 @@ check_login();
 if($_POST['submit'])
 {
     $seater=$_POST['seater'];
+    $rmno=$_POST['rmno'];
+    $RoomType=$_POST['RoomType'];
     $fees=$_POST['fees'];
+    
     $id=$_GET['id'];
-    $query="update rooms set seater=?,fees=? where id=?";
+    
+    $query="update rooms set seater=?,room_no=?,fees=?,RoomType=? where id=?";
     $stmt = $mysqli->prepare($query);
-    $rc=$stmt->bind_param('iii',$seater,$fees,$id);
+    $rc=$stmt->bind_param('isisi',$seater,$rmno,$fees,$RoomType,$id);
     $stmt->execute();
     echo"<script>alert('Room Details has been Updated successfully');</script>";
 }
@@ -26,6 +30,7 @@ if($_POST['submit'])
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="theme-color" content="#3e454c">
+        <p></p>
         <title>Edit Room Details</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -81,18 +86,26 @@ if($_POST['submit'])
                                                 ?>
                                                 <div class="hr-dashed"></div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Seater  </label>
+                                                    <label class="col-sm-2 control-label">Single or Sharing  </label>
                                                     <div class="col-sm-8">
                                                         <input type="text"  name="seater" value="<?php echo $row->seater;?>"  class="form-control"> </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Room no </label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" name="rmno" id="rmno" value="<?php echo $row->room_no;?>" disabled>
-                                                        <span class="help-block m-b-none">
-                                                            Room no can't be changed.</span>
+                                                        <input type="text" class="form-control" name="rmno" id="rmno" value="<?php echo $row->room_no;?>" >
+                                                      
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Room Type </label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" name="RoomType" id="RoomType" value="<?php echo $row->RoomType;?>" >
+                                                      
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Rental (per week)</label>
                                                     <div class="col-sm-8">
