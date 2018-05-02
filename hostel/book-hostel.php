@@ -384,7 +384,11 @@ if(isset($_GET['tx']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'course_code='+val,
+                    data: {          
+                        // data: "get_seater.php"+val
+                        // cannot pass value with & symbol in string              
+                        course_code: val
+                    },
                     success: function(data){
                         //alert(data);
                         $('#duration').val(data);
@@ -395,7 +399,11 @@ if(isset($_GET['tx']))
                  $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'course_code='+val,
+                    data: {
+                        // data: "get_seater.php"+val
+                        // cannot pass value with & symbol in string
+                        course_code: val
+                    },
                     success: function(data){
                         //alert(data);
                         newdata = data * test;
