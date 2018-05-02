@@ -431,6 +431,11 @@ if(isset($_GET['tx']))
 
         <script src="https://www.paypalobjects.com/js/external/apdg.js" type="text/javascript"></script>
 
+        <style>
+            /* FOR BEAUTIFY DROPDOWN LIST */
+            select:invalid { color: gray; }
+            option { color: black; }
+        </style>
 
     </head>
     <body>
@@ -472,10 +477,10 @@ if(isset($_GET['tx']))
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Room Type: </label>
+                                                    <label class="col-sm-2 control-label">Room Type : <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
                                                         <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);checkAvailability()" onBlur="" required> 
-                                                            <option value="" disabled selected>Select Room</option>
+                                                            <option value="" disabled selected hidden>Select Room</option>
                                                             <?php $query ="SELECT * FROM rooms";
                                                             $stmt2 = $mysqli->prepare($query);
                                                             $stmt2->execute();
@@ -494,14 +499,14 @@ if(isset($_GET['tx']))
                                                 <span id="hide-if-full">
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Single or Sharing:</label>
+                                                        <label class="col-sm-2 control-label">Single or Sharing :</label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="seater" id="seater"  class="form-control"  readonly>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Fees Per Week:</label>
+                                                        <label class="col-sm-2 control-label">Fees Per Week (RM) :</label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
 
@@ -512,10 +517,10 @@ if(isset($_GET['tx']))
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">course </label>
+                                                        <label class="col-sm-2 control-label">Course : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
-                                                                <option value="">Select Course</option>
+                                                                <option value="" disabled selected hidden>Select Course</option>
                                                                 <?php $query ="SELECT * FROM courses";
                                                                 $stmt2 = $mysqli->prepare($query);
                                                                 $stmt2->execute();
@@ -532,7 +537,7 @@ if(isset($_GET['tx']))
 
                                                     <div class="form-group">
 
-                                                        <label class="col-sm-2 control-label">Duration:</label>
+                                                        <label class="col-sm-2 control-label">Duration (Weeks) :</label>
 
                                                         <div class="col-sm-8">
                                                             
@@ -544,7 +549,7 @@ if(isset($_GET['tx']))
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Total Amount:</label>
+                                                        <label class="col-sm-2 control-label">Total Rental (RM) :</label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
                                                         </div>
@@ -615,35 +620,35 @@ if(isset($_GET['tx']))
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Email id : </label>
+                                                        <label class="col-sm-2 control-label">Email ID : </label>
                                                         <div class="col-sm-8">
                                                             <input type="email" name="email" id="email"  class="form-control" value="<?php echo $row->email;?>"  readonly>
                                                         </div>
                                                     </div>
                                                     <?php } ?>
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Emergency Contact: </label>
+                                                        <label class="col-sm-2 control-label">Emergency Contact : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="econtact" id="econtact"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Guardian  Name : </label>
+                                                        <label class="col-sm-2 control-label">Guardian  Name : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="gname" id="gname"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Guardian  Relation : </label>
+                                                        <label class="col-sm-2 control-label">Guardian  Relation : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Guardian Contact no : </label>
+                                                        <label class="col-sm-2 control-label">Guardian Contact No : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
                                                         </div>
@@ -655,24 +660,24 @@ if(isset($_GET['tx']))
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Address : </label>
+                                                        <label class="col-sm-2 control-label">Address : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <textarea  rows="5" name="address"  id="address" class="form-control" required="required"></textarea>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">City : </label>
+                                                        <label class="col-sm-2 control-label">City : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="city" id="city"  class="form-control" required="required">
                                                         </div>
                                                     </div>	
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">State </label>
+                                                        <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="state" id="state"class="form-control" required> 
-                                                                <option value="">Select State</option>
+                                                                <option value="" disabled selected hidden>Select State</option>
                                                                 <?php $query ="SELECT * FROM states";
                                                                 $stmt2 = $mysqli->prepare($query);
                                                                 $stmt2->execute();
@@ -686,7 +691,7 @@ if(isset($_GET['tx']))
                                                     </div>							
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Postcode : </label>
+                                                        <label class="col-sm-2 control-label">Postcode : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
                                                         </div>
@@ -697,34 +702,33 @@ if(isset($_GET['tx']))
                                                     </div>
 
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-5 control-label">Permanent Address same as Current address : </label>
-
-                                                        <div class="col-sm-4">
-                                                            <input type="checkbox" name="adcheck" value="1"/>
-                                                        </div>
+                                                    <div class="form-group text-sm-left">
+                                                        <label class="checkbox-inline col-sm-4 control-label" ><b>Permanent Address same as Current Address : </b>
+                                                            &nbsp
+                                                            <input class="col-sm-2" type="checkbox" name="adcheck" value="1" style="transform: scale(1.3);"/>
+                                                        </label>
                                                     </div>
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Address : </label>
+                                                        <label class="col-sm-2 control-label">Address : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <textarea  rows="5" name="paddress"  id="paddress" class="form-control" required="required"></textarea>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">City : </label>
+                                                        <label class="col-sm-2 control-label">City : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="pcity" id="pcity"  class="form-control" required="required">
                                                         </div>
                                                     </div>	
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">State </label>
+                                                        <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="pstate" id="pstate"class="form-control" required> 
-                                                                <option value="">Select State</option>
+                                                                <option value="" disabled selected hidden>Select State</option>
                                                                 <?php $query ="SELECT * FROM states";
                                                                 $stmt2 = $mysqli->prepare($query);
                                                                 $stmt2->execute();
@@ -738,7 +742,7 @@ if(isset($_GET['tx']))
                                                     </div>							
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Postcode : </label>
+                                                        <label class="col-sm-2 control-label">Postcode : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
                                                         </div>
@@ -749,9 +753,9 @@ if(isset($_GET['tx']))
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">i would prefer to share with : </label>
+                                                        <label class="col-sm-2 control-label">I would prefer to share with: </label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="PreferPerson" id="PreferPerson"  class="form-control" required="required">
+                                                            <input type="text" name="PreferPerson" id="PreferPerson"  class="form-control">
                                                         </div>
                                                     </div>	
 
@@ -849,10 +853,10 @@ if(isset($_GET['tx']))
                     if(data > 0)
                     {
                         $("#hide-if-full").hide();
-                        $("#room-availability-status").html(data+"room full");
+                        $("#room-availability-status").html("All "+data+" rooms are full and cannot be booked");
                     } else {
                         $("#hide-if-full").show();
-                        $("#room-availability-status").html(data+"room can be booked");
+                        $("#room-availability-status").html(data+"Room available and can be booked");
                     }
                 },
                 error:function (){}
