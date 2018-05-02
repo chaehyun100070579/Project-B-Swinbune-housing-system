@@ -367,6 +367,8 @@ if(isset($_GET['tx']))
                     }
                 });
 
+                var test = document.getElementById("duration").value;
+
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -374,19 +376,19 @@ if(isset($_GET['tx']))
                     success: function(data){
                         //alert(data);
                         $('#fpm').val(data);
+                        newdata = data * test;
+                        $('#ta').val(newdata);
                     }
                 });
             }
             
-            function getCourse(val){
-                
-                
+            function getCourse(val){                
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data: {          
-                        // data: "get_seater.php"+val
-                        // cannot pass value with & symbol in string              
+                    data: {
+                        // data: "course_code"+val
+                        // cannot pass value with & symbol in string
                         course_code: val
                     },
                     success: function(data){
@@ -400,7 +402,7 @@ if(isset($_GET['tx']))
                     type: "POST",
                     url: "get_seater.php",
                     data: {
-                        // data: "get_seater.php"+val
+                        // data: "course_code"+val
                         // cannot pass value with & symbol in string
                         course_code: val
                     },
@@ -410,8 +412,6 @@ if(isset($_GET['tx']))
                         $('#ta').val(newdata);
                     }
                 });
-                
-                
             }
             
 
