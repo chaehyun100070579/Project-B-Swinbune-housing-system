@@ -452,26 +452,26 @@ if(isset($_GET['tx']))
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <?php
+                                    $uid=$_SESSION['login'];
+                                    $stmt=$mysqli->prepare("SELECT emailid FROM registration WHERE emailid=? ");
+                                    $stmt->bind_param('s',$uid);
+                                    $stmt->execute();
+                                    $stmt -> bind_result($email);
+                                    $rs=$stmt->fetch();
+                                    $stmt->close();
+                                    if($rs)
+                                    { 
+                                        echo "<h3 style='color: red' align='left'>Hostel already booked by you</h3>";
+                                    }
+                                    else{
+                                        echo "";
+                                    }			
+                                    ?>
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">Fill all Info</div>
                                         <div class="panel-body">
-                                            <form method="post" action="" class="form-horizontal">
-                                                <?php
-                                                $uid=$_SESSION['login'];
-                                                $stmt=$mysqli->prepare("SELECT emailid FROM registration WHERE emailid=? ");
-                                                $stmt->bind_param('s',$uid);
-                                                $stmt->execute();
-                                                $stmt -> bind_result($email);
-                                                $rs=$stmt->fetch();
-                                                $stmt->close();
-                                                if($rs)
-                                                { 
-                                                    echo "<h3 style='color: red' align='left'>Hostel already booked by you</h3>";
-                                                }
-                                                else{
-                                                    echo "";
-                                                }			
-                                                ?>			
+                                            <form method="post" action="" class="form-horizontal">			
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label"><h4 style="color: green" align="left">Room Related info </h4> </label>
                                                 </div>
