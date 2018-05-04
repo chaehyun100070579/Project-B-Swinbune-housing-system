@@ -481,14 +481,15 @@ if(isset($_GET['tx']))
                                                     <div class="col-sm-8">
                                                         <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);checkAvailability()" onBlur="" required> 
                                                             <option value="" disabled selected hidden>Select Room</option>
-                                                            <?php $query ="SELECT * FROM rooms";
+                                                            <?php $query ="SELECT DISTINCT RoomType FROM rooms";
                                                             $stmt2 = $mysqli->prepare($query);
                                                             $stmt2->execute();
                                                             $res=$stmt2->get_result();
                                                             while($row=$res->fetch_object())
                                                             {
                                                             ?>
-                                                            <option value="<?php echo $row->room_no;?>"> <?php echo $row->RoomType;?></option>
+                                                            <!-- <option value="<?php //echo $row->room_no;?>"> <?php //echo $row->RoomType;?></option> -->
+                                                            <option value="<?php echo $row->RoomType;?>"> <?php echo $row->RoomType;?></option> 
                                                             <?php } ?>
                                                         </select> 
                                                         <span id="room-availability-status" style="font-size:12px;color:red"></span>
