@@ -16,6 +16,9 @@ if(isset($_POST['submit']))
     $rc=$stmt->bind_param('sssssiss',$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$password);
     $stmt->execute();
     echo"<script>alert('Student Succssfully register');</script>";
+    header("Location: index.php");
+    die();
+    
 }
 ?>
 
