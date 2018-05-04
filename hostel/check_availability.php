@@ -43,14 +43,32 @@ else echo "<span style='color:red'> Password Not matched</span>";
 if(!empty($_POST["roomno"])) 
 {
 $roomno=$_POST["roomno"];
-$result ="SELECT count(*) FROM registration WHERE roomno=?";
+//$result ="SELECT count(*) FROM registration WHERE RoomType=?";
+$result ="SELECT * from rooms
+left outer join registration
+on registration.roomno = rooms.room_no
+where rooms.RoomType = ?
+and registration.roomno IS NULL
+UNION
+select * from rooms
+inner join registration
+on registration.roomno = rooms.room_no
+where rooms.RoomType = ?
+and (select count(*) from rooms inner join registration where rooms.RoomType = ? and registration.roomno = rooms.room_no) < rooms.seater
+";
+// IMPORTANT !!
+// THESE SQL STATEMENTS WILL RETURN ROWS WITH ROOM THAT HAVE SPOTS
+// IMPORTANT !!
 $stmt = $mysqli->prepare($result);
-$stmt->bind_param('i',$roomno);
+$stmt->bind_param('sss',$roomno,$roomno,$roomno);
 $stmt->execute();
-$stmt->bind_result($count);
-$stmt->fetch();
+$stmt->store_result();
+//$stmt->bind_result($count);
+$rowcount=$stmt->num_rows();
+$stmt->free_result();
+//$stmt->fetch();
 $stmt->close();
-if($count>0)
-echo $count;
+//if($rowcount>0)
+echo $rowcount;
 }
 ?>

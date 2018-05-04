@@ -853,11 +853,11 @@ if(isset($_GET['tx']))
                     $("#loaderIcon").hide();
                     if(data > 0)
                     {
-                        $("#hide-if-full").hide();
-                        $("#room-availability-status").html("All "+data+" rooms are full and cannot be booked");
-                    } else {
                         $("#hide-if-full").show();
-                        $("#room-availability-status").html(data+"Room available and can be booked");
+                        $("#room-availability-status").html(data+" room(s) available and can be booked");
+                    } else {
+                        $("#hide-if-full").hide();
+                        $("#room-availability-status").html("All rooms are full and cannot be booked");
                     }
                 },
                 error:function (){}
