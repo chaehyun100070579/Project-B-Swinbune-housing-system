@@ -355,6 +355,7 @@ if(isset($_GET['tx']))
         <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
         <script type="text/javascript" src="js/validation.min.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
         <script>
             function getSeater(val) {
                 $.ajax({
@@ -447,7 +448,7 @@ if(isset($_GET['tx']))
 
                     <div class="row">
                         <div class="col-md-12">
-                            <br>
+                            <br/><br/>
                             <h2 class="page-title">Registration </h2>
 
                             <div class="row">
@@ -514,9 +515,6 @@ if(isset($_GET['tx']))
                                                         </div>
                                                     </div>
 
-
-
-
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Course : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
@@ -532,22 +530,17 @@ if(isset($_GET['tx']))
                                                                 <option value="<?php echo $row->course_code;?>"><?php echo $row->course_code;?></option>
         
                                                                 <?php } ?>
-                                                            </select> </div>
+                                                            </select>
+                                                        </div>
                                                     </div>
 
 
                                                     <div class="form-group">
-
                                                         <label class="col-sm-2 control-label">Duration (Weeks) :</label>
-
                                                         <div class="col-sm-8">
-                                                            
-                                                            
                                                             <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
                                                         </div>
-
                                                     </div>
-
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Total Rental (RM) :</label>
@@ -556,13 +549,9 @@ if(isset($_GET['tx']))
                                                         </div>
                                                     </div>
 
-
-
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label"><h4 style="color: green" align="left">Personal info </h4> </label>
                                                     </div>
-
-
 
                                                     <?php	
                                                     $aid=$_SESSION['id'];
@@ -787,17 +776,11 @@ if(isset($_GET['tx']))
 
                                                     <input type="hidden" name="currency_code" value="MYR" />
 
-
                                                     <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
 
                                                     <input type="submit" name ="submitpaypal" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">  
 
                                             </form>
-
-
-
-
-
 
                                         </div>
                                     </div>
@@ -807,16 +790,11 @@ if(isset($_GET['tx']))
                     </div>
                 </div>
             </div>
-        </div> 	
-
+        </div>
 
         <script type="text/javascript" charset="utf-8">
             var dgFlowMini = new PAYPAL.apps.DGFlowMini({trigger: 'submitBtn'});
         </script>
-
-
-
-
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
@@ -836,7 +814,12 @@ if(isset($_GET['tx']))
                     $('#pcity').val( $('#city').val() );
                     $('#pstate').val( $('#state').val() );
                     $('#ppincode').val( $('#pincode').val() );
-                } 
+                } else {
+                    $('#paddress').val('');
+                    $('#pcity').val('');
+                    $('#pstate').val('');
+                    $('#ppincode').val('');
+                }
 
             });
         });
