@@ -62,7 +62,7 @@ if(isset($_POST['submit']))
                 $pcity=$_POST['pcity'];
                 $pstate=$_POST['pstate'];
                 $ppincode=$_POST['ppincode'];
-                $PreferPerson = $_POST['PreferPerson'];                
+                $PreferPerson = $_POST['PreferPerson'];
 
                 $query="insert into  registration(roomno,seater,feespm,stayfrom,duration,course,studentid,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode,PreferPerson) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 $stmt = $mysqli->prepare($query);
@@ -74,22 +74,22 @@ if(isset($_POST['submit']))
                 $stmt2 = $mysqli->prepare($query2);
                 $stmt2->execute();
 
-                echo"<script>alert('Student Succssfully register Please kindly refer to your email');</script>";
+                echo"<script>alert('Student succssfully registered. Please kindly refer to your email');</script>";
 
                 $mail = new PHPMailer;
 
-                // $mail->SMTPDebug = 3;  showing debug output
+                // $mail->SMTPDebug = 3;  //showing debug output
 
                 $mail->isSMTP();                                   // Set mailer to use SMTP
                 $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                            // Enable SMTP authentication
-                $mail->Username = 'samuelo0otiong1996@gmail.com';          // SMTP username
-                $mail->Password = 'stck1996'; // SMTP password
+                $mail->Username = 'swinhousingtest@gmail.com';          // SMTP username
+                $mail->Password = 'swinburne123'; // SMTP password
                 $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
                 $mail->Port = 587;                                 // TCP port to connect to
 
-                $mail->setFrom('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
-                $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
+                $mail->setFrom('test@test.com', 'SwinburneHousing');
+                $mail->addReplyTo('test@test.com', 'SwinburneHousing');
                 $mail->addAddress($emailid);   // Add a recipient
                 //$mail->addCC('cc@example.com');
                 //$mail->addBCC('bcc@example.com');
@@ -97,8 +97,8 @@ if(isset($_POST['submit']))
                 $mail->isHTML(true);  // Set email format to HTML
 
                 $bodyContent = '<h1>Swinburne Hosuing - your booking has been successfully made</h1>';
-                $bodyContent .= '<p>hello</b></p>';
-                $bodyContent .= "You have received a new message. ".
+                $bodyContent .= '<p>Hello</p>';
+                $bodyContent .= "You have successfully booked your room. ".
                     " Here are the details:".
 
                     "
@@ -107,7 +107,7 @@ if(isset($_POST['submit']))
 
 
                                             <tr>
-                                                <td colspan='6'><h4>Room Realted Info</h4></td>
+                                                <td colspan='6'><h4>Room Related Info</h4></td>
                                             </tr>
 
 
@@ -146,7 +146,7 @@ if(isset($_POST['submit']))
                                                 <td><b>Student ID. :</b></td>
                                                 <td>$studentid</td>
                                                 <td><b>Full Name :</b></td>
-                                                <td>$fname&nbsp;$mname;&nbsp;$lname;</td>
+                                                <td>$fname&nbsp;$mname&nbsp;$lname</td>
                                                 <td><b>Email :</b></td>
                                                 <td>$emailid</td>
                                             </tr>
@@ -346,7 +346,7 @@ if(isset($_GET['tx']))
         <title>Student Hostel Registration</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-social.css">
         <link rel="stylesheet" href="css/bootstrap-select.css">
         <link rel="stylesheet" href="css/fileinput.min.css">
@@ -705,7 +705,7 @@ if(isset($_GET['tx']))
 
                                                     <div class="form-group text-sm-left">
                                                         <label class="checkbox-inline col-sm-4 control-label" ><b>Permanent Address same as Current Address : </b>
-                                                            &nbsp
+                                                            &nbsp;
                                                             <input class="col-sm-2" type="checkbox" name="adcheck" value="1" style="transform: scale(1.3);"/>
                                                         </label>
                                                     </div>
