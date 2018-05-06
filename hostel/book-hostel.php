@@ -361,7 +361,7 @@ if(isset($_GET['tx']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'roomid='+val,
+                    data:'roomid='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
                         $('#seater').val(data);
@@ -373,7 +373,7 @@ if(isset($_GET['tx']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'rid='+val,
+                    data:'rid='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
                         $('#fpm').val(data);
@@ -385,7 +385,7 @@ if(isset($_GET['tx']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'getroomnum='+val,
+                    data:'getroomnum='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
                         //$('#room').attr('value', data);
@@ -845,7 +845,7 @@ if(isset($_GET['tx']))
             jQuery.ajax({
                 
                 url: "check_availability.php",
-                data:'roomno='+val,
+                data:'roomno='+$("#room option:selected").text(),
                 type: "POST",
                 success:function(data){
                     $("#room-availability-status").html(data);
