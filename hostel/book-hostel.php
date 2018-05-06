@@ -358,6 +358,7 @@ if(isset($_GET['tx']))
 
         <script>
             function getSeater(val) {
+                // val no longer needed but still leave it there anyway
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -390,9 +391,10 @@ if(isset($_GET['tx']))
                         //alert(data);
                         //$('#room').attr('value', data);
                         var asd = document.getElementById("room");
+                        var trimmed = data.trim();
                         //asd.options[asd.selectedIndex].innerHTML = ("<option value='"+data+"'>"+val+"</option>");
                         //asd.options[asd.selectedIndex].innerHTML = ("<option value='123123'>123123</option>");
-                        asd.options[asd.selectedIndex].value = data;
+                        asd.options[asd.selectedIndex].value = trimmed;
                         //alert(asd.options[asd.selectedIndex].value);
                     }
                 });
