@@ -1,7 +1,8 @@
 <?php
 include('includes/pdoconfig.php');
 if(!empty($_POST["roomid"]))
-{	
+{
+// roomid is room type
 $id=$_POST['roomid'];
 //$stmt = $DB_con->prepare("SELECT * FROM rooms WHERE room_no = :id");
 // SELECT is different because have to put rooms table at the back
@@ -35,7 +36,8 @@ $stmt->execute(array(':id' => $id));
 
 
 if(!empty($_POST["rid"])) 
-{	
+{
+//rid is room type
 $id=$_POST['rid'];
 //$stmt = $DB_con->prepare("SELECT * FROM rooms WHERE room_no = :id");
 $query = "SELECT * from rooms
@@ -63,6 +65,35 @@ $stmt->execute(array(':id' => $id));
 // }
 }
 
+if(!empty($_POST["getroomnum"])) 
+{
+//getroomnum is room type
+$id=$_POST['getroomnum'];
+//$stmt = $DB_con->prepare("SELECT * FROM rooms WHERE room_no = :id");
+$query = "SELECT registration.*, rooms.* from rooms
+inner join registration
+on registration.roomno = rooms.room_no
+where rooms.RoomType = :id
+and (select count(*) from rooms inner join registration where rooms.RoomType = :id and registration.roomno = rooms.room_no) < rooms.seater
+UNION
+select registration.*, rooms.* from rooms
+left outer join registration
+on registration.roomno = rooms.room_no
+where rooms.RoomType = :id
+and registration.roomno IS NULL
+";
+$stmt = $DB_con->prepare($query);
+$stmt->execute(array(':id' => $id));
+?>
+ <?php
+// while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+// {
+ $row=$stmt->fetch(PDO::FETCH_ASSOC);
+  ?>
+ <?php echo htmlentities($row['room_no']); ?>
+  <?php
+// }
+}
 
 if(!empty($_POST["course_code"])) 
 {	
