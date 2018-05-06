@@ -480,7 +480,7 @@ if(isset($_GET['tx']))
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Room Type : <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);checkAvailability()" onBlur="" required> 
+                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
                                                             <option value="" disabled selected hidden>Select Room</option>
                                                             <?php $query ="SELECT DISTINCT RoomType FROM rooms";
                                                             $stmt2 = $mysqli->prepare($query);
