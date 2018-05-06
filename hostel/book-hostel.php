@@ -381,6 +381,21 @@ if(isset($_GET['tx']))
                         $('#ta').val(newdata);
                     }
                 });
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'getroomnum='+val,
+                    success: function(data){
+                        //alert(data);
+                        //$('#room').attr('value', data);
+                        var asd = document.getElementById("room");
+                        //asd.options[asd.selectedIndex].innerHTML = ("<option value='"+data+"'>"+val+"</option>");
+                        //asd.options[asd.selectedIndex].innerHTML = ("<option value='123123'>123123</option>");
+                        asd.options[asd.selectedIndex].value = data;
+                        //alert(asd.options[asd.selectedIndex].value);
+                    }
+                });
             }
             
             function getCourse(val){                
@@ -490,7 +505,7 @@ if(isset($_GET['tx']))
                                                             {
                                                             ?>
                                                             <!-- <option value="<?php //echo $row->room_no;?>"> <?php //echo $row->RoomType;?></option> -->
-                                                            <option value="<?php echo $row->RoomType;?>"> <?php echo $row->RoomType;?></option> 
+                                                            <option value="<?php echo $row->RoomType;?>"><?php echo $row->RoomType;?></option> 
                                                             <?php } ?>
                                                         </select> 
                                                         <span id="room-availability-status" style="font-size:12px;color:red"></span>
@@ -501,7 +516,7 @@ if(isset($_GET['tx']))
                                                 <span id="hide-if-full">
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Single or Sharing :</label>
+                                                        <label class="col-sm-2 control-label">Single or Sharing (Seater) :</label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="seater" id="seater"  class="form-control"  readonly>
                                                         </div>
@@ -828,8 +843,9 @@ if(isset($_GET['tx']))
         function checkAvailability() {
             $("#loaderIcon").show();
             jQuery.ajax({
+                
                 url: "check_availability.php",
-                data:'roomno='+$("#room").val(),
+                data:'roomno='+val,
                 type: "POST",
                 success:function(data){
                     $("#room-availability-status").html(data);
