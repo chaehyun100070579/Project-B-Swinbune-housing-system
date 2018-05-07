@@ -365,7 +365,8 @@ if(isset($_GET['tx']))
                     data:'roomid='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
-                        $('#seater').val(data);
+                        var trimmed = data.trim();
+                        $('#seater').val(trimmed);
                     }
                 });
 
@@ -377,7 +378,8 @@ if(isset($_GET['tx']))
                     data:'rid='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
-                        $('#fpm').val(data);
+                        var trimmed = data.trim();
+                        $('#fpm').val(trimmed);
                         newdata = data * test;
                         $('#ta').val(newdata);
                     }
@@ -411,7 +413,8 @@ if(isset($_GET['tx']))
                     },
                     success: function(data){
                         //alert(data);
-                        $('#duration').val(data);
+                        var trimmed = data.trim();
+                        $('#duration').val(trimmed);
                     }
                 });
                 
