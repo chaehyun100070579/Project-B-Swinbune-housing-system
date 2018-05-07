@@ -359,10 +359,13 @@ if(isset($_GET['tx']))
         <script>
             function getSeater(val) {
                 // val no longer needed but still leave it there anyway
+
+                var gen = document.getElementById("gender").value;
+
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'roomid='+$("#room option:selected").text(),
+                    data:'roomid='+$("#room option:selected").text()+'&gender='+gen,
                     success: function(data){
                         //alert(data);
                         var trimmed = data.trim();
@@ -370,17 +373,17 @@ if(isset($_GET['tx']))
                     }
                 });
 
-                var test = document.getElementById("duration").value;
+                var dura = document.getElementById("duration").value;
 
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'rid='+$("#room option:selected").text(),
+                    data:'rid='+$("#room option:selected").text()+'&gender='+gen,
                     success: function(data){
                         //alert(data);
                         var trimmed = data.trim();
                         $('#fpm').val(trimmed);
-                        newdata = data * test;
+                        newdata = data * dura;
                         $('#ta').val(newdata);
                     }
                 });
@@ -388,7 +391,7 @@ if(isset($_GET['tx']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'getroomnum='+$("#room option:selected").text(),
+                    data:'getroomnum='+$("#room option:selected").text()+'&gender='+gen,
                     success: function(data){
                         //alert(data);
                         //$('#room').attr('value', data);
@@ -409,6 +412,7 @@ if(isset($_GET['tx']))
                     data: {
                         // data: "course_code"+val
                         // cannot pass value with & symbol in string
+                        // some course has & in name
                         course_code: val
                     },
                     success: function(data){
@@ -418,18 +422,20 @@ if(isset($_GET['tx']))
                     }
                 });
                 
-                 var test = document.getElementById("fpm").value;
+                 var fee = document.getElementById("fpm").value;
+                 
                  $.ajax({
                     type: "POST",
                     url: "get_seater.php",
                     data: {
                         // data: "course_code"+val
                         // cannot pass value with & symbol in string
+                        // some course has & in name
                         course_code: val
                     },
                     success: function(data){
                         //alert(data);
-                        newdata = data * test;
+                        newdata = data * fee;
                         $('#ta').val(newdata);
                     }
                 });
@@ -617,7 +623,7 @@ if(isset($_GET['tx']))
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Gender : </label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="gender" value="<?php echo $row->gender;?>" class="form-control" readonly>
+                                                            <input type="text" name="gender" id="gender" value="<?php echo $row->gender;?>" class="form-control" readonly>
                                                         </div>
                                                     </div>
 
@@ -846,11 +852,15 @@ if(isset($_GET['tx']))
     </script>
     <script>
         function checkAvailability() {
+
+            var gen = document.getElementById("gender").value;
+
             $("#loaderIcon").show();
+
             jQuery.ajax({
                 
                 url: "check_availability.php",
-                data:'roomno='+$("#room option:selected").text(),
+                data:'roomno='+$("#room option:selected").text()+'&gender='+gen,
                 type: "POST",
                 success:function(data){
                     $("#room-availability-status").html(data);
