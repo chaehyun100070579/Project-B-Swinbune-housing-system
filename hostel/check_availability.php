@@ -42,25 +42,56 @@ else echo "<span style='color:red'> Password Not matched</span>";
 
 if(!empty($_POST["roomno"])) 
 {
+// roomno is room type
 $roomno=$_POST["roomno"];
+$gen=$_POST['gender'];
+if($gen == 'female')
+{
+    // if female
+    $gen2 = 'h';
+    $gen3 = '';
+} else {
+    // if male
+    $gen2 = 'hl';
+    $gen3 = 'hm';
+}
 //$result ="SELECT count(*) FROM registration WHERE RoomType=?";
-$result ="SELECT * from rooms
+// !!! OLD QUERY WITHOUT ROOM BLOCK H, HL, HM !!!
+/*
+// $result ="SELECT * from rooms
+// left outer join registration
+// on registration.roomno = rooms.room_no
+// where rooms.RoomType = ?
+// and registration.roomno IS NULL
+// UNION
+// select * from rooms
+// inner join registration
+// on registration.roomno = rooms.room_no
+// where rooms.RoomType = ?
+// and (select count(*) from rooms inner join registration where rooms.RoomType = ? and registration.roomno = rooms.room_no) < rooms.seater
+// ";
+*/
+$result = "SELECT * from rooms
 left outer join registration
 on registration.roomno = rooms.room_no
 where rooms.RoomType = ?
+and (rooms.block = ? or rooms.block = ?)
 and registration.roomno IS NULL
 UNION
 select * from rooms
 inner join registration
 on registration.roomno = rooms.room_no
 where rooms.RoomType = ?
-and (select count(*) from rooms inner join registration where rooms.RoomType = ? and registration.roomno = rooms.room_no) < rooms.seater
+and (rooms.block = ? or rooms.block = ?)
+and (select count(*) from rooms inner join registration on registration.roomno = rooms.room_no 
+where rooms.RoomType = ? and (rooms.block = ? or rooms.block = ?)) < rooms.seater
 ";
 // IMPORTANT !!
 // THESE SQL STATEMENTS WILL RETURN ROWS WITH ROOM THAT HAVE SPOTS
 // IMPORTANT !!
 $stmt = $mysqli->prepare($result);
-$stmt->bind_param('sss',$roomno,$roomno,$roomno);
+$stmt->bind_param('sssssssss',$roomno,$gen2,$gen3,$roomno,$gen2,$gen3,$roomno,$gen2,$gen3);
+//$stmt->bind_param('sss',$roomno,$roomno,$roomno);
 $stmt->execute();
 $stmt->store_result();
 //$stmt->bind_result($count);
