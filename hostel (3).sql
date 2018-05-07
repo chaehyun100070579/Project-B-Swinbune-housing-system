@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2017 at 07:58 AM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+-- Generation Time: May 07, 2018 at 10:34 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -77,7 +77,6 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `numberOfWeeks`, `posting_date`) VALUES
-(8, '123123', 'abc', 'aaabbcc', 11, '2017-11-10 04:55:54'),
 (9, '(MBA&MHRM)-Term 2', '(MBA&MHRM)-Term 2', '(MBA&MHRM)-Term 2', 11, '2017-11-10 04:57:04'),
 (10, '(MBA&MHRM)-Term 3', '(MBA&MHRM)-Term 3', '(MBA&MHRM)-Term 3', 10, '2017-11-10 04:57:27'),
 (11, '(MBA&MHRM)-Term 4', '(MBA&MHRM)-Term 4', '(MBA&MHRM)-Term 4', 10, '2017-11-10 04:57:35'),
@@ -107,7 +106,7 @@ INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `numberOfW
 
 CREATE TABLE `registration` (
   `id` int(11) NOT NULL,
-  `roomno` int(11) NOT NULL,
+  `roomno` varchar(11) NOT NULL,
   `seater` int(11) NOT NULL,
   `feespm` int(11) NOT NULL,
   `stayfrom` date NOT NULL,
@@ -147,7 +146,10 @@ CREATE TABLE `registration` (
 --
 
 INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `stayfrom`, `duration`, `course`, `studentid`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `PreferPerson`, `postingDate`, `updateDate`, `AcessCardNum`, `CheckinStatus`, `CheckinDate`, `CheckoutStatus`, `CheckoutDate`) VALUES
-(11, 5555, 1, 111, '2017-11-14', 9, 'Foundation - Semester 1', 10007059, 'chaehyun', '', 'hwang', 'male', 21321, 'hcz931030@gmail.com', 90, '090', '090', 90, '090', '099', 'Kelantan', 9, '090', '099', 'Kelantan', 9, 'lll', '2017-11-13 07:03:23', '', 0, 0, '0000-00-00', 0, '0000-00-00');
+(16, '1', 2, 95, '0001-01-01', 0, 'Intensive English - Semester 1', 4330111, 'vic', 'asd', 'chin', 'male', 2131, '11111@11111', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11'),
+(17, '4', 1, 232, '2018-04-11', 17, 'Foundation - Semester 2', 123, 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 123123, 'asdasd', 'asd', 123, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', '2018-04-24 07:04:49', '', 0, 0, '0000-00-00', 0, '0000-00-00'),
+(18, '2', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308701, 'vic1', 'asd1', 'chin1', 'male', 2131, '1111111@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11'),
+(19, '5', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308702, 'vic2', 'asd2', 'chin2', 'male', 2131, '222222@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11');
 
 -- --------------------------------------------------------
 
@@ -158,22 +160,27 @@ INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `stayfrom`, `dur
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
   `seater` int(11) NOT NULL,
-  `room_no` int(11) NOT NULL,
+  `room_no` varchar(11) NOT NULL,
   `fees` int(11) NOT NULL,
   `RoomType` varchar(255) NOT NULL,
-  `posting_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `posting_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `block` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `seater`, `room_no`, `fees`, `RoomType`, `posting_date`) VALUES
-(28, 2, 1, 95, 'Sharing with fan', '2017-11-03 09:28:49'),
-(29, 4, 2, 777, 'Single with fan', '2017-11-03 09:28:56'),
-(30, 2, 3, 152, 'Sharing with air-cond', '2017-11-03 09:29:08'),
-(31, 1, 4, 232, 'Single with air-cond', '2017-11-03 09:29:31'),
-(33, 1, 5555, 111, 'Sharing with Fan', '2017-11-13 07:01:03');
+INSERT INTO `rooms` (`id`, `seater`, `room_no`, `fees`, `RoomType`, `posting_date`, `block`) VALUES
+(28, 2, '1', 95, 'A- Twin with fan', '2017-11-03 09:28:49', 'HL'),
+(29, 1, '2', 777, 'B- Single with fan', '2017-11-03 09:28:56', 'HL'),
+(30, 2, '3', 152, 'C- Twin with Air-Cond', '2017-11-03 09:29:08', 'HL'),
+(31, 1, '4', 232, 'D- Single with Air-Cond', '2017-11-03 09:29:31', 'HL'),
+(36, 2, 'h123', 123, 'C- Twin with Air-Cond', '2018-03-20 06:28:34', 'HL'),
+(37, 2, 'h1234', 123, 'Free Room for Test', '2018-03-20 06:39:45', 'HL'),
+(38, 1, 'HM001', 323, 'B- Single with fan', '2018-04-24 07:51:02', 'HL'),
+(39, 2, 'hm54', 444, 'A- Twin with fan', '2018-04-24 07:52:09', 'HM'),
+(40, 1, '5', 95, 'Free Room for Test 2', '2017-11-03 09:28:49', 'HL');
 
 -- --------------------------------------------------------
 
@@ -231,40 +238,22 @@ CREATE TABLE `userlog` (
 
 INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`, `loginTime`) VALUES
 (83, 36, '100063362@students.swinburne.edu.my', 0x3a3a31, '', '', '2017-11-10 04:05:54'),
-(84, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 09:50:42'),
-(85, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:01:56'),
-(86, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:13:39'),
-(87, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:13:54'),
-(88, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:26:08'),
-(89, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:37:07'),
-(90, 34, 'hcz931030@gmail.com', 0x3132372e302e302e31, '', '', '2017-11-10 11:48:04'),
-(91, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 12:05:16'),
-(92, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 12:06:55'),
-(93, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 07:52:10'),
-(94, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 07:54:04'),
-(95, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:29'),
-(96, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:30'),
-(97, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:36'),
-(98, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:19:45'),
-(99, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:42:22'),
-(100, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 13:50:54'),
-(101, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 14:11:54'),
-(102, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 08:30:01'),
-(103, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:34:06'),
-(104, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:37:14'),
-(105, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:40:10'),
-(106, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:21:21'),
-(107, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:21:43'),
-(108, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:24:45'),
-(109, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:31:35'),
-(110, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:34:33'),
-(111, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 15:48:14'),
-(112, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 16:39:19'),
 (113, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 16:56:20'),
 (114, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:42:58'),
 (115, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:44:00'),
-(116, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:54:38'),
-(117, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 07:01:26');
+(118, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-06 06:00:23'),
+(119, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-19 17:59:21'),
+(120, 40, 'asd@asd.com', 0x3132372e302e302e31, '', '', '2018-03-20 06:04:38'),
+(128, 40, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 06:44:16'),
+(129, 40, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 07:05:42'),
+(130, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-04-17 07:06:55'),
+(131, 41, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 07:07:41'),
+(132, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 07:20:11'),
+(133, 40, 'asd@asd.com', 0x3132372e302e302e31, '', '', '2018-04-24 06:58:11'),
+(134, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-24 07:32:24'),
+(135, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-05-02 13:40:47'),
+(136, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 05:59:50'),
+(137, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 10:45:58');
 
 -- --------------------------------------------------------
 
@@ -300,8 +289,10 @@ INSERT INTO `userregistration` (`id`, `studentid`, `firstName`, `middleName`, `l
 (30, '1231', '2asd', 'asd', 'asd', 'female', 213, '5@gmail.com', '5', '2017-11-07 10:44:39', '', '', 0, 0),
 (35, 'sd', 'asd', 'adas', 'dasd', 'female', 123, '10@gmail.com', '10', '2017-11-08 18:40:57', '', '', 0, 0),
 (36, '100063362', 'jin', 'asd', 'lee', 'male', 1231231234, '100063362@students.swinburne.edu.my', 'jin', '2017-11-10 04:05:37', '', '', 0, 0),
-(38, '10007059', 'chaehyun', '', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '12-11-2017 11:10:32', '', 1, 1),
-(39, '231231', 'samuel', '', 'tion', 'male', 12312321, 'samuel@gmail.com', '1234', '2017-11-13 06:42:18', '', '', 0, 0);
+(38, '10007059', 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '12-11-2017 11:10:32', '', 1, 1),
+(39, '231231', 'samuel', '', 'tion', 'male', 12312321, 'samuel@gmail.com', '1234', '2017-11-13 06:42:18', '', '', 0, 0),
+(40, '123', 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 'asd', '2018-03-06 06:00:13', '', '', 1, 1),
+(42, '4330870', 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 'asd', '2018-04-17 07:19:56', '', '', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -358,44 +349,36 @@ ALTER TABLE `userregistration`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
 --
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 --
 -- AUTO_INCREMENT for table `userregistration`
 --
 ALTER TABLE `userregistration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
-COMMIT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
