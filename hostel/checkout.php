@@ -47,7 +47,7 @@ if(isset($_POST['submit']))
         //$CheckinStatus="0";
         $CheckoutDate = $_POST['CheckoutDate'];
         $CheckoutTime = $_POST['CheckoutTime'];        
-        
+
         $CheckoutOption = $_POST['Checkout'];
 
         if ($CheckoutOption == "1")
@@ -105,7 +105,7 @@ if(isset($_POST['submit']))
         $stmt->execute();
 
         echo"<script>alert('You have sucessfully CHECKED OUT! please kindly refer to your e-mail');</script>";
-        
+
         $mail = new PHPMailer;
 
         $mail->isSMTP();                                   // Set mailer to use SMTP
@@ -221,12 +221,12 @@ if(isset($_POST['submit']))
                                             <tr>
                                                 <td colspan='6'><h4>Check-Out Info</h4></td>
                                             </tr>
-                                            
+
                                              <tr>
                                                 <td><b>I wish to :</b></td>
                                                 <td>$CheckoutOption</td>
                                             </tr>
-                                            
+
                                              <tr>
                                                 <td><b>Check-Out Date :</b></td>
                                                 <td>$CheckoutDate</td>
@@ -236,7 +236,7 @@ if(isset($_POST['submit']))
                                                 <td><b>Check-Out Time :</b></td>
                                                 <td>$CheckoutTime</td>
                                             </tr>
-                                            
+
                                             <tr>
                                                <td><b>Key / Acess Card Returned Date :</b></td>
                                                <td>$KeyReturnedDate</td>
@@ -309,26 +309,103 @@ if(isset($_POST['submit']))
         <title>Room Transfer Request Form</title>
 
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
-        
-        <script type="text/javascript">
-            // function to auto call the onclick() function of first checkbox to enable ticking the T&S checkbox
-            window.onload = function() {
-                if(document.forms[0] && document.forms[0].Checkout) {
-                    document.forms[0].Checkout[0].checked = true;
-                    document.forms[0].Checkout[0].onclick();
-                }
+
+
+                <script>
+            function getSeater(val) {
+                // val no longer needed but still leave it there anyway
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'roomid='+$("#room option:selected").text(),
+                    success: function(data){
+                        //alert(data);
+                        var trimmed = data.trim();
+                        $('#seater').val(trimmed);
+                    }
+                });
+
+                var test = document.getElementById("duration").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'rid='+$("#room option:selected").text(),
+                    success: function(data){
+                        //alert(data);
+                        var trimmed = data.trim();
+                        $('#fpm').val(trimmed);
+                        newdata = data * test;
+                        $('#ta').val(newdata);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'getroomnum='+$("#room option:selected").text(),
+                    success: function(data){
+                        //alert(data);
+                        //$('#room').attr('value', data);
+                        var asd = document.getElementById("room");
+                        var trimmed = data.trim();
+                        //asd.options[asd.selectedIndex].innerHTML = ("<option value='"+data+"'>"+val+"</option>");
+                        //asd.options[asd.selectedIndex].innerHTML = ("<option value='123123'>123123</option>");
+                        asd.options[asd.selectedIndex].value = trimmed;
+                        //alert(asd.options[asd.selectedIndex].value);
+                    }
+                });
             }
+            
+            function getCourse(val){                
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data: {
+                        // data: "course_code"+val
+                        // cannot pass value with & symbol in string
+                        course_code: val
+                    },
+                    success: function(data){
+                        //alert(data);
+                        var trimmed = data.trim();
+                        $('#duration').val(trimmed);
+                    }
+                });
+                
+                 var test = document.getElementById("fpm").value;
+                 $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data: {
+                        // data: "course_code"+val
+                        // cannot pass value with & symbol in string
+                        course_code: val
+                    },
+                    success: function(data){
+                        //alert(data);
+                        newdata = data * test;
+                        $('#ta').val(newdata);
+                    }
+                });
+            }
+            
+
+      
         </script>
+        
+
+
         <!--
-            <link media="only screen and (max-device-width: 480px)" href="local/css/iphone.css" type="text/css" rel="stylesheet" />
-        -->
+<link media="only screen and (max-device-width: 480px)" href="local/css/iphone.css" type="text/css" rel="stylesheet" />
+-->
         <!--
-            YB
-            <link href="http://global.swinburne.edu.au/template/css/whats_on.css" rel="stylesheet" type="text/css" />
-            <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.coda-slider-2.0.js"></script>
-            <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.easing.1.3.js"></script>
-            <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
-        -->
+YB
+<link href="http://global.swinburne.edu.au/template/css/whats_on.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.coda-slider-2.0.js"></script>
+<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
+-->
 
         <style type="text/css">
             /*
@@ -383,8 +460,8 @@ if(isset($_POST['submit']))
                                 //$cnt=1;
                                 $row=$res->fetch_object();
 
-                                
-                                
+
+
                                 if($BookedStatus == 0)
                                 {
                                     echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
@@ -397,7 +474,7 @@ if(isset($_POST['submit']))
                                 { 
                                     echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
                                 }
-   
+
                                 else
                                 {
                                     // <!-- enclose table(form) in php to hide if already checked out (and also escape \')-->
@@ -470,7 +547,7 @@ if(isset($_POST['submit']))
                                 <br>
                                 <br>
 
-                                <table class="Form_Table" border="1" width="650" cellspacing="0">
+                                <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>ROOM CHECKLIST</h3></tr>
 
                                         <tr>
@@ -531,25 +608,51 @@ if(isset($_POST['submit']))
                                         <td colspan="5" class="content_black1">
                                             <label>
                                                 <!-- Semester Break Notification -->
-                                                <input type="checkbox" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" checked onclick="getCheckout(1,this.form.Checkout)" />
+                                                <input type="radio" id="chkRenewal" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);"  onclick="getCheckout(1,this.form.Checkout)" />
                                                 <b>Renewal for Next Semester</b>
                                             </label>
+
+
+                                                 <div class="form-group" id="text">
+                                                 
+                                                    <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
+                                                            <option value=""  selected hidden>Select Room</option>
+                                                            <option value="" >Sharing with fan</option>
+                                                            <option value="" >Single with fan </option>
+                                                            <option value="" >Sharing with air-cond </option>
+                                                            <option value="" >Single with air-cond</option>
+                                                            
+                                                        </select> 
+                                                        <span id="room-availability-status" style="font-size:12px;color:red"></span>
+                                                    </div>
+                                                    
+                                                    <span id="hide-if-full">
+                  
+                                                    
+                                                </div>
+
+
+
+                                            <br/>
+
                                             <br />
                                             <label>
                                                 <!-- Accommodation Rental Overpayment -->
-                                                <input type="checkbox" name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
+                                                <input type="radio"  name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
                                                 <b>Accommodation rental overpayment</b> 
                                             </label>
                                             <br />
                                             <label>
                                                 <!-- End Tenancy -->
-                                                <input type="checkbox" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
+                                                <input type="radio" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
                                                 <b>Permanent check out - Graduated/Withdrawal</b>
                                             </label>
                                             <br />
                                             <label>
                                                 <!-- Move to Private Accommodation -->
-                                                <input type="checkbox" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
+                                                <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
                                                 <b>Moving out to private accommodation</b>
                                             </label>
 
@@ -768,14 +871,28 @@ if(isset($_POST['submit']))
                                 }
                                 ?>	<!-- enclose table(form) in php to hide if already checked out (and also escape \') -->
                             </form>
+
+
+
                         </div>
+
                     </div>
+
 
                     <div class="clearing"></div>     
 
                 </div>
             </div>
         </div>
+
+
+        <script>
+            $('#myCheck').change(function() {
+                if (!$(this).is(':checked')) {
+                    alert('unchecked');
+                }
+            });
+        </script>
 
         <!-- Loading Scripts -->
         <script src="js/jquery.min.js"></script>
@@ -789,6 +906,55 @@ if(isset($_POST['submit']))
         <script src="js/main.js"></script>
 
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
+
+
+
+        <script type="text/javascript">
+            var checkbox = document.getElementById('chkRenewal');
+            var text = document.getElementById('text');
+            var showHiddenDiv = function(){
+                if(checkbox.checked) {
+                    text.style['display'] = 'block';
+                } else {
+                    text.style['display'] = 'none';
+                } 
+            }
+            checkbox.onclick = showHiddenDiv;
+            showHiddenDiv();
+        </script>
+
+        <script>
+            function checkAvailability() {
+                $("#loaderIcon").show();
+                jQuery.ajax({
+
+                    url: "check_availability.php",
+                    data:'roomno='+$("#room option:selected").text(),
+                    type: "POST",
+                    success:function(data){
+                        $("#room-availability-status").html(data);
+                        $("#loaderIcon").hide();
+                        if(data > 0)
+                        {
+                            $("#hide-if-full").show();
+                            $("#room-availability-status").html(data+" room(s) available and can be booked");
+                        } else {
+                            $("#hide-if-full").hide();
+                            $("#room-availability-status").html("All rooms are full and cannot be booked");
+                        }
+                    },
+                    error:function (){}
+                });
+            }
+        </script>
+
+
+
+
+
+
+
+
 
     </body>
 
