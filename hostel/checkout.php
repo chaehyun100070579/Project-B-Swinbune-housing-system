@@ -310,14 +310,16 @@ if(isset($_POST['submit']))
 
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
 
-
-                <script>
+        <script>
             function getSeater(val) {
                 // val no longer needed but still leave it there anyway
+
+                var gen = document.getElementById("gender").value;
+
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'roomid='+$("#room option:selected").text(),
+                    data:'roomid='+$("#room option:selected").text()+'&gender='+gen,
                     success: function(data){
                         //alert(data);
                         var trimmed = data.trim();
@@ -325,17 +327,17 @@ if(isset($_POST['submit']))
                     }
                 });
 
-                var test = document.getElementById("duration").value;
+                var dura = document.getElementById("duration").value;
 
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'rid='+$("#room option:selected").text(),
+                    data:'rid='+$("#room option:selected").text()+'&gender='+gen,
                     success: function(data){
                         //alert(data);
                         var trimmed = data.trim();
                         $('#fpm').val(trimmed);
-                        newdata = data * test;
+                        newdata = data * dura;
                         $('#ta').val(newdata);
                     }
                 });
@@ -343,7 +345,7 @@ if(isset($_POST['submit']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'getroomnum='+$("#room option:selected").text(),
+                    data:'getroomnum='+$("#room option:selected").text()+'&gender='+gen,
                     success: function(data){
                         //alert(data);
                         //$('#room').attr('value', data);
@@ -356,7 +358,7 @@ if(isset($_POST['submit']))
                     }
                 });
             }
-            
+
             function getCourse(val){                
                 $.ajax({
                     type: "POST",
@@ -364,6 +366,7 @@ if(isset($_POST['submit']))
                     data: {
                         // data: "course_code"+val
                         // cannot pass value with & symbol in string
+                        // some course has & in name
                         course_code: val
                     },
                     success: function(data){
@@ -372,28 +375,28 @@ if(isset($_POST['submit']))
                         $('#duration').val(trimmed);
                     }
                 });
-                
-                 var test = document.getElementById("fpm").value;
-                 $.ajax({
+
+                var fee = document.getElementById("fpm").value;
+
+                $.ajax({
                     type: "POST",
                     url: "get_seater.php",
                     data: {
                         // data: "course_code"+val
                         // cannot pass value with & symbol in string
+                        // some course has & in name
                         course_code: val
                     },
                     success: function(data){
                         //alert(data);
-                        newdata = data * test;
+                        newdata = data * fee;
                         $('#ta').val(newdata);
                     }
                 });
             }
-            
 
-      
         </script>
-        
+
 
 
         <!--
@@ -460,6 +463,11 @@ YB
                                 //$cnt=1;
                                 $row=$res->fetch_object();
 
+
+                                $query2 ="SELECT * FROM courses";
+                                $stmt2 = $mysqli->prepare($query2);
+                                $stmt2->execute();
+                                $res2=$stmt2->get_result();
 
 
                                 if($BookedStatus == 0)
@@ -614,26 +622,81 @@ YB
 
 
                                                  <div class="form-group" id="text">
-                                                 
-                                                    <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
-                                                    <div class="col-sm-8">
-                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
-                                                            <option value=""  selected hidden>Select Room</option>
-                                                            <option value="" >Sharing with fan</option>
-                                                            <option value="" >Single with fan </option>
-                                                            <option value="" >Sharing with air-cond </option>
-                                                            <option value="" >Single with air-cond</option>
-                                                            
-                                                        </select> 
-                                                        <span id="room-availability-status" style="font-size:12px;color:red"></span>
-                                                    </div>
-                                                    
-                                                    <span id="hide-if-full">
-                  
-                                                    
+
+                                                <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
+                                                <div class="col-sm-8">
+                                                    <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
+                                                    <option value="" disabled selected hidden>Select Room</option>
+                                                    ';                                    
+                                    $query ="SELECT DISTINCT RoomType FROM rooms";
+                                    $stmt2 = $mysqli->prepare($query);
+                                    $stmt2->execute();
+                                    $res=$stmt2->get_result();
+                                    while($row=$res->fetch_object())
+                                    {
+                                        echo "<option value=".$row->RoomType.">".$row->RoomType."</option>";
+                                    }
+                                    echo '
+                                                    </select> 
+                                                    <span id="room-availability-status" style="font-size:12px;color:red"></span>
                                                 </div>
 
+                                                <span id="hide-if-full">
+                                                <br/>
+                                                <br/>
 
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Single or Sharing (Seater) :</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" name="seater" id="seater"  class="form-control"  readonly>
+                                                        </div>
+                                                    </div>
+                                                <br/>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Fees Per Week (RM) :</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <br/>
+                                                    <br/>
+
+
+                                                    <label class="col-sm-4 control-label">Choose Course for next Semester: <span style="color:red">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
+                                                            <option value="" disabled selected hidden>Select Course</option>
+                                                            '; 
+                                    while($row2=$res2->fetch_object()) {
+                                        echo "<option value=".$row2->course_code.">".$row2->course_code."</option>";
+                                    }
+                                    echo '
+
+                                                        </select>
+                                                    </div>
+                                                    <br/>
+                                                    <br/>
+
+                                                     <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Duration (Weeks) :</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
+                                                        </div>
+                                                    </div>
+
+                                                      <br/>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Total Rental (RM) :</label>
+                                                        <div class="col-sm-4">
+                                                            <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    </div>
 
                                             <br/>
 
@@ -923,39 +986,56 @@ YB
             showHiddenDiv();
         </script>
 
-        <script>
-            function checkAvailability() {
-                $("#loaderIcon").show();
-                jQuery.ajax({
-
-                    url: "check_availability.php",
-                    data:'roomno='+$("#room option:selected").text(),
-                    type: "POST",
-                    success:function(data){
-                        $("#room-availability-status").html(data);
-                        $("#loaderIcon").hide();
-                        if(data > 0)
-                        {
-                            $("#hide-if-full").show();
-                            $("#room-availability-status").html(data+" room(s) available and can be booked");
-                        } else {
-                            $("#hide-if-full").hide();
-                            $("#room-availability-status").html("All rooms are full and cannot be booked");
-                        }
-                    },
-                    error:function (){}
-                });
-            }
-        </script>
-
-
-
-
-
-
-
 
 
     </body>
+
+    <script>
+        function checkAvailability() {
+
+            var gen = document.getElementById("gender").value;
+
+            $("#loaderIcon").show();
+
+            jQuery.ajax({
+
+                url: "check_availability.php",
+                data:'roomno='+$("#room option:selected").text()+'&gender='+gen,
+                type: "POST",
+                success:function(data){
+                    $("#room-availability-status").html(data);
+                    $("#loaderIcon").hide();
+                    if(data > 0)
+                    {
+                        $("#hide-if-full").show();
+                        $("#room-availability-status").html(data+" room(s) available and can be booked");
+                    } else {
+                        $("#hide-if-full").hide();
+                        $("#room-availability-status").html("All rooms are full and cannot be booked");
+                    }
+                },
+                error:function (){}
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#duration').keyup(function(){
+                var fetch_dbid = $(this).val();
+                $.ajax({
+                    type:'POST',
+                    url :"ins-amt.php?action=userid",
+                    data :{userinfo:fetch_dbid},
+                    success:function(data){
+                        $('.result').val(data);
+                    }
+                });
+
+
+            })});
+    </script>
+
 
 </html>
