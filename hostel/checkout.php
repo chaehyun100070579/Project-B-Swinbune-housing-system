@@ -111,13 +111,13 @@ if(isset($_POST['submit']))
         $mail->isSMTP();                                   // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                            // Enable SMTP authentication
-        $mail->Username = 'swinhousingtest@gmail.com';          // SMTP username
-        $mail->Password = 'swinburne123'; // SMTP password
+        $mail->Username = 'samuelo0otiong1996@gmail.com';          // SMTP username
+        $mail->Password = 'stck1996'; // SMTP password
         $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                 // TCP port to connect to
 
-        $mail->setFrom('test@test.com', 'SwinburneHousing');
-        $mail->addReplyTo('test@test.com', 'SwinburneHousing');
+        $mail->setFrom('samuelo0otiong1996@gmail.com', 'Swinburne');
+        $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'Swinburne');
         $mail->addAddress($email);   // Add a recipient
         //$mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
         //$mail->addBCC('bcc@example.com');
@@ -310,16 +310,14 @@ if(isset($_POST['submit']))
 
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
 
+
         <script>
             function getSeater(val) {
                 // val no longer needed but still leave it there anyway
-
-                var gen = document.getElementById("gender").value;
-
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'roomid='+$("#room option:selected").text()+'&gender='+gen,
+                    data:'roomid='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
                         var trimmed = data.trim();
@@ -327,17 +325,17 @@ if(isset($_POST['submit']))
                     }
                 });
 
-                var dura = document.getElementById("duration").value;
+                var test = document.getElementById("duration").value;
 
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'rid='+$("#room option:selected").text()+'&gender='+gen,
+                    data:'rid='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
                         var trimmed = data.trim();
                         $('#fpm').val(trimmed);
-                        newdata = data * dura;
+                        newdata = data * test;
                         $('#ta').val(newdata);
                     }
                 });
@@ -345,7 +343,7 @@ if(isset($_POST['submit']))
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
-                    data:'getroomnum='+$("#room option:selected").text()+'&gender='+gen,
+                    data:'getroomnum='+$("#room option:selected").text(),
                     success: function(data){
                         //alert(data);
                         //$('#room').attr('value', data);
@@ -366,7 +364,6 @@ if(isset($_POST['submit']))
                     data: {
                         // data: "course_code"+val
                         // cannot pass value with & symbol in string
-                        // some course has & in name
                         course_code: val
                     },
                     success: function(data){
@@ -376,24 +373,24 @@ if(isset($_POST['submit']))
                     }
                 });
 
-                var fee = document.getElementById("fpm").value;
-
+                var test = document.getElementById("fpm").value;
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
                     data: {
                         // data: "course_code"+val
                         // cannot pass value with & symbol in string
-                        // some course has & in name
                         course_code: val
                     },
                     success: function(data){
                         //alert(data);
-                        newdata = data * fee;
+                        newdata = data * test;
                         $('#ta').val(newdata);
                     }
                 });
             }
+
+
 
         </script>
 
@@ -468,25 +465,28 @@ YB
                                 $stmt2 = $mysqli->prepare($query2);
                                 $stmt2->execute();
                                 $res2=$stmt2->get_result();
+                                
+
+
 
 
                                 if($BookedStatus == 0)
                                 {
-                                    echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
+                                echo '<h3 style="color: red" align="left">You have NO ROOM to check out!</h3>';
                                 }
                                 elseif($row->CheckinStatus == false)
                                 {
-                                    echo '<h3 style="color: red" align="left">You are not checked in. Please check in first before checking out.</h3>';
+                                echo '<h3 style="color: red" align="left">You are not checked in. Please check in first before checking out.</h3>';
                                 }
                                 elseif($row->CheckoutStatus == true)
                                 { 
-                                    echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
+                                echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
                                 }
 
                                 else
                                 {
-                                    // <!-- enclose table(form) in php to hide if already checked out (and also escape \')-->
-                                    echo '
+                                // <!-- enclose table(form) in php to hide if already checked out (and also escape \')-->
+                                echo '
 
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>FACILTIES PROVIDED (Returned Condition)</h3></tr>
@@ -558,23 +558,23 @@ YB
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>ROOM CHECKLIST</h3></tr>
 
-                                        <tr>
-                                            <td width="160" class="content_black1">Student Name</td>
-                                            <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->firstName.' readonly    /></td>
-                                        </tr>
-                                        <tr>
-                                            <td width="160" class="content_black1">Student ID</td>
-                                            <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" value='.$row->studentid.' readonly /></td>
+                                    <tr>
+                                        <td width="160" class="content_black1">Student Name</td>
+                                        <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->firstName.' readonly    /></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="160" class="content_black1">Student ID</td>
+                                        <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" value='.$row->studentid.' readonly /></td>
 
-                                            <td width="65" class="content_black1"><center>
-                                                Contact No
-                                                </center></td>
-                                            <td width="285" colspan="3" class="content_black1"><input type="text" name="ContactNo" style="width:282px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" onkeyup="filterNonContactNo(this)" value='.$row->contactno.' readonly/></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="content_black1">Personal E-mail Address</td>
-                                            <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->emailid.' readonly /></td>
-                                        </tr>
+                                        <td width="65" class="content_black1"><center>
+                                            Contact No
+                                            </center></td>
+                                        <td width="285" colspan="3" class="content_black1"><input type="text" name="ContactNo" style="width:282px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" onkeyup="filterNonContactNo(this)" value='.$row->contactno.' readonly/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="content_black1">Personal E-mail Address</td>
+                                        <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->emailid.' readonly /></td>
+                                    </tr>
 
 
                                     <tr>
@@ -621,29 +621,28 @@ YB
                                             </label>
 
 
-                                                 <div class="form-group" id="text">
+                                            <div class="form-group" id="text">
 
                                                 <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
                                                 <div class="col-sm-8">
                                                     <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
                                                     <option value="" disabled selected hidden>Select Room</option>
                                                     ';                                    
-                                    $query ="SELECT DISTINCT RoomType FROM rooms";
-                                    $stmt2 = $mysqli->prepare($query);
-                                    $stmt2->execute();
-                                    $res=$stmt2->get_result();
-                                    while($row=$res->fetch_object())
-                                    {
-                                        echo "<option value=".$row->RoomType.">".$row->RoomType."</option>";
-                                    }
-                                    echo '
+                                                        $query ="SELECT DISTINCT RoomType FROM rooms";
+                                                        $stmt2 = $mysqli->prepare($query);
+                                                        $stmt2->execute();
+                                                        $res=$stmt2->get_result();
+                                                        while($row=$res->fetch_object())
+                                                        {
+                                                        echo "<option value=".$row->RoomType.">".$row->RoomType."</option>";
+                                                        }
+                                                    echo '
                                                     </select> 
                                                     <span id="room-availability-status" style="font-size:12px;color:red"></span>
                                                 </div>
 
                                                 <span id="hide-if-full">
-                                                <br/>
-                                                <br/>
+
 
                                                     <div class="form-group">
                                                         <label class="col-sm-6 control-label">Single or Sharing (Seater) :</label>
@@ -652,90 +651,78 @@ YB
                                                         </div>
                                                     </div>
                                                 <br/>
-
+                                                <br/>
                                                     <div class="form-group">
                                                         <label class="col-sm-6 control-label">Fees Per Week (RM) :</label>
                                                         <div class="col-sm-4">
                                                             <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
                                                         </div>
                                                     </div>
-
-
+                                                
                                                     <br/>
                                                     <br/>
-
+                                                    <br/>
 
                                                     <label class="col-sm-4 control-label">Choose Course for next Semester: <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
                                                         <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
                                                             <option value="" disabled selected hidden>Select Course</option>
                                                             '; 
-                                    while($row2=$res2->fetch_object()) {
-                                        echo "<option value=".$row2->course_code.">".$row2->course_code."</option>";
-                                    }
-                                    echo '
-
+                                                            while($row2=$res2->fetch_object()) {
+                                                                 echo "<option value=".$row2->course_code.">".$row2->course_code."</option>";
+                                                            }
+                                                            echo '
+                                                            
+                                                                
                                                         </select>
                                                     </div>
-                                                    <br/>
-                                                    <br/>
 
-                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Duration (Weeks) :</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
-                                                        </div>
-                                                    </div>
 
-                                                      <br/>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Total Rental (RM) :</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
-                                                        </div>
-                                                    </div>
+
 
                                                     </div>
 
-                                            <br/>
 
-                                            <br />
-                                            <label>
-                                                <!-- Accommodation Rental Overpayment -->
-                                                <input type="radio"  name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
-                                                <b>Accommodation rental overpayment</b> 
-                                            </label>
-                                            <br />
-                                            <label>
-                                                <!-- End Tenancy -->
-                                                <input type="radio" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
-                                                <b>Permanent check out - Graduated/Withdrawal</b>
-                                            </label>
-                                            <br />
-                                            <label>
-                                                <!-- Move to Private Accommodation -->
-                                                <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
-                                                <b>Moving out to private accommodation</b>
-                                            </label>
 
-                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <br/>
 
-                                            <label>
-                                                <b>New Address: </b>
-                                                <input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            </label>
-                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label>
-                                                <b>Owner Name: </b>&nbsp;
-                                                <input type="text" name="OwnerName" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            </label>
-                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label>
-                                                <b>Contact: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="text" name="OwnerContact" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            </label>
-                                        </td>
+                                                <br />
+                                                <label>
+                                                    <!-- Accommodation Rental Overpayment -->
+                                                    <input type="radio"  name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
+                                                    <b>Accommodation rental overpayment</b> 
+                                                </label>
+                                                <br />
+                                                <label>
+                                                    <!-- End Tenancy -->
+                                                    <input type="radio" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
+                                                    <b>Permanent check out - Graduated/Withdrawal</b>
+                                                </label>
+                                                <br />
+                                                <label>
+                                                    <!-- Move to Private Accommodation -->
+                                                    <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
+                                                    <b>Moving out to private accommodation</b>
+                                                </label>
+
+                                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                <label>
+                                                    <b>New Address: </b>
+                                                    <input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                                </label>
+                                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <b>Owner Name: </b>&nbsp;
+                                                    <input type="text" name="OwnerName" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                                </label>
+                                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <b>Contact: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="text" name="OwnerContact" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                                </label>
+                                                </td>
                                     </tr>
 
                                     <tr>
@@ -986,56 +973,39 @@ YB
             showHiddenDiv();
         </script>
 
+        <script>
+            function checkAvailability() {
+                $("#loaderIcon").show();
+                jQuery.ajax({
+
+                    url: "check_availability.php",
+                    data:'roomno='+$("#room option:selected").text(),
+                    type: "POST",
+                    success:function(data){
+                        $("#room-availability-status").html(data);
+                        $("#loaderIcon").hide();
+                        if(data > 0)
+                        {
+                            $("#hide-if-full").show();
+                            $("#room-availability-status").html(data+" room(s) available and can be booked");
+                        } else {
+                            $("#hide-if-full").hide();
+                            $("#room-availability-status").html("All rooms are full and cannot be booked");
+                        }
+                    },
+                    error:function (){}
+                });
+            }
+        </script>
+
+
+
+
+
+
+
 
 
     </body>
-
-    <script>
-        function checkAvailability() {
-
-            var gen = document.getElementById("gender").value;
-
-            $("#loaderIcon").show();
-
-            jQuery.ajax({
-
-                url: "check_availability.php",
-                data:'roomno='+$("#room option:selected").text()+'&gender='+gen,
-                type: "POST",
-                success:function(data){
-                    $("#room-availability-status").html(data);
-                    $("#loaderIcon").hide();
-                    if(data > 0)
-                    {
-                        $("#hide-if-full").show();
-                        $("#room-availability-status").html(data+" room(s) available and can be booked");
-                    } else {
-                        $("#hide-if-full").hide();
-                        $("#room-availability-status").html("All rooms are full and cannot be booked");
-                    }
-                },
-                error:function (){}
-            });
-        }
-    </script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-            $('#duration').keyup(function(){
-                var fetch_dbid = $(this).val();
-                $.ajax({
-                    type:'POST',
-                    url :"ins-amt.php?action=userid",
-                    data :{userinfo:fetch_dbid},
-                    success:function(data){
-                        $('.result').val(data);
-                    }
-                });
-
-
-            })});
-    </script>
-
 
 </html>
