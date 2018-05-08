@@ -85,13 +85,13 @@ if(isset($_POST['submit']))
         $mail->isSMTP();                                   // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                            // Enable SMTP authentication
-        $mail->Username = 'samuelo0otiong1996@gmail.com';          // SMTP username
-        $mail->Password = 'stck1996'; // SMTP password
+        $mail->Username = 'swinhousingtest@gmail.com';          // SMTP username
+        $mail->Password = 'swinburne123'; // SMTP password
         $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                 // TCP port to connect to
 
-        $mail->setFrom('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
-        $mail->addReplyTo('samuelo0otiong1996@gmail.com', 'SwinburneHousing');
+        $mail->setFrom('test@test.com', 'SwinburneHousing');
+        $mail->addReplyTo('test@test.com', 'SwinburneHousing');
         $mail->addAddress($email);   // Add a recipient
         //$mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
         //$mail->addBCC('bcc@example.com');
