@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2018 at 10:34 PM
+-- Generation Time: May 08, 2018 at 09:32 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -172,15 +172,18 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `seater`, `room_no`, `fees`, `RoomType`, `posting_date`, `block`) VALUES
-(28, 2, '1', 95, 'A- Twin with fan', '2017-11-03 09:28:49', 'HL'),
-(29, 1, '2', 777, 'B- Single with fan', '2017-11-03 09:28:56', 'HL'),
-(30, 2, '3', 152, 'C- Twin with Air-Cond', '2017-11-03 09:29:08', 'HL'),
-(31, 1, '4', 232, 'D- Single with Air-Cond', '2017-11-03 09:29:31', 'HL'),
-(36, 2, 'h123', 123, 'C- Twin with Air-Cond', '2018-03-20 06:28:34', 'HL'),
-(37, 2, 'h1234', 123, 'Free Room for Test', '2018-03-20 06:39:45', 'HL'),
-(38, 1, 'HM001', 323, 'B- Single with fan', '2018-04-24 07:51:02', 'HL'),
-(39, 2, 'hm54', 444, 'A- Twin with fan', '2018-04-24 07:52:09', 'HM'),
-(40, 1, '5', 95, 'Free Room for Test 2', '2017-11-03 09:28:49', 'HL');
+(28, 2, '1', 95, 'A- Twin with fan', '2017-11-03 09:28:49', 'H'),
+(29, 1, '2', 777, 'B- Single with fan', '2017-11-03 09:28:56', 'H'),
+(30, 2, '3', 152, 'C- Twin with Air-Cond', '2017-11-03 09:29:08', 'H'),
+(31, 1, '4', 232, 'D- Single with Air-Cond', '2017-11-03 09:29:31', 'H'),
+(36, 2, 'h123', 123, 'C- Twin with Air-Cond', '2018-03-20 06:28:34', 'H'),
+(37, 2, 'h1234', 123, 'Free Room for Test', '2018-03-20 06:39:45', 'H'),
+(38, 1, 'HM001', 323, 'B- Single with fan', '2018-04-24 07:51:02', 'H'),
+(39, 2, 'hm54', 444, 'A- Twin with fan', '2018-04-24 07:52:09', 'HL'),
+(40, 1, '5', 95, 'Free Room for Test 2', '2017-11-03 09:28:49', 'HL'),
+(41, 1, 'H000test', 255, 'Female Room', '2017-11-03 09:28:49', 'HM'),
+(42, 1, 'H001test', 255, '1 Male and 1 Female Room', '2017-11-03 09:28:49', 'H'),
+(43, 1, 'H002test', 255, '1 Male and 1 Female Room', '2017-11-03 09:28:49', 'HM');
 
 -- --------------------------------------------------------
 
@@ -238,12 +241,50 @@ CREATE TABLE `userlog` (
 
 INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`, `loginTime`) VALUES
 (83, 36, '100063362@students.swinburne.edu.my', 0x3a3a31, '', '', '2017-11-10 04:05:54'),
+(84, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 09:50:42'),
+(85, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:01:56'),
+(86, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:13:39'),
+(87, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:13:54'),
+(88, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:26:08'),
+(89, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:37:07'),
+(90, 34, 'hcz931030@gmail.com', 0x3132372e302e302e31, '', '', '2017-11-10 11:48:04'),
+(91, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 12:05:16'),
+(92, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 12:06:55'),
+(93, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 07:52:10'),
+(94, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 07:54:04'),
+(95, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:29'),
+(96, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:30'),
+(97, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:36'),
+(98, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:19:45'),
+(99, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:42:22'),
+(100, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 13:50:54'),
+(101, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 14:11:54'),
+(102, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 08:30:01'),
+(103, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:34:06'),
+(104, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:37:14'),
+(105, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:40:10'),
+(106, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:21:21'),
+(107, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:21:43'),
+(108, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:24:45'),
+(109, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:31:35'),
+(110, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:34:33'),
+(111, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 15:48:14'),
+(112, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 16:39:19'),
 (113, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 16:56:20'),
 (114, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:42:58'),
 (115, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:44:00'),
+(116, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:54:38'),
+(117, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 07:01:26'),
 (118, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-06 06:00:23'),
 (119, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-19 17:59:21'),
 (120, 40, 'asd@asd.com', 0x3132372e302e302e31, '', '', '2018-03-20 06:04:38'),
+(121, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-27 01:52:20'),
+(122, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:00:04'),
+(123, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:00:27'),
+(124, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:01:22'),
+(125, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:02:12'),
+(126, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-31 03:23:55'),
+(127, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-04-17 06:13:05'),
 (128, 40, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 06:44:16'),
 (129, 40, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 07:05:42'),
 (130, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-04-17 07:06:55'),
@@ -253,7 +294,9 @@ INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`,
 (134, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-24 07:32:24'),
 (135, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-05-02 13:40:47'),
 (136, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 05:59:50'),
-(137, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 10:45:58');
+(137, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 10:45:58'),
+(138, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-07 20:49:06'),
+(139, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-08 05:58:16');
 
 -- --------------------------------------------------------
 
@@ -292,7 +335,7 @@ INSERT INTO `userregistration` (`id`, `studentid`, `firstName`, `middleName`, `l
 (38, '10007059', 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '12-11-2017 11:10:32', '', 1, 1),
 (39, '231231', 'samuel', '', 'tion', 'male', 12312321, 'samuel@gmail.com', '1234', '2017-11-13 06:42:18', '', '', 0, 0),
 (40, '123', 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 'asd', '2018-03-06 06:00:13', '', '', 1, 1),
-(42, '4330870', 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 'asd', '2018-04-17 07:19:56', '', '', 1, 1);
+(42, '4330870', 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 'asd', '2018-04-17 07:19:56', '', '', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -358,12 +401,12 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `states`
 --
@@ -373,7 +416,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 --
 -- AUTO_INCREMENT for table `userregistration`
 --
