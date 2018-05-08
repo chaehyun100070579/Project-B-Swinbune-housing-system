@@ -10,12 +10,12 @@ $gen=$_POST['gender'];
 if($gen == 'female')
 {
     // if female
-    $gen2 = 'h';
+    $gen2 = 'hm';
     $gen3 = '';
 } else {
     // if male
-    $gen2 = 'hl';
-    $gen3 = 'hm';
+    $gen2 = 'h';
+    $gen3 = 'hl';
 }
 //$stmt = $DB_con->prepare("SELECT * FROM rooms WHERE room_no = :id");
 // SELECT is different because have to put rooms table at the back
@@ -81,12 +81,12 @@ $gen=$_POST['gender'];
 if($gen == 'female')
 {
     // if female
-    $gen2 = 'h';
+    $gen2 = 'hm';
     $gen3 = '';
 } else {
     // if male
-    $gen2 = 'hl';
-    $gen3 = 'hm';
+    $gen2 = 'h';
+    $gen3 = 'hl';
 }
 //$stmt = $DB_con->prepare("SELECT * FROM rooms WHERE room_no = :id");
 /*
@@ -148,12 +148,12 @@ $gen=$_POST['gender'];
 if($gen == 'female')
 {
     // if female
-    $gen2 = 'h';
+    $gen2 = 'hm';
     $gen3 = '';
 } else {
     // if male
-    $gen2 = 'hl';
-    $gen3 = 'hm';
+    $gen2 = 'h';
+    $gen3 = 'hl';
 }
 //$stmt = $DB_con->prepare("SELECT * FROM rooms WHERE room_no = :id");
 /*
