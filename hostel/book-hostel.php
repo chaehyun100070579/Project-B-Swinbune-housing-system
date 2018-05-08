@@ -96,7 +96,7 @@ if(isset($_POST['submit']))
 
                 $mail->isHTML(true);  // Set email format to HTML
 
-                $bodyContent = '<h1>Swinburne Hosuing - your booking has been successfully made</h1>';
+                $bodyContent = '<h1>Swinburne Housing - your booking has been successfully made</h1>';
                 $bodyContent .= '<p>Hello</p>';
                 $bodyContent .= "You have successfully booked your room. ".
                     " Here are the details:".
