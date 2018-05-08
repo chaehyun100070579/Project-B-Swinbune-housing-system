@@ -28,6 +28,22 @@ function getLocation(option,field)
     document.CheckoutForm.Location_field.value = field[option-1].value;
 }
 
+
+
+function myFunction() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        text.style.display = "block";
+    } else {
+        text.style.display = "none";
+    }
+}
+
+
+
+
+
 function getCheckout(option,field)
 {
     unCheckAll(field);
@@ -52,6 +68,13 @@ function getCheckout(option,field)
         document.CheckoutForm.OwnerContact.disabled = true;	
 
         document.CheckoutForm.Agree_Refund_Term.disabled = false;
+
+
+        document.getElementById('text').style.display = 'block';
+
+
+
+
     }
 
     if (option==2)
@@ -71,6 +94,8 @@ function getCheckout(option,field)
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
         document.CheckoutForm.OwnerContact.disabled = true;	
+        
+        document.getElementById('text').style.display = 'none';
     }
 
     if ( option==3)
@@ -90,6 +115,8 @@ function getCheckout(option,field)
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
         document.CheckoutForm.OwnerContact.disabled = true;	
+        
+        document.getElementById('text').style.display = 'none';
     }
 
     if (option==4)
@@ -112,6 +139,8 @@ function getCheckout(option,field)
         document.CheckoutForm.NewAddress.disabled = false;
         document.CheckoutForm.OwnerName.disabled = false;
         document.CheckoutForm.OwnerContact.disabled = false;
+        
+        document.getElementById('text').style.display = 'none';
 
     }
 
@@ -327,8 +356,21 @@ function emailCheck (emailStr)
     return true;
 }
 
+function myFunction() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    if (checkBox.checked == true){
+        text.style.display = "block";
+    } else {
+        text.style.display = "none";
+    }
+}
+
+
 function checkEmpty()
 {
+
+
     var pass=true;
     var empty=true;
 
@@ -432,6 +474,8 @@ function checkEmpty()
      pass=false;
      return false;
     }
+
+
 
     if (document.CheckoutForm.Checkout[3].checked==true)
     {   
