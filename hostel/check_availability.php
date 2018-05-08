@@ -48,12 +48,12 @@ $gen=$_POST['gender'];
 if($gen == 'female')
 {
     // if female
-    $gen2 = 'h';
+    $gen2 = 'hm';
     $gen3 = '';
 } else {
     // if male
-    $gen2 = 'hl';
-    $gen3 = 'hm';
+    $gen2 = 'h';
+    $gen3 = 'hl';
 }
 //$result ="SELECT count(*) FROM registration WHERE RoomType=?";
 // !!! OLD QUERY WITHOUT ROOM BLOCK H, HL, HM !!!
