@@ -142,7 +142,7 @@ Last update : &nbsp; <?php echo $row->updateDate;?>
 <option value="<?php echo $row->gender;?>"><?php echo $row->gender;?></option>
 <option value="male">Male</option>
 <option value="female">Female</option>
-<option value="others">Others</option>
+
 
 </select>
 </div>
