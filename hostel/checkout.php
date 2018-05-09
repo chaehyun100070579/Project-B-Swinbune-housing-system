@@ -642,15 +642,15 @@ YB
                                                     <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
                                                     <option value="" disabled selected hidden>Select Room</option>
                                                     ';                                    
-                                    $query ="SELECT DISTINCT RoomType FROM rooms";
-                                    $stmt2 = $mysqli->prepare($query);
-                                    $stmt2->execute();
-                                    $res=$stmt2->get_result();
-                                    while($row=$res->fetch_object())
-                                    {
-                                        echo "<option value=".$row->RoomType.">".$row->RoomType."</option>";
-                                    }
-                                    echo '
+                                                        $query ="SELECT DISTINCT RoomType FROM rooms";
+                                                        $stmt2 = $mysqli->prepare($query);
+                                                        $stmt2->execute();
+                                                        $res=$stmt2->get_result();
+                                                        while($row=$res->fetch_object())
+                                                        {
+                                                            echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
+                                                        }
+                                                        echo '
                                                     </select> 
                                                     <span id="room-availability-status" style="font-size:12px;color:red"></span>
                                                 </div>
@@ -685,7 +685,7 @@ YB
                                                             <option value="" disabled selected hidden>Select Course</option>
                                                             '; 
                                                             while($row2=$res2->fetch_object()) {
-                                                                echo "<option value=".$row2->course_code.">".$row2->course_code."</option>";
+                                                                echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
                                                             }
                                                             echo '
                                                            
