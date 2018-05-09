@@ -211,7 +211,7 @@ check_login();
 
                                             <input type="hidden" name="currency_code" value="MYR">
 
-                                            <input type="hidden" name="amount" value="<?php echo $dr*$fpm;?>">
+                                            <input type="hidden" name="amount" value=" '.$dr*$fpm.'">
 
                                             <input type="hidden" name="custom" value="">
 
