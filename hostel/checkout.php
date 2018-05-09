@@ -5,8 +5,6 @@ include('includes/checklogin.php');
 check_login();
 date_default_timezone_set('Asia/Kuala_Lumpur');
 include('PHPMailer/PHPMailerAutoload.php');
-
-
 $aid=$_SESSION['id'];
 $ret="select * from userregistration where id=?";
 $stmt= $mysqli->prepare($ret) ;
@@ -20,13 +18,9 @@ while($row=$res->fetch_object())
     $BookedStatus = $row->BookedStatus;
     $gender = $row->gender;
 }
-
 if(isset($_POST['submit']))
 {
-
-
     $aid=$_SESSION['studentid'];
-
     $ret="select * from registration where studentid=?";
     $stmt= $mysqli->prepare($ret) ;
     $stmt->bind_param('i',$aid);
@@ -34,14 +28,10 @@ if(isset($_POST['submit']))
     $res=$stmt->get_result();
     //$cnt=1;
     $row=$res->fetch_object();
-
-
-
     if($row->CheckoutStatus == true)
     {
         echo"<script>alert('You cant check-out more than an one time! You are already CHECKED OUT!');</script>";
     }
-
     else
     {
         $studentid=$row->studentid;
@@ -50,17 +40,29 @@ if(isset($_POST['submit']))
         //$CheckinStatus="0";
         $CheckoutDate = $_POST['CheckoutDate'];
         $CheckoutTime = $_POST['CheckoutTime'];        
-
         $CheckoutOption = $_POST['Checkout'];
-
         if ($CheckoutOption == "1")
         {
             // Semester Break Notification
             $CheckoutStatus="1";
             $CheckinStatus="0";
             //echo"<script>alert('Semester Break Notification');</script>";
-
-
+            
+            $chkSameRoom = $_POST['chkSameRoom'];
+            
+            if($chkSameRoom == "YesSameRoom")
+            {
+                $query = "update registration SET TotalPaymentStatus = '0' WHERE studentid = '$studentid' ";
+                $stmt = $mysqli->prepare($query);
+                $stmt->execute();
+                
+            }
+            else
+            {
+                
+            }
+            
+            
         }
         elseif($CheckoutOption == "2")
         {
@@ -90,9 +92,7 @@ if(isset($_POST['submit']))
             $CheckinStatus="1";
             //echo"<script>alert('all fail');</script>";
         }
-
         $KeyReturnedDate = $_POST['KeyReturnedDate'];
-
         $Building = $_POST['Location'];
         $Bed = $_POST['Bed'];
         $Mattress = $_POST['Mattress'];
@@ -104,15 +104,11 @@ if(isset($_POST['submit']))
         $Curtain = $_POST['Curtain'];
         $Fan = $_POST['Fan'];
         $Ac = $_POST['Ac'];
-
         $query = "update registration SET CheckoutStatus = '$CheckoutStatus', CheckinStatus = '$CheckinStatus',  CheckoutDate='$CheckoutDate'  WHERE studentid = '$studentid' ";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();
-
         echo"<script>alert('You have sucessfully CHECKED OUT! please kindly refer to your e-mail');</script>";
-
         $mail = new PHPMailer;
-
         $mail->isSMTP();                                   // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                            // Enable SMTP authentication
@@ -120,15 +116,12 @@ if(isset($_POST['submit']))
         $mail->Password = 'swinburne123'; // SMTP password
         $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                 // TCP port to connect to
-
         $mail->setFrom('test@test.com', 'SwinburneHousing');
         $mail->addReplyTo('test@test.com', 'SwinburneHousing');
         $mail->addAddress($email);   // Add a recipient
         //$mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
         //$mail->addBCC('bcc@example.com');
-
         $mail->isHTML(true);  // Set email format to HTML
-
         $bodyContent = '<h1>Swinburne Housing System - You have checked Out sucessfully</h1>';
         $bodyContent .= '<p>hello</b></p>';
         $bodyContent .= "You have received a new message. ".
@@ -136,29 +129,22 @@ if(isset($_POST['submit']))
             "
                     <table border='1' id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
                      <tbody>
-
                                             <tr>
                                                 <td colspan='6'><h4>Room Realted Info</h4></td>
                                             </tr>
-
-
                                             <tr>
                                                 <td><b>Room no :</b></td>
                                                 <td>$row->roomno</td>
                                                 <td><b>Single or Twin:</b></td>
                                                 <td>$row->seater</td>
-
                                             </tr>
                                             <tr>
                                                 <td><b>Building:</b></td>
                                                 <td>$Building</td>
                                             </tr>
-
-
                                             <tr>
                                                 <td colspan='6'><h4>Personal Info</h4></td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Student ID :</b></td>
                                                 <td>$studentid</td>
@@ -167,96 +153,73 @@ if(isset($_POST['submit']))
                                                 <td><b>Email :</b></td>
                                                 <td>$email</td>
                                             </tr>
-
-
                                             <tr>
                                                 <td colspan='6'><h4>Facilities Conditions(O=OK, F=Need Fxing, NA=Not Available)</h4></td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Bed :</b></td>
                                                 <td>$Bed</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Clean Mattress with fitted cover :</b></td>
                                                 <td>$Mattress</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Study Table :</b></td>
                                                 <td>$StudyTable</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Book Shelf :</b></td>
                                                 <td>$BookShelf</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Chair :</b></td>
                                                 <td>$Chair</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Wardrobe :</b></td>
                                                 <td>$Wardrobe</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Venetian Blind(for non Ac room only) :</b></td>
                                                 <td>$VenetianBlind</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Curtain(for AC Room only) :</b></td>
                                                 <td>$Curtain</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Fan :</b></td>
                                                 <td>$Fan</td>
                                             </tr>
-
                                             <tr>
                                                 <td><b>Air-Conditioner(for AC room only) :</b></td>
                                                 <td>$Ac</td>
                                             </tr>
-
                                             <tr>
                                                 <td colspan='6'><h4>Check-Out Info</h4></td>
                                             </tr>
-
                                              <tr>
                                                 <td><b>I wish to :</b></td>
                                                 <td>$CheckoutOption</td>
                                             </tr>
-
                                              <tr>
                                                 <td><b>Check-Out Date :</b></td>
                                                 <td>$CheckoutDate</td>
                                             </tr>
-
                                              <tr>
                                                 <td><b>Check-Out Time :</b></td>
                                                 <td>$CheckoutTime</td>
                                             </tr>
-
                                             <tr>
                                                <td><b>Key / Acess Card Returned Date :</b></td>
                                                <td>$KeyReturnedDate</td>
                                             </tr>
-
-
-
                                         </tbody>
                                     </table>
-
                     ";
-
         $mail->Subject = 'Email from  Swinbune housing';
         $mail->Body    = $bodyContent;
-
         $mail->smtpConnect([
             'ssl' => [
             'verify_peer' => false,
@@ -264,7 +227,6 @@ if(isset($_POST['submit']))
             'allow_self_signed' => true
         ]
         ]);
-
         if(!$mail->send()) {
             echo 'Message could not be sent.';
             echo 'Mailer Error: ' . $mail->ErrorInfo;
@@ -273,13 +235,6 @@ if(isset($_POST['submit']))
         } 
     }
 }
-
-
-
-
-
-
-
 ?>
 <!doctype html>
 <html lang="en" class="no-js">
@@ -318,9 +273,7 @@ if(isset($_POST['submit']))
         <script>
             function getSeater(val) {
                 // val no longer needed but still leave it there anyway
-
                 var gen = document.getElementById("gender").value;
-
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -331,9 +284,7 @@ if(isset($_POST['submit']))
                         $('#seater').val(trimmed);
                     }
                 });
-
                 var dura = document.getElementById("duration").value;
-
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -346,7 +297,6 @@ if(isset($_POST['submit']))
                         $('#ta').val(newdata);
                     }
                 });
-
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -363,7 +313,6 @@ if(isset($_POST['submit']))
                     }
                 });
             }
-
             function getCourse(val){                
                 $.ajax({
                     type: "POST",
@@ -380,9 +329,7 @@ if(isset($_POST['submit']))
                         $('#duration').val(trimmed);
                     }
                 });
-
                 var fee = document.getElementById("fpm").value;
-
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -399,7 +346,6 @@ if(isset($_POST['submit']))
                     }
                 });
             }
-
         </script>
 
 
@@ -468,11 +414,26 @@ YB
                                 //$cnt=1;
                                 $row=$res->fetch_object();
 
+                                if(isset($row))
+                                {
+                                    $roomno = $row->roomno;
+                                    $ret2 = "select * from rooms where room_no=?";
+                                    $stmt2= $mysqli->prepare($ret2) ;
+                                    $stmt2->bind_param('s',$roomno);
+                                    $stmt2->execute() ;//ok
+                                    $res2=$stmt2->get_result();
+                                    //$cnt=1;
+                                    $row2=$res2->fetch_object();
+                                }
+
+
 
                                 $query2 ="SELECT * FROM courses";
                                 $stmt2 = $mysqli->prepare($query2);
                                 $stmt2->execute();
                                 $res2=$stmt2->get_result();
+
+
 
 
                                 if($BookedStatus == 0)
@@ -487,12 +448,10 @@ YB
                                 { 
                                     echo '<h3 style="color: red" align="left">You are already CHECKED OUT!</h3>';
                                 }
-
                                 else
                                 {
                                     // <!-- enclose table(form) in php to hide if already checked out (and also escape \')-->
                                     echo '
-
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>FACILTIES PROVIDED (Returned Condition)</h3></tr>
                                     <tr>
@@ -555,14 +514,11 @@ YB
                                         <td>Others</td>
                                         <td><input type="text" name="Others" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" /></td>
                                     </tr>
-
                                 </table>
                                 <br>
                                 <br>
-
                                 <table class="Form_Table" border="1" width="660" cellspacing="0">
                                     <tr><h3>ROOM CHECKLIST</h3></tr>
-
                                         <tr>
                                             <td width="160" class="content_black1">Student Name</td>
                                             <td width="440" colspan="5" class="content_black1"><input type="text" name="FullName" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->firstName.' readonly    /></td>
@@ -570,7 +526,6 @@ YB
                                         <tr>
                                             <td width="160" class="content_black1">Student ID</td>
                                             <td width="90" class="content_black1"><input type="text" name="StudID" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="9" onkeyup="displayStudEmail(this)" value='.$row->studentid.' readonly /></td>
-
                                             <td width="65" class="content_black1"><center>
                                                 Contact No
                                                 </center></td>
@@ -580,8 +535,6 @@ YB
                                             <td class="content_black1">Personal E-mail Address</td>
                                             <td colspan="5" class="content_black1"><input type="text" name="Email" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" value='.$row->emailid.' readonly /></td>
                                         </tr>
-
-
                                     <tr>
                                         <td class="content_black1">Location</td>
                                         <td colspan="5" class="content_black1">
@@ -591,10 +544,8 @@ YB
                                             <input type="checkbox" id="gender" value='.$gender.' name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" />
                                             Female Hostel
                                             &nbsp;&nbsp;&nbsp;
-
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td width="80" class="content_black1">
                                             House / Flat
@@ -602,63 +553,52 @@ YB
                                             <br> B - Single with fan
                                             <br> C - Twin with Air-Cond
                                             <br> D - Single with Air-Cond
-
                                         </td>
-
-                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" /></td>
+                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" value='.$row2->RoomType.' readonly /></td>
                                         <td width="60" class="content_black1"><center> Room No</center></td>
                                         <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value='.$row->roomno.' readonly /></td>
                                         <td width="75" class="content_black1"><center>
                                             Key / Acess Card Returned Date 
                                             </center></td>
                                         <td width="90" class="content_black1">
-                                            <input type="date" name="KeyReturnedDate" id="KeyReturnedDate"  style="width:115px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);">
+                                            <input type="date" name="KeyReturnedDate" id="KeyReturnedDate"  style="width:115px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" required>
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td class="content_black1"><b>I wish to</b></td>
                                         <td colspan="5" class="content_black1">
                                             <label>
                                                 <!-- Semester Break Notification -->
-                                                <input type="radio" id="chkRenewal" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);"  onclick="getCheckout(1,this.form.Checkout)" />
+                                                <input type="radio" id="chkRenewal" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);"  onclick="getCheckout(1,this.form.Checkout)" required />
                                                 <b>Renewal for Next Semester</b>
                                             </label>
-
-
-
                                                 <div class="form-group" id="RenwalSameRoom">
-
                                                 <p>Do you wish to Renewal with same room?</p>
-                                                <input type="radio" d="showYesSameRoom" name="chkSameRoom" onclick="showYesSameRoom()" >
+                                                <input type="radio" id="showYesSameRoom" name="chkSameRoom" onclick="showYesSameRoom()" value ="YesSameRoom" checked >
                                                 <b>Yes</b>
-                                                <input type="radio" id="showNoSameRoom" name="chkSameRoom" onclick="showNoSameRoom()" >
+                                                <input type="radio" id="showNoSameRoom" name="chkSameRoom" onclick="showNoSameRoom()" value"NoSameRoom">
                                                 <b>No</b>
-
                                                  <div class="form-group" id="text">
-
                                                <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
+                                                    <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" > 
                                                     <option value="" disabled selected hidden>Select Room</option>
                                                     ';                                    
-                                                        $query ="SELECT DISTINCT RoomType FROM rooms";
-                                                        $stmt2 = $mysqli->prepare($query);
-                                                        $stmt2->execute();
-                                                        $res=$stmt2->get_result();
-                                                        while($row=$res->fetch_object())
-                                                        {
-                                                            echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
-                                                        }
-                                                        echo '
+                                    $query ="SELECT DISTINCT RoomType FROM rooms";
+                                    $stmt2 = $mysqli->prepare($query);
+                                    $stmt2->execute();
+                                    $res=$stmt2->get_result();
+                                    while($row=$res->fetch_object())
+                                    {
+                                        echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
+                                    }
+                                    echo '
                                                     </select> 
                                                     <span id="room-availability-status" style="font-size:12px;color:red"></span>
                                                 </div>
-
                                                 <span id="hide-if-full">
                                                 <br/>
                                                 <br/>
-
                                                     <div class="form-group">
                                                         <label class="col-sm-6 control-label">Single or Sharing (Seater) :</label>
                                                         <div class="col-sm-4">
@@ -666,78 +606,64 @@ YB
                                                         </div>
                                                     </div>
                                                 <br/>
-
                                                     <div class="form-group">
                                                         <label class="col-sm-6 control-label">Fees Per Week (RM) :</label>
                                                         <div class="col-sm-4">
                                                             <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
                                                         </div>
                                                     </div>
-
-
                                                     <br/>
                                                     <br/>
-
-
                                                     <label class="col-sm-4 control-label">Choose Course for next Semester: <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
+                                                        <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  > 
                                                             <option value="" disabled selected hidden>Select Course</option>
                                                             '; 
-                                                            while($row2=$res2->fetch_object()) {
-                                                                echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
-                                                            }
-                                                            echo '
-                                                           
-           
+                                    while($row2=$res2->fetch_object()) {
+                                        echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
+                                    }
+                                    echo '
+
+
                                                         </select>
                                                     </div>
                                                     <br/>
                                                     <br/>
-
                                                      <div class="form-group">
                                                         <label class="col-sm-6 control-label">Duration (Weeks) :</label>
                                                         <div class="col-sm-4">
                                                             <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
                                                         </div>
                                                     </div>
-
                                                       <br/>
-
                                                     <div class="form-group">
                                                         <label class="col-sm-6 control-label">Total Rental (RM) :</label>
                                                         <div class="col-sm-4">
                                                             <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
                                                         </div>
                                                     </div>
-
                                                     </div>
-
                                             </div>
-
                                             <br/>
-
                                             <br />
                                             <label>
                                                 <!-- Accommodation Rental Overpayment -->
-                                                <input type="radio"  name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" />
+                                                <input type="radio"  name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" required />
                                                 <b>Accommodation rental overpayment</b> 
                                             </label>
                                             <br />
                                             <label>
                                                 <!-- End Tenancy -->
-                                                <input type="radio" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" />
+                                                <input type="radio" name="Checkout" value="3" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(3,this.form.Checkout)" required/>
                                                 <b>Permanent check out - Graduated/Withdrawal</b>
                                             </label>
                                             <br />
                                             <label>
                                                 <!-- Move to Private Accommodation -->
-                                                <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" />
+                                                <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" required/>
                                                 <b>Moving out to private accommodation</b>
                                             </label>
-
                                             <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
                                             <label>
                                                 <b>New Address: </b>
                                                 <input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
@@ -754,12 +680,10 @@ YB
                                             </label>
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td valign="top" class="content_black1"><b>Reasons / Others</b></td>
                                         <td colspan="5" class="content_black1"><input type="text" name="CheckoutReason" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" /></td>
                                     </tr>
-
                                     <tr>
                                         <td width="160" valign="top" class="content_black1">and to request refund</td>
                                         <td colspan="5" class="content_black1"><input type="checkbox" name="Refund_Deposit" value="Deposit less your charges" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
@@ -769,7 +693,6 @@ YB
                                             Others
                                             <input type="text" name="RefundDetail" style="width:210px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
                                     </tr>
-
                                     <tr>
                                         <td valign="top" class="content_black1">by the selected mode of payment</td>
                                         <td colspan="5" class="content_black1"><input type="checkbox" name="Refund_MOP" value="Direct Bank In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(1,this.form.Refund_MOP)" disabled="disabled" />
@@ -782,7 +705,6 @@ YB
                                             Cheque <i>(above RM25,000 * with RM2.12 charge(GST 6% Inclusive))</i>
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td colspan="6"><table border="0" width="550" cellpadding="0" cellspacing="2" align="center">
                                             <tr>
@@ -896,7 +818,6 @@ YB
                                                 </tr>
                                             </table></td>
                                     </tr>
-
                                     <tr>
                                         <td colspan="3" class="content_black1"><b>Check Out Date</b> &nbsp;
                                             <input type="date" name="CheckoutDate" id="CheckoutDate" style="width:150px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" required />
@@ -923,22 +844,17 @@ YB
                                                 <option value="5:00 pm">5:00 pm </option>
                                             </select></td>
                                     </tr>
-
                                     <tr>
-
                                         <td colspan="3" class="content_black1">
                                             Date &nbsp;
                                             <input type="text" name="Submission_Date" style="width:80px" value='.date('Y/m/d').' readonly="readonly" /></td>
                                     </tr>
-
                                 </table>
-
                                 <input type="hidden" name="Location_field" value="" />
                                 <input type="hidden" name="Checkout_field" value="" />
                                 <input type="hidden" name="Refund_MOP_field" value="" />
                                 <input type="hidden" name="Refund_Name_field" value="" />
                                 <br />
-
                                 <table border="0" width="600" cellpadding="0" cellspacing="2">
                                     <tr>
                                         <td><p align="center">
@@ -1019,13 +935,9 @@ YB
 
         <script>
             function checkAvailability() {
-
                 var gen = document.getElementById("gender").value;
-
                 $("#loaderIcon").show();
-
                 jQuery.ajax({
-
                     url: "check_availability.php",
                     data:'roomno='+$("#room option:selected").text()+'&gender='+gen,
                     type: "POST",
@@ -1047,7 +959,6 @@ YB
         </script>
 
         <script type="text/javascript">
-
             $(document).ready(function() {
                 $('#duration').keyup(function(){
                     var fetch_dbid = $(this).val();
@@ -1059,11 +970,22 @@ YB
                             $('.result').val(data);
                         }
                     });
-
-
                 })});
         </script>
 
+        <!--
+        <script>
+            if (document.getElementById('chkRenewal').checked == true)
+            {
+                if( (document.getElementById('showYesSameRoom').checked ==false) && (document.getElementById('showNoSameRoom').checked ==false)  )
+                    {
+                         alert('You MUST Choose Renewal Option (Yes or No)');
+
+                    }
+                   
+            }
+        </script>
+        -->
 
 
     </body>
