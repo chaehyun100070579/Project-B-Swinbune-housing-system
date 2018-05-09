@@ -182,30 +182,48 @@ check_login();
                                         </tbody>
                                     </table>
 
-                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                    <?php
 
-
-                                        <input type="hidden" name="cmd" value="_xclick">
-
-                                        <input type="hidden" name="business" value="SwinburneHousingMerchant@gmail.com">
-
-                                        <input type="hidden" name="item_name" value="Total room rental fee">
-
-                                        <input type="hidden" name="item_number" value="0001">
-
-                                        <input type="hidden" name="currency_code" value="MYR">
-
-                                        <input type="hidden" name="amount" value="<?php echo $dr*$fpm;?>">
-
-                                        <input type="hidden" name="custom" value="">
-
-                                        <input type="hidden" name="charset" value="UTF-8">
+                                    $aid=$_SESSION['studentid'];
+                                    $ret="select * from registration where studentid=?";
+                                    $stmt= $mysqli->prepare($ret) ;
+                                    $stmt->bind_param('i',$aid);
+                                    $stmt->execute() ;//ok
+                                    $res=$stmt->get_result();
+                                    $row=$res->fetch_object();
+                            
+                                    if($row->TotalPaymentStatus == "1")
+                                    {
+                                        echo '<h3 style="color: blue" align="left">TotalFee is already Paid!</h3>';
+                                    }
                                         
-                                        <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
+                                    else{
+                                        echo'
+                                        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
-                                        <input type="submit" id ="submitBtn"value="Pay Total fee: <?php echo $dr*$fpm;?>"
-                                               class="btn btn-primary" onclick="submitform()">
-                                    </form>
+                                            <input type="hidden" name="cmd" value="_xclick">
+
+                                            <input type="hidden" name="business" value="SwinburneHousingMerchant@gmail.com">
+
+                                            <input type="hidden" name="item_name" value="Total room rental fee">
+
+                                            <input type="hidden" name="item_number" value="0001">
+
+                                            <input type="hidden" name="currency_code" value="MYR">
+
+                                            <input type="hidden" name="amount" value="<?php echo $dr*$fpm;?>">
+
+                                            <input type="hidden" name="custom" value="">
+
+                                            <input type="hidden" name="charset" value="UTF-8">
+
+                                            <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndexForTotalPayment.php" />
+
+                                            <input type="submit" id ="submitBtn"value="Pay Total fee:'.$dr*$fpm.' "
+                                            class="btn btn-primary" onclick="submitform()">
+                                            </form>';
+                                    }
+                                    ?>
 
                                 </div>
                             </div>
@@ -214,11 +232,12 @@ check_login();
                 </div>
             </div>
         </div>
-        
-        <script type="text/javascript" charset="utf-8">
-            var dgFlowMini = new PAYPAL.apps.DGFlowMini({trigger: 'submitBtn'});
-        </script>
 
+        <!--
+<script type="text/javascript" charset="utf-8">
+var dgFlowMini = new PAYPAL.apps.DGFlowMini({trigger: 'submitBtn'});
+</script>
+-->
 
         <!-- Loading Scripts -->
         <script src="js/jquery.min.js"></script>
