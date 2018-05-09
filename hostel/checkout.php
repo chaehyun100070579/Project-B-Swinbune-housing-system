@@ -47,22 +47,52 @@ if(isset($_POST['submit']))
             $CheckoutStatus="1";
             $CheckinStatus="0";
             //echo"<script>alert('Semester Break Notification');</script>";
-            
+
             $chkSameRoom = $_POST['chkSameRoom'];
-            
-            if($chkSameRoom == "YesSameRoom")
+
+            if ($chkSameRoom =='')
             {
-                $query = "update registration SET TotalPaymentStatus = '0' WHERE studentid = '$studentid' ";
-                $stmt = $mysqli->prepare($query);
-                $stmt->execute();
-                
+                echo"<script>alert('You Must choose Room option to Renwal Yes or No!');</script>";
+                exit();
+               
             }
             else
             {
-                
+                if($chkSameRoom == "YesSameRoom")
+                {
+                    $query = "update registration SET TotalPaymentStatus = '0' WHERE studentid = '$studentid' ";
+                    $stmt = $mysqli->prepare($query);
+                    $stmt->execute();
+
+                }
+                else
+                {
+                    $roomno=$_POST['room'];
+                    $seater=$_POST['seater'];
+                    $feespm=$_POST['fpm'];
+                    $duration=$_POST['duration'];
+                    $course=$_POST['course'];
+
+                    if($roomno=='' or $course=='' )
+                    {
+                        echo"<script>alert('You Must choose which room to continue and Course!');</script>";
+                        exit ();
+                    }
+
+                    else
+                    {
+
+                        $query = "update registration SET TotalPaymentStatus = '0', roomno ='$roomno', seater='$seater', feespm='$feespm', course='$course' WHERE studentid = '$studentid' ";
+                        $stmt = $mysqli->prepare($query);
+                        $stmt->execute();
+                    }
+
+                }
+
             }
-            
-            
+
+
+
         }
         elseif($CheckoutOption == "2")
         {
@@ -574,7 +604,7 @@ YB
                                             </label>
                                                 <div class="form-group" id="RenwalSameRoom">
                                                 <p>Do you wish to Renewal with same room?</p>
-                                                <input type="radio" id="showYesSameRoom" name="chkSameRoom" onclick="showYesSameRoom()" value ="YesSameRoom" checked >
+                                                <input type="radio" id="showYesSameRoom" name="chkSameRoom" onclick="showYesSameRoom()" value ="YesSameRoom"  >
                                                 <b>Yes</b>
                                                 <input type="radio" id="showNoSameRoom" name="chkSameRoom" onclick="showNoSameRoom()" value"NoSameRoom">
                                                 <b>No</b>
@@ -974,18 +1004,18 @@ YB
         </script>
 
         <!--
-        <script>
-            if (document.getElementById('chkRenewal').checked == true)
-            {
-                if( (document.getElementById('showYesSameRoom').checked ==false) && (document.getElementById('showNoSameRoom').checked ==false)  )
-                    {
-                         alert('You MUST Choose Renewal Option (Yes or No)');
+<script>
+if (document.getElementById('chkRenewal').checked == true)
+{
+if( (document.getElementById('showYesSameRoom').checked ==false) && (document.getElementById('showNoSameRoom').checked ==false)  )
+{
+alert('You MUST Choose Renewal Option (Yes or No)');
 
-                    }
-                   
-            }
-        </script>
-        -->
+}
+
+}
+</script>
+-->
 
 
     </body>
