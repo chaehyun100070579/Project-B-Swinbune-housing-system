@@ -10,6 +10,7 @@ check_login();
 
 
 
+
 if(isset($_POST['submit']))
 {
     $aid=$_SESSION['id'];
@@ -404,7 +405,7 @@ if(isset($_GET['tx']))
                     }
                 });
             }
-            
+
             function getCourse(val){                
                 $.ajax({
                     type: "POST",
@@ -421,10 +422,10 @@ if(isset($_GET['tx']))
                         $('#duration').val(trimmed);
                     }
                 });
-                
-                 var fee = document.getElementById("fpm").value;
-                 
-                 $.ajax({
+
+                var fee = document.getElementById("fpm").value;
+
+                $.ajax({
                     type: "POST",
                     url: "get_seater.php",
                     data: {
@@ -440,9 +441,8 @@ if(isset($_GET['tx']))
                     }
                 });
             }
-            
 
-      
+
         </script>
 
         <link href="../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
@@ -476,6 +476,55 @@ if(isset($_GET['tx']))
                         <div class="col-md-12">
                             <br/><br/>
                             <h2 class="page-title">Registration </h2>
+
+                            <?php
+
+                            $aid=$_SESSION['id'];
+                            $ret="select * from userregistration where id=?";
+                            $stmt= $mysqli->prepare($ret) ;
+                            $stmt->bind_param('i',$aid);
+                            $stmt->execute() ;//ok
+                            $res=$stmt->get_result();
+                            $row=$res->fetch_object();
+                             
+                            if($row->BookingFeeStatus == "1")
+                            {
+                                
+                                echo '<h3 style="color: blue" align="left">BookingFee = Paid!</h3>';
+
+                            }
+                            else
+                            {
+                                
+                                echo '<h3 style="color: blue" align="left">You must pay booking fee first to proceed booking</h3>';
+                                echo'
+
+                                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" accept-charset="utf-8">
+
+                                                        <p>
+                                                            <input type="hidden" name="cmd" value="_xclick" />
+
+                                                            <input type="hidden" name="charset" value="UTF-8">
+
+                                                            <input type="hidden" name="business" value="SwinburneHousingMerchant@gmail.com" />
+
+                                                            <input type="hidden" name="item_name" value="Booking fee" />
+
+                                                            <input type="hidden" name="item_number" value="0001" />
+
+                                                            <input type="hidden" name="amount" value="500" />
+
+                                                            <input type="hidden" name="currency_code" value="MYR" />
+
+                                                            <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
+
+                                                            <input type="submit" name ="submitpaypal" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">  
+
+                                                    </form>
+                                                        ';
+                            }
+
+                            ?>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -554,7 +603,7 @@ if(isset($_GET['tx']))
                                                                 {
                                                                 ?>
                                                                 <option value="<?php echo $row->course_code;?>"><?php echo $row->course_code;?></option>
-        
+
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
@@ -785,28 +834,7 @@ if(isset($_GET['tx']))
                                             </form>
 
 
-                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" accept-charset="utf-8">
 
-                                                <p>
-                                                    <input type="hidden" name="cmd" value="_xclick" />
-
-                                                    <input type="hidden" name="charset" value="UTF-8">
-
-                                                    <input type="hidden" name="business" value="SwinburneHousingMerchant@gmail.com" />
-
-                                                    <input type="hidden" name="item_name" value="Booking fee" />
-
-                                                    <input type="hidden" name="item_number" value="0001" />
-
-                                                    <input type="hidden" name="amount" value="500" />
-
-                                                    <input type="hidden" name="currency_code" value="MYR" />
-
-                                                    <input type="hidden" name="return"  value ="http://localhost/Swinburne%20hostel%20webstie17/hostel/PaypalPdtIndex.php" />
-
-                                                    <input type="submit" name ="submitpaypal" id ="submitBtn"value="Pay Rm500 Booking fee" class="btn btn-primary" onclick="submitform()">  
-
-                                            </form>
 
                                         </div>
                                     </div>
@@ -818,9 +846,11 @@ if(isset($_GET['tx']))
             </div>
         </div>
 
+        <!--
         <script type="text/javascript" charset="utf-8">
             var dgFlowMini = new PAYPAL.apps.DGFlowMini({trigger: 'submitBtn'});
         </script>
+        -->
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
@@ -832,6 +862,7 @@ if(isset($_GET['tx']))
         <script src="js/chartData.js"></script>
         <script src="js/main.js"></script>
     </body>
+
     <script type="text/javascript">
         $(document).ready(function(){
             $('input[type="checkbox"]').click(function(){
@@ -850,6 +881,7 @@ if(isset($_GET['tx']))
             });
         });
     </script>
+
     <script>
         function checkAvailability() {
 
@@ -858,7 +890,7 @@ if(isset($_GET['tx']))
             $("#loaderIcon").show();
 
             jQuery.ajax({
-                
+
                 url: "check_availability.php",
                 data:'roomno='+$("#room option:selected").text()+'&gender='+gen,
                 type: "POST",

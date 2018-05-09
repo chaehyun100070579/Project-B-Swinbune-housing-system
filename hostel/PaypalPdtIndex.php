@@ -59,7 +59,11 @@ while ($row=$res->fetch_object()) {
         <?php if($payment_data)
     printf('<p>Thank you %s these are you transaction details!.</p>', $payment_data['first_name'], $payment_data['mc_gross'], $payment_data['mc_currency']); ?>
 
-        
+       
+        <a href="book-hostel.php">
+            <input type="button" value="Return to Booking page" />
+        </a>
+
 
         <?php if($_GET): ?>
         <hr/>
