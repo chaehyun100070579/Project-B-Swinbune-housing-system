@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2018 at 09:32 AM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 5.6.24
+-- Generation Time: May 09, 2018 at 05:37 PM
+-- Server version: 10.1.26-MariaDB
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -138,18 +138,21 @@ CREATE TABLE `registration` (
   `CheckinStatus` tinyint(1) NOT NULL,
   `CheckinDate` date NOT NULL,
   `CheckoutStatus` tinyint(4) NOT NULL,
-  `CheckoutDate` date NOT NULL
+  `CheckoutDate` date NOT NULL,
+  `TotalPaymentStatus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `registration`
 --
 
-INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `stayfrom`, `duration`, `course`, `studentid`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `PreferPerson`, `postingDate`, `updateDate`, `AcessCardNum`, `CheckinStatus`, `CheckinDate`, `CheckoutStatus`, `CheckoutDate`) VALUES
-(16, '1', 2, 95, '0001-01-01', 0, 'Intensive English - Semester 1', 4330111, 'vic', 'asd', 'chin', 'male', 2131, '11111@11111', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11'),
-(17, '4', 1, 232, '2018-04-11', 17, 'Foundation - Semester 2', 123, 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 123123, 'asdasd', 'asd', 123, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', '2018-04-24 07:04:49', '', 0, 0, '0000-00-00', 0, '0000-00-00'),
-(18, '2', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308701, 'vic1', 'asd1', 'chin1', 'male', 2131, '1111111@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11'),
-(19, '5', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308702, 'vic2', 'asd2', 'chin2', 'male', 2131, '222222@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11');
+INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `stayfrom`, `duration`, `course`, `studentid`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `PreferPerson`, `postingDate`, `updateDate`, `AcessCardNum`, `CheckinStatus`, `CheckinDate`, `CheckoutStatus`, `CheckoutDate`, `TotalPaymentStatus`) VALUES
+(16, '1', 2, 95, '0001-01-01', 0, 'Intensive English - Semester 1', 4330111, 'vic', 'asd', 'chin', 'male', 2131, '11111@11111', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11', 0),
+(17, '4', 1, 232, '2018-04-11', 17, 'Foundation - Semester 2', 123, 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 123123, 'asdasd', 'asd', 123, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', '2018-04-24 07:04:49', '', 0, 0, '0000-00-00', 0, '0000-00-00', 0),
+(18, '2', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308701, 'vic1', 'asd1', 'chin1', 'male', 2131, '1111111@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11', 0),
+(19, '5', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308702, 'vic2', 'asd2', 'chin2', 'male', 2131, '222222@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11', 0),
+(30, '', 0, 0, '0000-00-00', 0, '', 0, '', '', '', '', 0, '', 0, '', '', 0, '', '', '', 0, '', '', '', 0, '', '2018-05-09 13:31:48', '', 0, 0, '0000-00-00', 0, '0000-00-00', 0),
+(31, '1', 2, 95, '0000-00-00', 11, 'Intensive English - Semester 1', 10007059, 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', 12312, 'asd', 'asd', 0, 'asd', '213', 'Terengganu', 123, 'asd', '213', 'Terengganu', 123, '123132', '2018-05-09 15:03:07', '', 123, 1, '2018-05-22', 0, '0000-00-00', 1);
 
 -- --------------------------------------------------------
 
@@ -296,7 +299,12 @@ INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`,
 (136, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 05:59:50'),
 (137, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 10:45:58'),
 (138, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-07 20:49:06'),
-(139, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-08 05:58:16');
+(139, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-08 05:58:16'),
+(140, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 09:05:23'),
+(141, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 09:23:11'),
+(142, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 09:30:17'),
+(143, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 13:47:59'),
+(144, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 13:49:07');
 
 -- --------------------------------------------------------
 
@@ -332,7 +340,7 @@ INSERT INTO `userregistration` (`id`, `studentid`, `firstName`, `middleName`, `l
 (30, '1231', '2asd', 'asd', 'asd', 'female', 213, '5@gmail.com', '5', '2017-11-07 10:44:39', '', '', 0, 0),
 (35, 'sd', 'asd', 'adas', 'dasd', 'female', 123, '10@gmail.com', '10', '2017-11-08 18:40:57', '', '', 0, 0),
 (36, '100063362', 'jin', 'asd', 'lee', 'male', 1231231234, '100063362@students.swinburne.edu.my', 'jin', '2017-11-10 04:05:37', '', '', 0, 0),
-(38, '10007059', 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '12-11-2017 11:10:32', '', 1, 1),
+(38, '10007059', 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '09-05-2018 02:52:37', '', 1, 1),
 (39, '231231', 'samuel', '', 'tion', 'male', 12312321, 'samuel@gmail.com', '1234', '2017-11-13 06:42:18', '', '', 0, 0),
 (40, '123', 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 'asd', '2018-03-06 06:00:13', '', '', 1, 1),
 (42, '4330870', 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 'asd', '2018-04-17 07:19:56', '', '', 1, 0);
@@ -392,36 +400,44 @@ ALTER TABLE `userregistration`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
 --
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+
 --
 -- AUTO_INCREMENT for table `userregistration`
 --
 ALTER TABLE `userregistration`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
