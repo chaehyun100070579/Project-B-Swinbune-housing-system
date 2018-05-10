@@ -951,6 +951,7 @@ YB
 
         <script type="text/javascript">
             var checkbox2 = document.getElementById('showNoSameRoom');
+            var checkbox3 = document.getElementById('showYesSameRoom');
             var text2 = document.getElementById('text');
             var showHiddenDiv2 = function(){
                 if(checkbox2.checked) {
@@ -960,6 +961,7 @@ YB
                 } 
             }
             checkbox2.onclick = showHiddenDiv2;
+            checkbox3.onclick = showHiddenDiv2;
             showHiddenDiv2();
         </script>
 
