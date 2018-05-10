@@ -28,6 +28,7 @@ if(isset($_POST['submit']))
     $res=$stmt->get_result();
     //$cnt=1;
     $row=$res->fetch_object();
+
     if($row->CheckoutStatus == true)
     {
         echo"<script>alert('You cant check-out more than an one time! You are already CHECKED OUT!');</script>";
@@ -54,7 +55,6 @@ if(isset($_POST['submit']))
             {
                 echo"<script>alert('You Must choose Room option to Renwal Yes or No!');</script>";
                 exit();
-               
             }
             else
             {
@@ -63,7 +63,6 @@ if(isset($_POST['submit']))
                     $query = "update registration SET TotalPaymentStatus = '0' WHERE studentid = '$studentid' ";
                     $stmt = $mysqli->prepare($query);
                     $stmt->execute();
-
                 }
                 else
                 {
@@ -78,21 +77,14 @@ if(isset($_POST['submit']))
                         echo"<script>alert('You Must choose which room to continue and Course!');</script>";
                         exit ();
                     }
-
                     else
                     {
-
                         $query = "update registration SET TotalPaymentStatus = '0', roomno ='$roomno', seater='$seater', feespm='$feespm', course='$course' WHERE studentid = '$studentid' ";
                         $stmt = $mysqli->prepare($query);
                         $stmt->execute();
                     }
-
                 }
-
             }
-
-
-
         }
         elseif($CheckoutOption == "2")
         {
@@ -122,6 +114,7 @@ if(isset($_POST['submit']))
             $CheckinStatus="1";
             //echo"<script>alert('all fail');</script>";
         }
+
         $KeyReturnedDate = $_POST['KeyReturnedDate'];
         $Building = $_POST['Location'];
         $Bed = $_POST['Bed'];
@@ -134,10 +127,13 @@ if(isset($_POST['submit']))
         $Curtain = $_POST['Curtain'];
         $Fan = $_POST['Fan'];
         $Ac = $_POST['Ac'];
+
         $query = "update registration SET CheckoutStatus = '$CheckoutStatus', CheckinStatus = '$CheckinStatus',  CheckoutDate='$CheckoutDate'  WHERE studentid = '$studentid' ";
         $stmt = $mysqli->prepare($query);
         $stmt->execute();
+
         echo"<script>alert('You have sucessfully CHECKED OUT! please kindly refer to your e-mail');</script>";
+
         $mail = new PHPMailer;
         $mail->isSMTP();                                   // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
@@ -152,6 +148,7 @@ if(isset($_POST['submit']))
         //$mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
         //$mail->addBCC('bcc@example.com');
         $mail->isHTML(true);  // Set email format to HTML
+
         $bodyContent = '<h1>Swinburne Housing System - You have checked Out sucessfully</h1>';
         $bodyContent .= '<p>hello</b></p>';
         $bodyContent .= "You have received a new message. ".
@@ -248,6 +245,7 @@ if(isset($_POST['submit']))
                                         </tbody>
                                     </table>
                     ";
+                    
         $mail->Subject = 'Email from  Swinbune housing';
         $mail->Body    = $bodyContent;
         $mail->smtpConnect([
@@ -257,6 +255,7 @@ if(isset($_POST['submit']))
             'allow_self_signed' => true
         ]
         ]);
+
         if(!$mail->send()) {
             echo 'Message could not be sent.';
             echo 'Mailer Error: ' . $mail->ErrorInfo;
@@ -266,6 +265,7 @@ if(isset($_POST['submit']))
     }
 }
 ?>
+
 <!doctype html>
 <html lang="en" class="no-js">
 
@@ -296,6 +296,7 @@ if(isset($_POST['submit']))
         <link href="../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
 
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
         <title>Room Transfer Request Form</title>
 
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
@@ -314,7 +315,9 @@ if(isset($_POST['submit']))
                         $('#seater').val(trimmed);
                     }
                 });
+
                 var dura = document.getElementById("duration").value;
+
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -327,6 +330,7 @@ if(isset($_POST['submit']))
                         $('#ta').val(newdata);
                     }
                 });
+
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -343,6 +347,7 @@ if(isset($_POST['submit']))
                     }
                 });
             }
+
             function getCourse(val){                
                 $.ajax({
                     type: "POST",
@@ -359,7 +364,9 @@ if(isset($_POST['submit']))
                         $('#duration').val(trimmed);
                     }
                 });
+
                 var fee = document.getElementById("fpm").value;
+
                 $.ajax({
                     type: "POST",
                     url: "get_seater.php",
@@ -428,10 +435,11 @@ YB
                     <div class="page_positioning">
                         <div id="content" class="no_small">
                             <h1>
-                                <br />CheckOut Confirmation / Clearance & Deposit Refund Form
+                                <br />CheckOut Confirmation / Clearance &amp; Deposit Refund Form
                             </h1>
 
                             <p class="title">&nbsp;</p>
+                            
                             <form action="" method="post" name="CheckoutForm" id="CheckoutForm" onsubmit="return checkEmpty();">
 
                                 <?php
@@ -457,13 +465,10 @@ YB
                                 }
 
 
-
                                 $query2 ="SELECT * FROM courses";
                                 $stmt2 = $mysqli->prepare($query2);
                                 $stmt2->execute();
                                 $res2=$stmt2->get_result();
-
-
 
 
                                 if($BookedStatus == 0)
@@ -613,15 +618,15 @@ YB
                                                 <div class="col-sm-8">
                                                     <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" > 
                                                     <option value="" disabled selected hidden>Select Room</option>
-                                                    ';                                    
-                                    $query ="SELECT DISTINCT RoomType FROM rooms";
-                                    $stmt2 = $mysqli->prepare($query);
-                                    $stmt2->execute();
-                                    $res=$stmt2->get_result();
-                                    while($row=$res->fetch_object())
-                                    {
-                                        echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
-                                    }
+                                    ';                                    
+                                                        $query ="SELECT DISTINCT RoomType FROM rooms";
+                                                        $stmt2 = $mysqli->prepare($query);
+                                                        $stmt2->execute();
+                                                        $res=$stmt2->get_result();
+                                                        while($row=$res->fetch_object())
+                                                        {
+                                                            echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
+                                                        }
                                     echo '
                                                     </select> 
                                                     <span id="room-availability-status" style="font-size:12px;color:red"></span>
@@ -648,13 +653,11 @@ YB
                                                     <div class="col-sm-8">
                                                         <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  > 
                                                             <option value="" disabled selected hidden>Select Course</option>
-                                                            '; 
-                                    while($row2=$res2->fetch_object()) {
-                                        echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
-                                    }
+                                    '; 
+                                                                while($row2=$res2->fetch_object()) {
+                                                                    echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
+                                                                }
                                     echo '
-
-
                                                         </select>
                                                     </div>
                                                     <br/>
