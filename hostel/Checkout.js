@@ -29,7 +29,6 @@ function getLocation(option,field)
 }
 
 
-
 function myFunction() {
     var checkBox = document.getElementById("myCheck");
     var text = document.getElementById("text");
@@ -52,105 +51,140 @@ function showNoSameRoom()
 }
 
 
-
-
-
 function getCheckout(option,field)
 {
+    // FOR I WISH TO CHECKBOX
     unCheckAll(field);
     field[option-1].checked = true;
     document.CheckoutForm.Checkout_field.value = field[option-1].value;	
 
     if (option==1)
     {	
-        document.CheckoutForm.Bank_Swift_Code.disabled == false;
 
+        document.CheckoutForm.Cheque.disabled = true;
+        document.CheckoutForm.Cheque.checked = false;
+        
+        //document.CheckoutForm.Bank_Swift_Code.disabled = false;
+        
         document.CheckoutForm.Refund_Deposit.disabled = true;
+        document.CheckoutForm.Refund_Deposit.checked = false;
         document.CheckoutForm.Refund_Others.disabled = true;
+        document.CheckoutForm.Refund_Others.checked = false;
         document.CheckoutForm.RefundDetail.disabled = true;
+        document.CheckoutForm.RefundDetail.value="";
+        document.CheckoutForm.RefundDetail.style.background="transparent";
 
-        document.CheckoutForm.Refund_MOP.disabled = true;
-        disabledAll(document.CheckoutForm.Refund_MOP);	    
+        //document.CheckoutForm.Refund_MOP.disabled = true;
+        disabledAll(document.CheckoutForm.Refund_MOP);
+        document.getElementById('Refund_MOP1').checked = false;
+        document.getElementById('Refund_MOP2').checked = false;
         document.CheckoutForm.TT_Currency.disabled = true;
-        document.CheckoutForm.Cheque.disabled = true;    
-
+        document.CheckoutForm.TT_Currency.value="";
+        document.CheckoutForm.TT_Currency.style.background="transparent";
+        
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
-        document.CheckoutForm.OwnerContact.disabled = true;	
+        document.CheckoutForm.OwnerContact.disabled = true;
+
+        disabledAll(document.CheckoutForm.Refund_Bank_FName); //HAVE TO ADD MORE DISABLE
+        document.CheckoutForm.Bank_AcctNo.disabled = true;
+        document.CheckoutForm.Bank_Name.disabled = true;
+        document.CheckoutForm.Bank_Address.disabled = true;
 
         document.CheckoutForm.Agree_Refund_Term.disabled = false;
 
-
         document.getElementById('RenwalSameRoom').style.display = 'block';
-
-
+        document.getElementById('checkout-new-address').style.display = 'none';
 
     }
 
     if (option==2)
     {	
-        document.CheckoutForm.Cheque.disabled = true;
+        document.CheckoutForm.Cheque.disabled = false;
+
         document.CheckoutForm.Refund_Deposit.disabled = false;
-        document.CheckoutForm.Refund_Deposit.style.background="#FFFFAA";
+        //document.CheckoutForm.Refund_Deposit.style.background="#FFFFAA";
         document.CheckoutForm.Refund_Others.disabled = false;
-        document.CheckoutForm.Refund_Others.style.background="#FFFFAA";
+        //document.CheckoutForm.Refund_Others.style.background="#FFFFAA";
         document.CheckoutForm.RefundDetail.disabled = false;
         document.CheckoutForm.RefundDetail.style.background="#FFFFAA";
-        enabledAll(document.CheckoutForm.Refund_MOP);	
-        enabledAll(document.CheckoutForm.Refund_Bank_FName);
-        document.CheckoutForm.Agree_Refund_Term.disabled = false;
-        document.CheckoutForm.Agree_Refund_Term.style.background="#FFFFAA";   
 
+        enabledAll(document.CheckoutForm.Refund_MOP);
+        // enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
+        
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
-        document.CheckoutForm.OwnerContact.disabled = true;	
+        document.CheckoutForm.OwnerContact.disabled = true;
+        
+        // document.CheckoutForm.Bank_AcctNo.disabled = false;
+        // document.CheckoutForm.Bank_Name.disabled = false;
+        // document.CheckoutForm.Bank_Address.disabled = false;
+
+        document.CheckoutForm.Agree_Refund_Term.disabled = false;
+        //document.CheckoutForm.Agree_Refund_Term.style.background="#FFFFAA"; 
 
         document.getElementById('RenwalSameRoom').style.display = 'none';
+        document.getElementById('checkout-new-address').style.display = 'none';
     }
 
-    if ( option==3)
+    if (option==3)
     {	
-        document.CheckoutForm.Cheque.disabled = false;
+        document.CheckoutForm.Cheque.disabled = true;
+        document.CheckoutForm.Cheque.checked = false;
+
         document.CheckoutForm.Refund_Deposit.disabled = false;
-        document.CheckoutForm.Refund_Deposit.style.background="#FFFFAA";
+        //document.CheckoutForm.Refund_Deposit.style.background="#FFFFAA";
         document.CheckoutForm.Refund_Others.disabled = false;
-        document.CheckoutForm.Refund_Others.style.background="#FFFFAA";
+        //document.CheckoutForm.Refund_Others.style.background="#FFFFAA";
         document.CheckoutForm.RefundDetail.disabled = false;
         document.CheckoutForm.RefundDetail.style.background="#FFFFAA";
-        enabledAll(document.CheckoutForm.Refund_MOP);	
-        enabledAll(document.CheckoutForm.Refund_Bank_FName);
-        document.CheckoutForm.Agree_Refund_Term.disabled = false;
-        document.CheckoutForm.Agree_Refund_Term.style.background="#FFFFAA"; 
+
+        enabledAll(document.CheckoutForm.Refund_MOP);
+        // enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
 
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
-        document.CheckoutForm.OwnerContact.disabled = true;	
+        document.CheckoutForm.OwnerContact.disabled = true;
 
-       document.getElementById('RenwalSameRoom').style.display = 'none';
+        // document.CheckoutForm.Bank_AcctNo.disabled = false;
+        // document.CheckoutForm.Bank_Name.disabled = false;
+        // document.CheckoutForm.Bank_Address.disabled = false;
+
+        document.CheckoutForm.Agree_Refund_Term.disabled = false;
+        //document.CheckoutForm.Agree_Refund_Term.style.background="#FFFFAA";    
+
+
+        document.getElementById('RenwalSameRoom').style.display = 'none';
+        document.getElementById('checkout-new-address').style.display = 'none';
     }
 
     if (option==4)
-    {	   
+    {
         document.CheckoutForm.Cheque.disabled = true;
+        document.CheckoutForm.Cheque.checked = false;
+
         document.CheckoutForm.Refund_Deposit.disabled = false;
-        document.CheckoutForm.Refund_Deposit.style.background="#FFFFAA";
+        //document.CheckoutForm.Refund_Deposit.style.background="#FFFFAA";
         document.CheckoutForm.Refund_Others.disabled = false;
-        document.CheckoutForm.Refund_Others.style.background="#FFFFAA";
+        //document.CheckoutForm.Refund_Others.style.background="#FFFFAA";
         document.CheckoutForm.RefundDetail.disabled = false;
         document.CheckoutForm.RefundDetail.style.background="#FFFFAA";
-        enabledAll(document.CheckoutForm.Refund_MOP);	
-        //enabledAll(document.CheckoutForm.Refund_Bank_FName);
-        document.CheckoutForm.Bank_AcctNo.disabled = false;
-        document.CheckoutForm.Bank_Name.disabled = false;
-        document.CheckoutForm.Bank_Address.disabled = false;
-        document.CheckoutForm.Agree_Refund_Term.disabled = false;
-        document.CheckoutForm.Agree_Refund_Term.style.background="#FFFFAA";    
-
+        enabledAll(document.CheckoutForm.Refund_MOP);
+        // enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
+        
         document.CheckoutForm.NewAddress.disabled = false;
         document.CheckoutForm.OwnerName.disabled = false;
         document.CheckoutForm.OwnerContact.disabled = false;
 
+        // document.CheckoutForm.Bank_AcctNo.disabled = false;
+        // document.CheckoutForm.Bank_Name.disabled = false;
+        // document.CheckoutForm.Bank_Address.disabled = false;
+        
+        document.CheckoutForm.Agree_Refund_Term.disabled = false;
+        //document.CheckoutForm.Agree_Refund_Term.style.background="#FFFFAA";
+
         document.getElementById('RenwalSameRoom').style.display = 'none';
+        document.getElementById('checkout-new-address').style.display = 'block';
 
     }
 
@@ -159,63 +193,75 @@ function getCheckout(option,field)
 
 function getRefund_Bank_FName(option,field)
 {
+    // FOR PAYEE/FATHER/MOTHER NAME CHECKBOX
     unCheckAll(field);
     field[option-1].checked = true;
     document.CheckoutForm.Refund_Name_field.value = field[option-1].value;
     if (document.CheckoutForm.Refund_Name_field.value=='Payee Name')
-    {   document.CheckoutForm.Bank_FullName.disabled = false;
-     document.CheckoutForm.Bank_FullName.focus();
-     document.CheckoutForm.Bank_ParentName.value = '';
-     document.CheckoutForm.Bank_ParentName.style.background="transparent";
-     document.CheckoutForm.Bank_ParentName.disabled = true;
+    {   
+        document.CheckoutForm.Bank_FullName.disabled = false;
+        document.CheckoutForm.Bank_FullName.focus();
+        document.CheckoutForm.Bank_ParentName.value = '';
+        document.CheckoutForm.Bank_ParentName.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_ParentName.disabled = true;
     }
     else
-    {   document.CheckoutForm.Bank_ParentName.disabled = false;
-     document.CheckoutForm.Bank_ParentName.focus();
-     document.CheckoutForm.Bank_FullName.value = '';
-     document.CheckoutForm.Bank_FullName.style.background="transparent";
-     document.CheckoutForm.Bank_FullName.disabled = true;
+    {   
+        document.CheckoutForm.Bank_ParentName.disabled = false;
+        document.CheckoutForm.Bank_ParentName.focus();
+        document.CheckoutForm.Bank_FullName.value = '';
+        document.CheckoutForm.Bank_FullName.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_FullName.disabled = true;
     }
 }
 
 function getRefund_MOP(option,field)
 {
+    // FOR SELECTED MODE OF PAYMENT CHECKBOX
     unCheckAll(field);
     field[option-1].checked = true;
     document.CheckoutForm.Refund_MOP_field.value = field[option-1].value;
     if (document.CheckoutForm.Refund_MOP_field.value=='Direct Bank In')
-    {	document.CheckoutForm.TT_Currency.value = '';
-     document.CheckoutForm.TT_Currency.style.background="transparent";
-     document.CheckoutForm.TT_Currency.disabled = true;		
-     document.CheckoutForm.Payee_ID.disabled = false;
-     document.CheckoutForm.Payee_ID.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_AcctNo.disabled = false;
-     document.CheckoutForm.Bank_AcctNo.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Name.disabled = false;
-     document.CheckoutForm.Bank_Name.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Address.disabled = false;
-     document.CheckoutForm.Bank_Address.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Town.disabled = false;
-     document.CheckoutForm.Bank_Town.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Swift_Code.value = '';
-     document.CheckoutForm.Bank_Swift_Code.style.background="transparent";
-     document.CheckoutForm.Bank_Swift_Code.disabled = false;
+    {
+    // IF CHOSEN DIRECT BANK IN
+    // CHECQUE NOT IN HERE (ONLY HAS OWN FUNCTION TO UNTICK THE OTHERS WHEN SELF IS TICKED)
+    document.CheckoutForm.TT_Currency.value = '';
+    document.CheckoutForm.TT_Currency.style.background="transparent";
+    document.CheckoutForm.TT_Currency.disabled = true;	
+    enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX	
+    document.CheckoutForm.Payee_ID.disabled = false;
+    document.CheckoutForm.Payee_ID.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_AcctNo.disabled = false;
+    document.CheckoutForm.Bank_AcctNo.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Name.disabled = false;
+    document.CheckoutForm.Bank_Name.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Address.disabled = false;
+    document.CheckoutForm.Bank_Address.style.background="#FFFFAA";
+    //  document.CheckoutForm.Bank_Town.disabled = false;
+    //  document.CheckoutForm.Bank_Town.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Swift_Code.value = '';
+    //  document.CheckoutForm.Bank_Swift_Code.style.background="transparent";
+    document.CheckoutForm.Bank_Swift_Code.disabled = true;
+    document.CheckoutForm.Bank_Swift_Code.style.background="#EBEBE4";
     }  
     else
-    {	document.CheckoutForm.TT_Currency.disabled = false;
-     document.CheckoutForm.TT_Currency.focus();
-     document.CheckoutForm.Payee_ID.disabled = false;
-     document.CheckoutForm.Payee_ID.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_AcctNo.disabled = false;
-     document.CheckoutForm.Bank_AcctNo.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Name.disabled = false;
-     document.CheckoutForm.Bank_Name.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Address.disabled = false;
-     document.CheckoutForm.Bank_Address.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Town.disabled = false;
-     document.CheckoutForm.Bank_Town.style.background="#FFFFAA";
-     document.CheckoutForm.Bank_Swift_Code.disabled = false;
-     document.CheckoutForm.Bank_Swift_Code.style.background="#FFFFAA";
+    {
+    // IF CHOSEN TELEGRAPHIC TRANSFER
+    document.CheckoutForm.TT_Currency.disabled = false;
+    document.CheckoutForm.TT_Currency.focus();
+    enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
+    document.CheckoutForm.Payee_ID.disabled = false;
+    document.CheckoutForm.Payee_ID.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_AcctNo.disabled = false;
+    document.CheckoutForm.Bank_AcctNo.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Name.disabled = false;
+    document.CheckoutForm.Bank_Name.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Address.disabled = false;
+    document.CheckoutForm.Bank_Address.style.background="#FFFFAA";
+    //  document.CheckoutForm.Bank_Town.disabled = false;
+    //  document.CheckoutForm.Bank_Town.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Swift_Code.disabled = false;
+    document.CheckoutForm.Bank_Swift_Code.style.background="#FFFFAA";
     }
 }
 
@@ -366,6 +412,7 @@ function emailCheck (emailStr)
     return true;
 }
 
+/* 
 function myFunction() {
     var checkBox = document.getElementById("myCheck");
     var text = document.getElementById("text");
@@ -375,7 +422,7 @@ function myFunction() {
         text.style.display = "none";
     }
 }
-
+ */
 
 function checkEmpty()
 {
@@ -522,9 +569,10 @@ function checkEmpty()
      return false;
     }
 
-    if ((document.CheckoutForm.Refund_Deposit.checked==true) || (document.CheckoutForm.Refund_Others.checked==true))
+    //if ((document.CheckoutForm.Refund_Deposit.checked==true) || (document.CheckoutForm.Refund_Others.checked==true))
+    if (document.CheckoutForm.RefundCheck.checked==true)
     {
-        if ((document.CheckoutForm.Refund_Others.checked==true) && (document.CheckoutForm.RefundDetail.value==''))
+        if ((document.getElementById("Refund_Others").checked==true) && (document.CheckoutForm.RefundDetail.value==''))
         {   alert('You MUST state details for the OTHERS REFUND.');
          document.CheckoutForm.RefundDetail.focus();
          pass=false;
