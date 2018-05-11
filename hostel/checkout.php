@@ -439,7 +439,7 @@ YB
                             </h1>
 
                             <p class="title">&nbsp;</p>
-                            
+
                             <form action="" method="post" name="CheckoutForm" id="CheckoutForm" onsubmit="return checkEmpty();">
 
                                 <?php
@@ -573,12 +573,16 @@ YB
                                     <tr>
                                         <td class="content_black1">Location</td>
                                         <td colspan="5" class="content_black1">
-                                            <input type="checkbox" id="gender" value='.$gender.' name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(1,this.form.Location)" />
-                                            Male Hostel
-                                            &nbsp;&nbsp;&nbsp;
-                                            <input type="checkbox" id="gender" value='.$gender.' name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" />
-                                            Female Hostel
-                                            &nbsp;&nbsp;&nbsp;
+                                            <label>
+                                                <input type="radio" id="gender" value="male" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(1,this.form.Location)" />
+                                                Male Hostel
+                                                &nbsp;&nbsp;&nbsp;
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="gender" value="female" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" disabled="disabled" />
+                                                Female Hostel
+                                                &nbsp;&nbsp;&nbsp;
+                                            </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -607,78 +611,92 @@ YB
                                                 <input type="radio" id="chkRenewal" name="Checkout" value="1" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);"  onclick="getCheckout(1,this.form.Checkout)" required />
                                                 <b>Renewal for Next Semester</b>
                                             </label>
-                                                <div class="form-group" id="RenwalSameRoom">
+                                            <div class="form-group" id="RenwalSameRoom">
                                                 <p>Do you wish to Renewal with same room?</p>
-                                                <input type="radio" id="showYesSameRoom" name="chkSameRoom" onclick="showYesSameRoom()" value ="YesSameRoom"  >
-                                                <b>Yes</b>
-                                                <input type="radio" id="showNoSameRoom" name="chkSameRoom" onclick="showNoSameRoom()" value"NoSameRoom">
-                                                <b>No</b>
-                                                 <div class="form-group" id="text">
-                                               <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
-                                                <div class="col-sm-8">
-                                                    <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" > 
-                                                    <option value="" disabled selected hidden>Select Room</option>
-                                    ';                                    
-                                                        $query ="SELECT DISTINCT RoomType FROM rooms";
-                                                        $stmt2 = $mysqli->prepare($query);
-                                                        $stmt2->execute();
-                                                        $res=$stmt2->get_result();
-                                                        while($row=$res->fetch_object())
-                                                        {
-                                                            echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
-                                                        }
-                                    echo '
-                                                    </select> 
-                                                    <span id="room-availability-status" style="font-size:12px;color:red"></span>
-                                                </div>
-                                                <span id="hide-if-full">
-                                                <br/>
-                                                <br/>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Single or Sharing (Seater) :</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="text" name="seater" id="seater"  class="form-control"  readonly>
-                                                        </div>
-                                                    </div>
-                                                <br/>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Fees Per Week (RM) :</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <br/>
-                                                    <br/>
-                                                    <label class="col-sm-4 control-label">Choose Course for next Semester: <span style="color:red">*</span></label>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" id="showYesSameRoom" name="chkSameRoom" onclick="showYesSameRoom()" value ="YesSameRoom"  >
+                                                    <b>Yes</b>
+                                                </label>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <input type="radio" id="showNoSameRoom" name="chkSameRoom" onclick="showNoSameRoom()" value"NoSameRoom">
+                                                    <b>No</b>
+                                                </label>
+                                                <div class="form-group" id="text">
+                                                    <label class="col-sm-4 control-label">Choose Room Type to Continue : <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  > 
-                                                            <option value="" disabled selected hidden>Select Course</option>
-                                    '; 
-                                                                while($row2=$res2->fetch_object()) {
-                                                                    echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
-                                                                }
-                                    echo '
-                                                        </select>
+                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" > 
+                                                        <option value="" disabled selected hidden>Select Room</option>
+                                        ';                                    
+                                                            $query ="SELECT DISTINCT RoomType FROM rooms";
+                                                            $stmt2 = $mysqli->prepare($query);
+                                                            $stmt2->execute();
+                                                            $res=$stmt2->get_result();
+                                                            while($row=$res->fetch_object())
+                                                            {
+                                                                echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
+                                                            }
+                                        echo '
+                                                        </select> 
+                                                        <span id="room-availability-status" style="font-size:12px;color:red"></span>
                                                     </div>
-                                                    <br/>
-                                                    <br/>
-                                                     <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Duration (Weeks) :</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
+
+                                                    <span id="hide-if-full">
+
+                                                        <br/>
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-6 control-label">Single or Sharing (Seater) :</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="text" name="seater" id="seater"  class="form-control"  readonly>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                      <br/>
-                                                    <div class="form-group">
-                                                        <label class="col-sm-6 control-label">Total Rental (RM) :</label>
-                                                        <div class="col-sm-4">
-                                                            <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-6 control-label">Fees Per Week (RM) :</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    </div>
+
+                                                        <br/>
+                                                        <br/>
+                                                        <label class="col-sm-4 control-label">Choose Course for next Semester: <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  > 
+                                                                <option value="" disabled selected hidden>Select Course</option>
+                                            '; 
+                                                                    while($row2=$res2->fetch_object()) {
+                                                                        echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
+                                                                    }
+                                            echo '
+                                                            </select>
+                                                        </div>
+
+                                                        <br/>
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-6 control-label">Duration (Weeks) :</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-6 control-label">Total Rental (RM) :</label>
+                                                            <div class="col-sm-4">
+                                                                <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <br/>
+                                                    </span> <!-- hide-if-full -->                        
+                                                </div>
                                             </div>
+
                                             <br/>
-                                            <br />
                                             <label>
                                                 <!-- Accommodation Rental Overpayment -->
                                                 <input type="radio"  name="Checkout" value="2" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(2,this.form.Checkout)" required />
@@ -696,46 +714,65 @@ YB
                                                 <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" required/>
                                                 <b>Moving out to private accommodation</b>
                                             </label>
-                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label>
-                                                <b>New Address: </b>
-                                                <input type="text" name="NewAddress" style="width:500px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            </label>
-                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label>
-                                                <b>Owner Name: </b>&nbsp;
-                                                <input type="text" name="OwnerName" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            </label>
-                                            <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label>
-                                                <b>Contact: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="text" name="OwnerContact" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            </label>
+                                            
+                                            <span id="checkout-new-address">
+                                                <label>
+                                                    <b>New Address: </b>
+                                                    <input type="text" name="NewAddress" style="width:455px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                                </label>
+                                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <b>Owner Name: </b>&nbsp;
+                                                    <input type="text" name="OwnerName" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                                </label>
+                                                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label>
+                                                    <b>Contact: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="text" name="OwnerContact" style="width:200px;" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
+                                                </label>
+                                            </span>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td valign="top" class="content_black1"><b>Reasons / Others</b></td>
                                         <td colspan="5" class="content_black1"><input type="text" name="CheckoutReason" style="width:450px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" /></td>
                                     </tr>
                                     <tr>
                                         <td width="160" valign="top" class="content_black1">and to request refund</td>
-                                        <td colspan="5" class="content_black1"><input type="checkbox" name="Refund_Deposit" value="Deposit less your charges" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" />
-                                            Deposit less your charges
-                                            &nbsp;&nbsp;&nbsp;
-                                            <input type="checkbox" name="Refund_Others" value="Others" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="document.CheckoutForm.RefundDetail.focus();" disabled="disabled" />
-                                            Others
-                                            <input type="text" name="RefundDetail" style="width:210px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
+                                        <td colspan="5" class="content_black1">
+                                            <label>
+                                                <input type="checkbox" name="Refund_Deposit" id="Refund_Deposit" "value="Deposit less your charges" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="false" />
+                                                Deposit less your charges
+                                                &nbsp;&nbsp;&nbsp;
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="Refund_Others" id="Refund_Others" value="Others" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="document.CheckoutForm.RefundDetail.focus();" disabled="false" />
+                                                Others
+                                            </label>
+                                            <label>
+                                                <input type="text" name="RefundDetail" id="RefundDetail" style="width:210px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" />
+                                            </label>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td valign="top" class="content_black1">by the selected mode of payment</td>
-                                        <td colspan="5" class="content_black1"><input type="checkbox" name="Refund_MOP" value="Direct Bank In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(1,this.form.Refund_MOP)" disabled="disabled" />
-                                            Direct Bank In <i>(below RM 25,000 and for Malaysian bank accounts)</i> <br />
-                                            <input type="checkbox" name="Refund_MOP" value="TT" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(2,this.form.Refund_MOP)" disabled="disabled" />
-                                            Telegraphic Transfer (TT)* in
-                                            <input type="text" name="TT_Currency" style="width:100px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="20" disabled="disabled" />
-                                            <i> (foreign currency)</i> <br />
-                                            <input type="checkbox" name="Cheque" value="Cheque In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(3,this.form.Refund_MOP)" disabled="disabled" />
-                                            Cheque <i>(above RM25,000 * with RM2.12 charge(GST 6% Inclusive))</i>
+                                        <td colspan="5" class="content_black1">
+                                            <label>
+                                                <input type="checkbox" name="Refund_MOP" id="Refund_MOP1" value="Direct Bank In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(1,this.form.Refund_MOP)" disabled="disabled" />
+                                                Direct Bank In <i>(below RM 25,000 and for Malaysian bank accounts)</i>
+                                            </label> <br />
+                                            <label>
+                                                <input type="checkbox" name="Refund_MOP" id="Refund_MOP2" value="TT" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(2,this.form.Refund_MOP)" disabled="disabled" />
+                                                Telegraphic Transfer (TT)* in
+                                            </label>
+                                                <input type="text" name="TT_Currency" id="TT_Currency" style="width:100px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="20" disabled="disabled" />
+                                                <i> (foreign currency)</i>
+                                            </label> <br />
+                                            </label>
+                                                <input type="checkbox" name="Cheque" id="Cheque" value="Cheque In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(3,this.form.Refund_MOP)" disabled="disabled" />
+                                                Cheque <i>(above RM25,000 * with RM2.12 charge(GST 6% Inclusive))</i>
+                                            </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -743,28 +780,39 @@ YB
                                             <tr>
                                                 <td width="10" valign="top" class="content_black1">*</td>
                                                 <td width="10" valign="top" class="content_black1">(1)</td>
-                                                <td width="540" class="content_black_small"><i>Please complete the details below. Kindly ensure that the Payee Name and IC/Passport Number are as exactly stated in your Bank Account. If any of this information is wrong, then the refund will be returned by the University Bank. Not only your refund will be delayed but a service charge of RM10.60 (GST 6% Inclusive) shall also be imposed for a replacement.
-                                                    </i></td>
+                                                <td width="540" class="content_black_small">
+                                                    <i>Please complete the details below. Kindly ensure that the Payee Name and IC/Passport Number are as exactly stated in your Bank Account. If any of this information is wrong, then the refund will be returned by the University Bank. Not only your refund will be delayed but a service charge of RM10.60 (GST 6% Inclusive) shall also be imposed for a replacement.
+                                                    </i>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="10" valign="top" class="content_black1"></td>
                                                 <td width="10" valign="top" class="content_black1">(2)</td>
-                                                <td width="540" class="content_black_small"><i>If you choose Telegraphic Transfer (TT), the cost of bank charges and GST for TT shall be borne by you. Foreign currency T/T shall be translated by the Universtity\'s bank at the prevailing exchange rate on the day of transaction. <b>Please provide a copy of your passport as a bank\'s supporting document for TT</b>.
-                                                    </i></td>
+                                                <td width="540" class="content_black_small">
+                                                    <i>If you choose Telegraphic Transfer (TT), the cost of bank charges and GST for TT shall be borne by you. Foreign currency T/T shall be translated by the Universtity\'s bank at the prevailing exchange rate on the day of transaction. <b>Please provide a copy of your passport as a bank\'s supporting document for TT</b>.
+                                                    </i>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="10" valign="top" class="content_black1"></td>
                                                 <td width="10" valign="top" class="content_black1">(3)</td>
-                                                <td width="540" class="content_black_small"><i>For the safety of your money, refund to third party other than yourself or your parents is not encouraged unless you are able to prove that you don\'t have a Malaysian bank account <u>AND</u> when the University\'s bank is unable to TT the refund to your home country from Malaysia. In this case, a handwritten authorization letter is required from you, e-mail authorization is not accepted.
-                                                    </i></td>
+                                                <td width="540" class="content_black_small">
+                                                    <i>For the safety of your money, refund to third party other than yourself or your parents is not encouraged unless you are able to prove that you don\'t have a Malaysian bank account <u>AND</u> when the University\'s bank is unable to TT the refund to your home country from Malaysia. In this case, a handwritten authorization letter is required from you, e-mail authorization is not accepted.
+                                                    </i>
+                                                </td>
                                             </tr>
                                             </table>
                                             <table border="0" width="580" cellpadding="0" cellspacing="1" align="center">
                                                 <tr>
                                                     <td width="30" valign="top"><input type="checkbox" name="Refund_Bank_FName" value="Payee Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(1,this.form.Refund_Bank_FName)" disabled="disabled" /></td>
                                                     <td width="280" valign="top" class="content_black1"><b>Payee Name</b><br />
-                                                        <span class="content_black_small">(<b><u>Student\'s name</u></b> stated as in their Own bank book)</span></td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Bank_FullName" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
+                                                        <span class="content_black_small">
+                                                            (<b><u>Student\'s name</u></b> stated as in their Own bank book)
+                                                        </span>
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Bank_FullName" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="580" colspan="3" class="content_black1"><center>
@@ -774,8 +822,13 @@ YB
                                                 <tr>
                                                     <td width="30" valign="top"><input type="checkbox" name="Refund_Bank_FName" value="Parent Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(2,this.form.Refund_Bank_FName)" disabled="disabled" /></td>
                                                     <td width="280" valign="top" class="content_black1"><b>Please prepare the cheque under my <u><i>Father\'s / Mother\'s</i></u> Name</b><br />
-                                                        <span class="content_black_small">(As stated in their bank book)</span></td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Bank_ParentName" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
+                                                        <span class="content_black_small">
+                                                            (As stated in their bank book)
+                                                        </span>
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Bank_ParentName" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" />
+                                                    </td>
                                                 </tr>
                                             </table>
                                             <table border="0" width="580" cellpadding="0" cellspacing="1" align="center">
@@ -783,43 +836,66 @@ YB
                                                     <td width="30">&nbsp;</td>
                                                     <td width="30" class="content_black1">&nbsp;</td>
                                                     <td width="250" valign="top" class="content_black1"> Payee <u><b>IC No</b></u> <i>(for Malaysian)</i> <br />
-                                                        Payee <u><b>Passport No</b></u> <i>(for foreigner)</td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Payee_ID" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" disabled="disabled" />
+                                                        Payee <u><b>Passport No</b></u> <i>(for foreigner)
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Payee_ID" style="width:300px;height:30px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" disabled="disabled" />
                                                         <br><font color="orange"><b>All international student needs to provide <u>passport front page</u></b> <br>for bank verification purpose. </font>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="30">&nbsp;</td>
                                                     <td width="30" class="content_black1">&nbsp;</td>
-                                                    <td width="250" valign="top" class="content_black1"><b>Bank Account No</b></td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Bank_AcctNo" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" disabled="disabled" /></td>
+                                                    <td width="250" valign="top" class="content_black1">
+                                                        <b>Bank Account No</b>
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Bank_AcctNo" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="30" disabled="disabled" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="30">&nbsp;</td>
                                                     <td width="30">&nbsp;</td>
-                                                    <td width="250" valign="top" class="content_black1">Bank Name</td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Bank_Name" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="50" disabled="disabled" /></td>
+                                                    <td width="250" valign="top" class="content_black1">
+                                                        Bank Name
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Bank_Name" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="50" disabled="disabled" />
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="30">&nbsp;</td>
                                                     <td width="30">&nbsp;</td>
-                                                    <td width="250" valign="top" class="content_black1">Bank Address</td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Bank_Address" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" /></td>
+                                                    <td width="250" valign="top" class="content_black1">
+                                                        Bank Address
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Bank_Address" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="100" disabled="disabled" />
+                                                    </td>
                                                 </tr>						
                                                 <tr>
                                                     <td width="30">&nbsp;</td>
                                                     <td width="30">&nbsp;</td>
-                                                    <td width="250" valign="top" class="content_black1">Bank Swift Code<br />
-                                                        <span class="content_black_small">(International Bank T/T only)</span></td>
-                                                    <td width="270" class="content_black1"><input type="text" name="Bank_Swift_Code" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="20" /></td>
+                                                    <td width="250" valign="top" class="content_black1">
+                                                        Bank Swift Code
+                                                        <br />
+                                                        <span class="content_black_small">
+                                                            (International Bank T/T only)
+                                                        </span>
+                                                    </td>
+                                                    <td width="270" class="content_black1">
+                                                        <input type="text" name="Bank_Swift_Code" style="width:300px" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="20" disabled="disabled" />
+                                                    </td>
                                                 </tr>
                                             </table>
                                             <table border="0" width="580" cellpadding="0" cellspacing="2" align="center">
                                                 <tr>
                                                     <td width="20"><input type="checkbox" name="Agree_Refund_Term" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" required /></td>
-                                                    <td colspan="2" class="content_black1"> I understand that the process of refund is subject to the reasons below, and agree
+                                                    <td colspan="2" class="content_black1"> 
+                                                        I understand that the process of refund is subject to the reasons below, and agree
                                                         not to hold the University liable for late payment of refund should the conditions
-                                                        not be met &amp;/or due to other unforeseen circumstances:</td>
+                                                        not be met &amp;/or due to other unforeseen circumstances:
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="20">&nbsp;</td>
@@ -914,15 +990,15 @@ YB
             </div>
         </div>
 
-
-        <script>
-            $('#myCheck').change(function() {
-                if (!$(this).is(':checked')) {
-                    alert('unchecked');
-                }
-            });
-        </script>
-
+        <!-- 
+            <script>
+                $('#myCheck').change(function() {
+                    if (!$(this).is(':checked')) {
+                        alert('unchecked');
+                    }
+                });
+            </script>
+        -->
         <!-- Loading Scripts -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
@@ -934,13 +1010,14 @@ YB
         <script src="js/chartData.js"></script>
         <script src="js/main.js"></script>
 
-        <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
-
+        <!--<script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
+        -->
 
 
         <script type="text/javascript">
             var checkbox = document.getElementById('chkRenewal');
             var text = document.getElementById('RenwalSameRoom');
+            var newAdd = document.getElementById('checkout-new-address');
             var showHiddenDiv = function(){
                 if(checkbox.checked) {
                     text.style['display'] = 'block';
@@ -948,8 +1025,12 @@ YB
                     text.style['display'] = 'none';
                 } 
             }
-            checkbox.onclick = showHiddenDiv;
+            var hideNewAddress = function(){
+                newAdd.style['display'] = 'none';
+            }
+            //checkbox.onclick = showHiddenDiv;
             showHiddenDiv();
+            hideNewAddress();
         </script>
 
         <script type="text/javascript">
