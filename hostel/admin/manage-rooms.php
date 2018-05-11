@@ -65,23 +65,24 @@ if(isset($_GET['del']))
                                     <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Sno.</th>
-
-                                                <th>Single or Sharing</th>
+                                                <th>No.</th>
+                                                <th>Seater</th>
                                                 <th>Room No.</th>
-                                                <th>Fees (PW)</th>
+                                                <th>Fees (RM/Week)</th>
                                                 <th>RoomType</th>
+                                                <th>Building</th>
                                                 <th>Posting Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Sno.</th>
-                                                <th>Single or Sharing</th>
+                                                <th>No.</th>
+                                                <th>Seater</th>
                                                 <th>Room No.</th>
-                                                <th>Fees (PW)</th>
+                                                <th>Fees (RM/Week)</th>
                                                 <th>RoomType</th>
+                                                <th>Building</th>
                                                 <th>Posting Date</th>
                                                 <th>Action</th>
                                             </tr>
@@ -108,12 +109,14 @@ if(isset($_GET['del']))
                                                 <td>
                                                     <?php echo $row->room_no;?>
                                                 </td>
-                                                <td>
+                                                <td style="width:13%">
                                                     <?php echo $row->fees;?>
                                                 </td>
-                                                
                                                 <td>
                                                     <?php echo $row->RoomType;?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row->block;?>
                                                 </td>
                                                 <td>
                                                     <?php echo $row->posting_date;?>
