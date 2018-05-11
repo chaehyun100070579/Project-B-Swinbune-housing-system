@@ -574,12 +574,12 @@ YB
                                         <td class="content_black1">Location</td>
                                         <td colspan="5" class="content_black1">
                                             <label>
-                                                <input type="radio" id="gender" value="male" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(1,this.form.Location)" />
+                                                <input type="radio" id="gender" value="male" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(1,this.form.Location)" disabled="disabled" '; if($gender=="male") echo "checked='checked'"; echo'/>
                                                 Male Hostel
                                                 &nbsp;&nbsp;&nbsp;
                                             </label>
                                             <label>
-                                                <input type="radio" id="gender" value="female" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" disabled="disabled" />
+                                                <input type="radio" id="gender" value="female" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" disabled="disabled" '; if($gender=="female") echo "checked='checked'"; echo'/>
                                                 Female Hostel
                                                 &nbsp;&nbsp;&nbsp;
                                             </label>
