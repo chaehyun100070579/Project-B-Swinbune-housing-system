@@ -4,18 +4,19 @@ include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
 //code for add courses
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
     $seater=$_POST['seater'];
     $rmno=$_POST['rmno'];
     $RoomType=$_POST['RoomType'];
     $fees=$_POST['fees'];
+    $block=$_POST['block'];
     
     $id=$_GET['id'];
     
-    $query="update rooms set seater=?,room_no=?,fees=?,RoomType=? where id=?";
+    $query="update rooms set seater=?,room_no=?,fees=?,RoomType=?,block=? where id=?";
     $stmt = $mysqli->prepare($query);
-    $rc=$stmt->bind_param('isisi',$seater,$rmno,$fees,$RoomType,$id);
+    $rc=$stmt->bind_param('isisis',$seater,$rmno,$fees,$RoomType,$block,$id);
     $stmt->execute();
     echo"<script>alert('Room Details has been Updated successfully');</script>";
 }
@@ -34,7 +35,7 @@ if($_POST['submit'])
         <title>Edit Room Details</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-social.css">
         <link rel="stylesheet" href="css/bootstrap-select.css">
         <link rel="stylesheet" href="css/fileinput.min.css">
@@ -61,10 +62,10 @@ if($_POST['submit'])
             <?php include('includes/sidebar.php');?>
             <div class="content-wrapper">
                 <div class="container-fluid">
-
                     <div class="row">
                         <div class="col-md-12">
 
+                            <br/><br/><br/>
                             <h2 class="page-title">Edit Room Details </h2>
 
                             <div class="row">
@@ -86,12 +87,25 @@ if($_POST['submit'])
                                                 ?>
                                                 <div class="hr-dashed"></div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Single or Sharing  </label>
+                                                    <label class="col-sm-2 control-label">Single or Sharing (Seater) <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <input type="text"  name="seater" value="<?php echo $row->seater;?>"  class="form-control"> </div>
+                                                        <select name="seater" id="seater" class="form-control" style="font-size:smaller;" > 
+                                                            <option value="<?php echo $row->seater;?>" selected hidden><?php echo $row->seater;?></option>
+                                                            <?php $query ="SELECT DISTINCT seater FROM rooms order by seater";
+                                                            $stmt2 = $mysqli->prepare($query);
+                                                            $stmt2->execute();
+                                                            $res2=$stmt2->get_result();
+                                                            while($row2=$res2->fetch_object())
+                                                            {
+                                                            ?>
+                                                            <option value="<?php echo $row2->seater;?>"><?php echo $row2->seater;?></option>
+    
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Room no </label>
+                                                    <label class="col-sm-2 control-label">Room No. <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
                                                         <input type="text" class="form-control" name="rmno" id="rmno" value="<?php echo $row->room_no;?>" >
                                                       
@@ -99,17 +113,45 @@ if($_POST['submit'])
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Room Type </label>
+                                                    <label class="col-sm-2 control-label">Room Type <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" name="RoomType" id="RoomType" value="<?php echo $row->RoomType;?>" >
-                                                      
+                                                        <select name="RoomType" id="RoomType" class="form-control" style="font-size:smaller;" > 
+                                                            <option value="<?php echo $row->RoomType;?>" selected hidden><?php echo $row->RoomType;?></option>
+                                                            <?php $query ="SELECT DISTINCT RoomType FROM rooms order by RoomType";
+                                                            $stmt2 = $mysqli->prepare($query);
+                                                            $stmt2->execute();
+                                                            $res2=$stmt2->get_result();
+                                                            while($row2=$res2->fetch_object())
+                                                            {
+                                                            ?>
+                                                            <option value="<?php echo $row2->RoomType;?>"><?php echo $row2->RoomType;?></option>
+                                                            <?php } ?>
+                                                        </select>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Rental (per week)</label>
+                                                    <label class="col-sm-2 control-label">Rental (RM/week) <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
                                                         <input type="text" class="form-control" name="fees" value="<?php echo $row->fees;?>" >
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Block/Building <span style="color:red">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <select name="block" id="block" class="form-control" style="font-size:smaller;" > 
+                                                            <option value="<?php echo $row->block;?>" selected hidden><?php echo $row->block;?></option>
+                                                            <?php $query ="SELECT DISTINCT block FROM rooms order by block";
+                                                            $stmt2 = $mysqli->prepare($query);
+                                                            $stmt2->execute();
+                                                            $res2=$stmt2->get_result();
+                                                            while($row2=$res2->fetch_object())
+                                                            {
+                                                            ?>
+                                                            <option value="<?php echo $row2->block;?>"><?php echo $row2->block;?></option>
+                                                            <?php } ?>
+                                                        </select>
                                                     </div>
                                                 </div>
 
