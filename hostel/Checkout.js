@@ -225,8 +225,9 @@ function getRefund_MOP(option,field)
     {
     // IF CHOSEN DIRECT BANK IN
     // CHECQUE NOT IN HERE (ONLY HAS OWN FUNCTION TO UNTICK THE OTHERS WHEN SELF IS TICKED)
+    document.getElementById('Cheque').checked = false;
     document.CheckoutForm.TT_Currency.value = '';
-    document.CheckoutForm.TT_Currency.style.background="transparent";
+    document.CheckoutForm.TT_Currency.style.background="#EBEBE4";
     document.CheckoutForm.TT_Currency.disabled = true;	
     enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX	
     document.CheckoutForm.Payee_ID.disabled = false;
@@ -243,10 +244,11 @@ function getRefund_MOP(option,field)
     //  document.CheckoutForm.Bank_Swift_Code.style.background="transparent";
     document.CheckoutForm.Bank_Swift_Code.disabled = true;
     document.CheckoutForm.Bank_Swift_Code.style.background="#EBEBE4";
-    }  
+    }
     else
     {
     // IF CHOSEN TELEGRAPHIC TRANSFER
+    document.getElementById('Cheque').checked = false;
     document.CheckoutForm.TT_Currency.disabled = false;
     document.CheckoutForm.TT_Currency.focus();
     enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
@@ -263,6 +265,32 @@ function getRefund_MOP(option,field)
     document.CheckoutForm.Bank_Swift_Code.disabled = false;
     document.CheckoutForm.Bank_Swift_Code.style.background="#FFFFAA";
     }
+}
+
+function getRefund_Cheque()
+{
+    // FOR SELECTED MODE OF PAYMENT CHECKBOX (CHEQUE)
+    // IF CHOSEN CHEQUE
+    document.getElementById('Refund_MOP1').checked = false;
+    document.getElementById('Refund_MOP2').checked = false;
+    document.CheckoutForm.TT_Currency.value = '';
+    document.CheckoutForm.TT_Currency.style.background="#EBEBE4";
+    document.CheckoutForm.TT_Currency.disabled = true;	
+    enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX	
+    document.CheckoutForm.Payee_ID.disabled = false;
+    document.CheckoutForm.Payee_ID.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_AcctNo.disabled = false;
+    document.CheckoutForm.Bank_AcctNo.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Name.disabled = false;
+    document.CheckoutForm.Bank_Name.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Address.disabled = false;
+    document.CheckoutForm.Bank_Address.style.background="#FFFFAA";
+    //  document.CheckoutForm.Bank_Town.disabled = false;
+    //  document.CheckoutForm.Bank_Town.style.background="#FFFFAA";
+    document.CheckoutForm.Bank_Swift_Code.value = '';
+    //  document.CheckoutForm.Bank_Swift_Code.style.background="transparent";
+    document.CheckoutForm.Bank_Swift_Code.disabled = true;
+    document.CheckoutForm.Bank_Swift_Code.style.background="#EBEBE4";
 }
 
 function filterNonNumeric(field)
@@ -569,10 +597,9 @@ function checkEmpty()
      return false;
     }
 
-    //if ((document.CheckoutForm.Refund_Deposit.checked==true) || (document.CheckoutForm.Refund_Others.checked==true))
-    if (document.CheckoutForm.RefundCheck.checked==true)
+    if ((document.CheckoutForm.Refund_Deposit.checked==true) || (document.CheckoutForm.Refund_Others.checked==true))
     {
-        if ((document.getElementById("Refund_Others").checked==true) && (document.CheckoutForm.RefundDetail.value==''))
+        if ((document.CheckoutForm.Refund_Others.checked==true) && (document.CheckoutForm.RefundDetail.value==''))
         {   alert('You MUST state details for the OTHERS REFUND.');
          document.CheckoutForm.RefundDetail.focus();
          pass=false;
