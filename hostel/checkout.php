@@ -593,7 +593,7 @@ YB
                                             <br> C - Twin with Air-Cond
                                             <br> D - Single with Air-Cond
                                         </td>
-                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" value='.$row2->RoomType.' readonly /></td>
+                                        <td width="60" class="content_black1"><input type="text" name="House_Flat" style="width:80px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="4" value="'.$row2->RoomType.'" readonly /></td>
                                         <td width="60" class="content_black1"><center> Room No</center></td>
                                         <td width="60" class="content_black1"><input type="text" name="RoomNo" style="width:60px;background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="3" onkeyup="filterNonNumeric(this)" value='.$row->roomno.' readonly /></td>
                                         <td width="75" class="content_black1"><center>
