@@ -72,7 +72,7 @@ function getCheckout(option,field)
         document.CheckoutForm.Refund_Others.checked = false;
         document.CheckoutForm.RefundDetail.disabled = true;
         document.CheckoutForm.RefundDetail.value="";
-        document.CheckoutForm.RefundDetail.style.background="transparent";
+        document.CheckoutForm.RefundDetail.style.background="EBEBE4";
 
         //document.CheckoutForm.Refund_MOP.disabled = true;
         disabledAll(document.CheckoutForm.Refund_MOP);
@@ -80,7 +80,7 @@ function getCheckout(option,field)
         document.getElementById('Refund_MOP2').checked = false;
         document.CheckoutForm.TT_Currency.disabled = true;
         document.CheckoutForm.TT_Currency.value="";
-        document.CheckoutForm.TT_Currency.style.background="transparent";
+        document.CheckoutForm.TT_Currency.style.background="EBEBE4";
         
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
@@ -173,8 +173,11 @@ function getCheckout(option,field)
         // enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
         
         document.CheckoutForm.NewAddress.disabled = false;
+        document.CheckoutForm.NewAddress.style.background="#FFFFAA";
         document.CheckoutForm.OwnerName.disabled = false;
+        document.CheckoutForm.OwnerName.style.background="#FFFFAA";
         document.CheckoutForm.OwnerContact.disabled = false;
+        document.CheckoutForm.OwnerContact.style.background="#FFFFAA";
 
         // document.CheckoutForm.Bank_AcctNo.disabled = false;
         // document.CheckoutForm.Bank_Name.disabled = false;
@@ -185,6 +188,7 @@ function getCheckout(option,field)
 
         document.getElementById('RenwalSameRoom').style.display = 'none';
         document.getElementById('checkout-new-address').style.display = 'block';
+        document.CheckoutForm.NewAddress.focus();
 
     }
 
