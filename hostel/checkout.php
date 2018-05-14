@@ -747,7 +747,7 @@ YB
                                                 &nbsp;&nbsp;&nbsp;
                                             </label>
                                             <label>
-                                                <input type="checkbox" name="Refund_Others" id="Refund_Others" value="Others" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="document.CheckoutForm.RefundDetail.focus();" disabled="false" />
+                                                <input type="checkbox" name="Refund_Others" id="Refund_Others" value="Others" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="false" />
                                                 Others
                                             </label>
                                             <label>
@@ -769,8 +769,8 @@ YB
                                                 <input type="text" name="TT_Currency" id="TT_Currency" style="width:100px;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" maxlength="20" disabled="disabled" />
                                                 <i> (foreign currency)</i>
                                             </label> <br />
-                                            </label>
-                                                <input type="checkbox" name="Cheque" id="Cheque" value="Cheque In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_MOP(3,this.form.Refund_MOP)" disabled="disabled" />
+                                            <label>
+                                                <input type="checkbox" name="Cheque" id="Cheque" value="Cheque In" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Cheque()" disabled="disabled" />
                                                 Cheque <i>(above RM25,000 * with RM2.12 charge(GST 6% Inclusive))</i>
                                             </label>
                                         </td>
@@ -1047,6 +1047,26 @@ YB
             checkbox2.onclick = showHiddenDiv2;
             checkbox3.onclick = showHiddenDiv2;
             showHiddenDiv2();
+        </script>
+
+        <script type="text/javascript">
+            // FOR 'AND TO REQUEST REFUND' CHECKBOXES (NOT INSIDE CHECKOUT.JS)
+            var refund_checkbox1 = document.getElementById('Refund_Deposit');
+            var refund_checkbox2 = document.getElementById('Refund_Others');
+            var refund_text = document.getElementById('RefundDetail');
+            var refundCheckbox1 = function(){
+                refund_checkbox2.checked = false;
+                refund_text.value = '';
+                refund_text.disabled = true;
+                refund_text.style.background="#EBEBE4";
+            }
+            var refundCheckbox2 = function(){
+                refund_checkbox1.checked = false;
+                refund_text.disabled = false;
+                document.CheckoutForm.RefundDetail.focus();
+            }
+            refund_checkbox1.onclick = refundCheckbox1;
+            refund_checkbox2.onclick = refundCheckbox2;
         </script>
 
         <script>
