@@ -351,7 +351,7 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Gender : </label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="gender" id="gender" value="<?php echo $row->gender;?>" class="form-control" >
+                                                            <input type="text" name="gender" id="gender" value="<?php echo $row->gender;?>" class="form-control" readonly>
                                                         </div>
                                                     </div>
 
