@@ -23,7 +23,7 @@
                     <li class="ts-account">
                         <a href="#"><img src="img/SWINBURNE.jpg" class="ts-avatar hidden-side" alt=""> Account <i class="fa fa-angle-down hidden-side"></i></a>
                         <ul>
-                            <li><a href="my-profile.php">My Account</a></li>
+                            <li><a href="admin-profile.php">My Account</a></li>
                             <li><a href="logout.php">Logout</a></li>
                         </ul>
                     </li>
