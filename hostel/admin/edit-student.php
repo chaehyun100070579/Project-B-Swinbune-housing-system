@@ -15,7 +15,7 @@ if($_POST['submit'])
     $roomno=$_POST['room'];
     $seater=$_POST['seater'];
     $feespm=$_POST['fpm'];
-    $stayfrom=$_POST['stayf'];
+    $stayfrom="";
     $duration=$_POST['duration'];
     $course=$_POST['course'];
     $studentid=$_POST['studentid'];
@@ -87,6 +87,7 @@ if($_POST['submit'])
         <script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
         <script type="text/javascript" src="js/validation.min.js"></script>
 
+
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/fonts/font-awesome.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/style.css" media="screen" rel="stylesheet" type="text/css" />
@@ -96,6 +97,96 @@ if($_POST['submit'])
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/slider.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
+
+        <script>
+            function getSeater(val) {
+                // val no longer needed but still leave it there anyway
+
+                var gen = document.getElementById("gender").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'roomid='+$("#room option:selected").text()+'&gender='+gen,
+                    success: function(data){
+                        //alert(data);
+                        var trimmed = data.trim();
+                        $('#seater').val(trimmed);
+                    }
+                });
+
+                var dura = document.getElementById("duration").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'rid='+$("#room option:selected").text()+'&gender='+gen,
+                    success: function(data){
+                        //alert(data);
+                        var trimmed = data.trim();
+                        $('#fpm').val(trimmed);
+                        newdata = data * dura;
+                        $('#ta').val(newdata);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data:'getroomnum='+$("#room option:selected").text()+'&gender='+gen,
+                    success: function(data){
+                        //alert(data);
+                        //$('#room').attr('value', data);
+                        var asd = document.getElementById("room");
+                        var trimmed = data.trim();
+                        //asd.options[asd.selectedIndex].innerHTML = ("<option value='"+data+"'>"+val+"</option>");
+                        //asd.options[asd.selectedIndex].innerHTML = ("<option value='123123'>123123</option>");
+                        asd.options[asd.selectedIndex].value = trimmed;
+                        //alert(asd.options[asd.selectedIndex].value);
+                    }
+                });
+            }
+
+            function getCourse(val){                
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data: {
+                        // data: "course_code"+val
+                        // cannot pass value with & symbol in string
+                        // some course has & in name
+                        course_code: val
+                    },
+                    success: function(data){
+                        //alert(data);
+                        var trimmed = data.trim();
+                        $('#duration').val(trimmed);
+                    }
+                });
+
+                var fee = document.getElementById("fpm").value;
+
+                $.ajax({
+                    type: "POST",
+                    url: "get_seater.php",
+                    data: {
+                        // data: "course_code"+val
+                        // cannot pass value with & symbol in string
+                        // some course has & in name
+                        course_code: val
+                    },
+                    success: function(data){
+                        //alert(data);
+                        newdata = data * fee;
+                        $('#ta').val(newdata);
+                    }
+                });
+            }
+
+
+        </script>
+
+
 
 
     </head>
@@ -117,7 +208,8 @@ if($_POST['submit'])
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Edit Student Details</div>
                                         <div class="panel-body">
-                                            <form method="post" class="form-horizontal">
+                                            <form method="post" action="" class="form-horizontal">	
+
                                                 <?php	
                                                 $id=$_GET['id'];
                                                 $ret="select * from registration where id=?";
@@ -126,6 +218,7 @@ if($_POST['submit'])
                                                 $stmt->execute() ;//ok
                                                 $res=$stmt->get_result();
                                                 //$cnt=1;
+
                                                 while($row=$res->fetch_object())
                                                 {
                                                 ?>
@@ -135,291 +228,292 @@ if($_POST['submit'])
                                                         <?php echo $row->firstName;?> <?php echo $row->lastName;?>'s  Room Related info </h4> </label>
                                                 </div>
 
+
+
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Room no </label>
+                                                    <label class="col-sm-2 control-label">Room Type : <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <select name="room" id="room"class="form-control"  onChange="getSeater(this.value);" onBlur="checkAvailability()" required> 
-                                                            <option value="<?php echo $row->roomno;?>"><?php echo $row->roomno;?></option>
-                                                            <?php $query ="SELECT * FROM rooms";
+                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
+                                                            <option value="" disabled selected hidden>Select Room</option>
+                                                            <?php $query ="SELECT DISTINCT RoomType FROM rooms";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res2=$stmt2->get_result();
-                                                    while($row2=$res2->fetch_object())
+                                                    $res=$stmt2->get_result();
+                                                    while($row=$res->fetch_object())
                                                     {
                                                             ?>
-                                                            <option value="<?php echo $row2->room_no;?>"> <?php echo $row2->room_no;?></option>
+                                                            <!-- <option value="<?php //echo $row->room_no;?>"> <?php //echo $row->RoomType;?></option> -->
+                                                            <option value="<?php echo $row->RoomType;?>"><?php echo $row->RoomType;?></option> 
                                                             <?php } ?>
                                                         </select> 
-                                                        <span id="room-availability-status" style="font-size:12px;"></span>
+                                                        <span id="room-availability-status" style="font-size:12px;color:red"></span>
 
                                                     </div>
                                                 </div>
 
+                                                <span id="hide-if-full">
 
-
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Single or Sharing</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="seater" id="seater" value="<?php echo $row->seater;?>"  class="form-control"  >
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Single or Sharing (Seater) :</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="seater" id="seater"  class="form-control"  readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Fees Per Month</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="fpm" id="fpm" value="<?php echo $row->feespm;?>" class="form-control" >
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Fees Per Week (RM) :</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
+
+                                                        </div>
                                                     </div>
-                                                </div>
 
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Stay From</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="date" name="stayf" id="stayf" value="<?php echo $row->stayfrom;?>"  class="form-control" >
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Duration</label>
-                                                    <div class="col-sm-8">
-
-                                                        <select name="duration" id="duration"  class="form-control" >
-                                                            <option value=""><?php echo $row->duration;?></option>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="12">12</option>
-                                                        </select>
-
-
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label"><h4 style="color: green" align="left"><?php echo $row->firstName;?> <?php echo $row->lastName;?>'s Personal info </h4> </label>
-                                                </div>
-
-
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Course </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="course" id="course" class="form-control" required> 
-                                                            <option value="<?php echo $row->course;?>"><?php echo $row->course;?></option>
-                                                            <?php $query ="SELECT * FROM courses";
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Course : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
+                                                                <option value="" disabled selected hidden>Select Course</option>
+                                                                <?php $query ="SELECT * FROM courses";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res2=$stmt2->get_result();
-                                                    while($row2=$res2->fetch_object())
+                                                    $res=$stmt2->get_result();
+                                                    while($row=$res->fetch_object())
                                                     {
-                                                            ?>
-                                                            <option value="<?php echo $row2->course_fn;?>"><?php echo $row2->course_fn;?>&nbsp;&nbsp;(<?php echo $row2->course_sn;?>)</option>
-                                                            <?php } ?>
-                                                        </select> </div>
-                                                </div>
+                                                                ?>
+                                                                <option value="<?php echo $row->course_code;?>"><?php echo $row->course_code;?></option>
 
-
-
-
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Student ID : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="studentid" id="studentid" value="<?php echo $row->studentid;?>"  class="form-control" required="required" readonly >
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">First Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="fname" id="fname" value="<?php echo $row->firstName;?>"  class="form-control" required="required" >
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Duration (Weeks) :</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Middle Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="mname" id="mname" value="<?php echo $row->middleName;?>"  class="form-control">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Total Rental (RM) :</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Last Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="lname" id="lname" value="<?php echo $row->lastName;?>"  class="form-control" required="required">
+                                                    <?php	
+                                                    $id=$_GET['id'];
+                                                    $ret="select * from registration where id=?";
+                                                    $stmt= $mysqli->prepare($ret) ;
+                                                    $stmt->bind_param('i',$id);
+                                                    $stmt->execute() ;//ok
+                                                    $res=$stmt->get_result();
+                                                    //$cnt=1;
+                                                    $row=$res->fetch_object()
+                                                    ?>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label"><h4 style="color: green" align="left"><?php echo $row->firstName;?> <?php echo $row->lastName;?>'s Personal info </h4> </label>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Gender : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="gender" value="<?php echo $row->gender;?>" class="form-control" required="required">
 
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Student ID : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="studentid" id="studentid"  class="form-control" value="<?php echo $row->studentid;?>" readonly >
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Contact No : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="contact" id="contact" value="<?php echo $row->contactno;?>" class="form-control" required="required">
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">First Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="fname" id="fname"  class="form-control" value="<?php echo $row->firstName;?>"  >
+                                                        </div>
                                                     </div>
-                                                </div>
 
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Email id : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="email" name="email" id="email" value="<?php echo $row->emailid;?>" class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Middle Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="mname" id="mname"  class="form-control" value="<?php echo $row->middleName;?>"  >
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Emergency Contact: </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="econtact" id="econtact" value="<?php echo $row->egycontactno;?>" class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Last Name : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="lname" id="lname"  class="form-control" value="<?php echo $row->lastName;?>" >
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Guardian  Name : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="gname" id="gname" value="<?php echo $row->guardianName;?>" class="form-control" >
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Gender : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="gender" id="gender" value="<?php echo $row->gender;?>" class="form-control" >
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Guardian  Relation : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="grelation" id="grelation" value="<?php echo $row->guardianRelation;?>" class="form-control" required="required" >
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Contact No : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="contact" id="contact" value="<?php echo $row->contactno;?>"  class="form-control" >
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Guardian Contact no : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="gcontact" id="gcontact"  value="<?php echo $row->guardianContactno;?>" class="form-control" required="required">
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Email ID : </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="email" name="email" id="email"  class="form-control" value="<?php echo $row->emailid;?>"  >
+                                                        </div>
                                                     </div>
-                                                </div>	
 
 
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label"><h4 style="color: green" align="left"> <?php echo $row->firstName;?> <?php echo $row->lastName;?>'s Correspondense Address </h4> </label>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Address : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" rows="5" name="address"  id="address"  value="<?php echo $row->corresAddress;?>" class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Emergency Contact : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="econtact" id="econtact"  class="form-control" required="required">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">City : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="city" id="city" value="<?php echo $row->corresCIty;?>"   class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Guardian  Name : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="gname" id="gname"  class="form-control" required="required">
+                                                        </div>
                                                     </div>
-                                                </div>	
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">State </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="state" id="state"class="form-control" required> 
-                                                            <option value="<?php echo $row->corresState;?>"><?php echo $row->corresState;?></option>
-                                                            <?php $query ="SELECT * FROM states";
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Guardian  Relation : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Guardian Contact No : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left"> <?php echo $row->firstName;?> <?php echo $row->lastName;?>'s Current Address </h4> </label>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Address : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <textarea  rows="5" name="address"  id="address" class="form-control" required="required"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">City : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="city" id="city"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select name="state" id="state"class="form-control" required> 
+                                                                <option value="" disabled selected hidden>Select State</option>
+                                                                <?php $query ="SELECT * FROM states";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res2=$stmt2->get_result();
-                                                    while($row2=$res2->fetch_object())
+                                                    $res=$stmt2->get_result();
+                                                    while($row=$res->fetch_object())
                                                     {
-                                                            ?>
-                                                            <option value="<?php echo $row2->State;?>"><?php echo $row2->State;?></option>
-                                                            <?php } ?>
-                                                        </select> </div>
-                                                </div>							
+                                                                ?>
+                                                                <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+                                                                <?php } ?>
+                                                            </select> </div>
+                                                    </div>							
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Pincode : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="pincode" id="pincode" value="<?php echo $row->corresPincode;?>"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Postcode : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left"> Permanent Address </h4> </label>
                                                     </div>
-                                                </div>	
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label"><h4 style="color: green" align="left"> <?php echo $row->firstName;?> <?php echo $row->lastName;?>'s Permanent Address </h4> </label>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-5 control-label">Permanent Address same as Correspondense address : </label>
-                                                    <div class="col-sm-4">
-                                                        <input type="checkbox" name="adcheck" value="1"/>
+                                                    <div class="form-group text-sm-left">
+                                                        <label class="checkbox-inline col-sm-4 control-label" ><b>Permanent Address same as Current Address : </b>
+                                                            &nbsp;
+                                                            <input class="col-sm-2" type="checkbox" name="adcheck" value="1" style="transform: scale(1.3);"/>
+                                                        </label>
                                                     </div>
-                                                </div>
 
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Address : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text"  rows="5" name="paddress" value="<?php echo $row->pmntAddress;?>"   id="paddress" class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Address : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <textarea  rows="5" name="paddress"  id="paddress" class="form-control" required="required"></textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">City : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="pcity" id="pcity" value="<?php echo $row->pmntCity;?>"  class="form-control" required="required">
-                                                    </div>
-                                                </div>	
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">City : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="pcity" id="pcity"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">State </label>
-                                                    <div class="col-sm-8">
-                                                        <select name="pstate" id="pstate"class="form-control" required > 
-                                                            <option value="<?php echo $row->pmnatetState;?>"><?php echo $row->pmnatetState;?></option>
-                                                            <?php $query ="SELECT * FROM states";
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select name="pstate" id="pstate"class="form-control" required> 
+                                                                <option value="" disabled selected hidden>Select State</option>
+                                                                <?php $query ="SELECT * FROM states";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res2=$stmt2->get_result();
-                                                    while($row2=$res2->fetch_object())
+                                                    $res=$stmt2->get_result();
+                                                    while($row=$res->fetch_object())
                                                     {
-                                                            ?>
-                                                            <option value="<?php echo $row2->State;?>"><?php echo $row2->State;?></option>
-                                                            <?php } ?>
-                                                        </select> </div>
-                                                </div>							
+                                                                ?>
+                                                                <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+                                                                <?php } ?>
+                                                            </select> </div>
+                                                    </div>							
 
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Pincode : </label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" name="ppincode" id="ppincode" value="<?php echo $row->pmntPincode;?>"  class="form-control" required="required">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Postcode : <span style="color:red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
+                                                        </div>
+                                                    </div>	
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Accommodation preference </h4> </label>
                                                     </div>
-                                                </div>	
 
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">I would prefer to share with: </label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" name="PreferPerson" id="PreferPerson"  class="form-control">
+                                                        </div>
+                                                    </div>	
 
+                                                    <?php } ?>
 
+                                                    <div class="col-sm-8 col-sm-offset-2">
 
+                                                        <input class="btn btn-primary" type="submit" name="submit" value="Update Student Details">
+                                                    </div>
 
-
-                                                <?php } ?>
-                                                <div class="col-sm-8 col-sm-offset-2">
-
-                                                    <input class="btn btn-primary" type="submit" name="submit" value="Update Student Details">
-                                                </div>
+                                                </span>
 
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -429,6 +523,7 @@ if($_POST['submit'])
                 </div> 
             </div>
         </div>
+
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
@@ -441,22 +536,6 @@ if($_POST['submit'])
         <script src="js/main.js"></script>
 
 
-        <script>
-            function checkAvailability() {
-                $("#loaderIcon").show();
-                jQuery.ajax({
-                    url: "check_availability.php",
-                    data:'roomno='+$("#room").val(),
-                    type: "POST",
-                    success:function(data){
-                        $("#room-availability-status").html(data);
-                        $("#loaderIcon").hide();
-                    },
-                    error:function (){}
-                });
-            }
-        </script>
-
         <script type="text/javascript">
             $(document).ready(function(){
                 $('input[type="checkbox"]').click(function(){
@@ -465,10 +544,63 @@ if($_POST['submit'])
                         $('#pcity').val( $('#city').val() );
                         $('#pstate').val( $('#state').val() );
                         $('#ppincode').val( $('#pincode').val() );
-                    } 
+                    } else {
+                        $('#paddress').val('');
+                        $('#pcity').val('');
+                        $('#pstate').val('');
+                        $('#ppincode').val('');
+                    }
 
                 });
             });
+        </script>
+
+        <script>
+            function checkAvailability() {
+
+                var gen = document.getElementById("gender").value;
+
+                $("#loaderIcon").show();
+
+                jQuery.ajax({
+
+                    url: "check_availability.php",
+                    data:'roomno='+$("#room option:selected").text()+'&gender='+gen,
+                    type: "POST",
+                    success:function(data){
+                        $("#room-availability-status").html(data);
+                        $("#loaderIcon").hide();
+                        if(data > 0)
+                        {
+                            $("#hide-if-full").show();
+                            $("#room-availability-status").html(data+" room(s) available and can be booked");
+                        } else {
+                            $("#hide-if-full").hide();
+                            $("#room-availability-status").html("All rooms are full and cannot be booked");
+                        }
+                    },
+                    error:function (){}
+                });
+            }
+        </script>
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+                $('#duration').keyup(function(){
+                    var fetch_dbid = $(this).val();
+                    $.ajax({
+                        type:'POST',
+                        url :"ins-amt.php?action=userid",
+                        data :{userinfo:fetch_dbid},
+                        success:function(data){
+                            $('.result').val(data);
+                        }
+                    });
+
+
+                })});
         </script>
 
 
