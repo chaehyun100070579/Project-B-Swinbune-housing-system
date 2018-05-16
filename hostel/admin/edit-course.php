@@ -4,17 +4,18 @@ include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
 //code for add courses
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
-$coursecode=$_POST['cc'];
-$coursesn=$_POST['cns'];
-$coursefn=$_POST['cnf'];
-$id=$_GET['id'];
-$query="update courses set course_code=?,course_sn=?,course_fn=? where id=?";
-$stmt = $mysqli->prepare($query);
-$rc=$stmt->bind_param('sssi',$coursecode,$coursesn,$coursefn,$id);
-$stmt->execute();
-echo"<script>alert('Course has been Updated successfully');</script>";
+	$coursecode=$_POST['cc'];
+	$coursesn=$_POST['cns'];
+	$coursefn=$_POST['cnf'];
+	$weeks=$POST['cd'];
+	$id=$_GET['id'];
+	$query="update courses set course_code=?,course_sn=?,course_fn=?,numberOfWeeks=? where id=?";
+	$stmt = $mysqli->prepare($query);
+	$rc=$stmt->bind_param('sssii',$coursecode,$coursesn,$coursefn,$weeks,$id);
+	$stmt->execute();
+	echo"<script>alert('Course has been Updated successfully');</script>";
 }
 
 ?>
@@ -30,21 +31,25 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 	<title>Edit Course</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-social.css">
 	<link rel="stylesheet" href="css/bootstrap-select.css">
 	<link rel="stylesheet" href="css/fileinput.min.css">
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/fonts/font-awesome.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="../../wp-content/themes/swinburne-sarawak-byhds/style.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/menus.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/responsive.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/slider.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
-<script type="text/javascript" src="js/validation.min.js"></script>
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/menus.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/responsive.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/slider.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
+	
+	<script type="text/javascript" src="js/jquery-1.11.3-jquery.min.js"></script>
+	<script type="text/javascript" src="js/validation.min.js"></script>
+
 </head>
 <body>
 	<?php include('includes/header.php');?>
@@ -55,71 +60,91 @@ echo"<script>alert('Course has been Updated successfully');</script>";
 
 				<div class="row">
 					<div class="col-md-12">
-					
+						<br/><br/><br/>
 						<h2 class="page-title">Edit Course </h2>
 	
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel panel-default">
-									<div class="panel-heading">Edit courses</div>
+									<div class="panel-heading">
+										Edit courses
+									</div>
 									<div class="panel-body">
 										<form method="post" class="form-horizontal">
-												<?php	
-												$id=$_GET['id'];
-	$ret="select * from courses where id=?";
-		$stmt= $mysqli->prepare($ret) ;
-	 $stmt->bind_param('i',$id);
-	 $stmt->execute() ;//ok
-	 $res=$stmt->get_result();
-	 //$cnt=1;
-	   while($row=$res->fetch_object())
-	  {
-	  	?>
-						<div class="hr-dashed"></div>
-						<div class="form-group">
-						<label class="col-sm-2 control-label">Course Code </label>
-					<div class="col-sm-8">
-					<input type="text"  name="cc" value="<?php echo $row->course_code;?>"  class="form-control"> </div>
-					</div>
-				 <div class="form-group">
-				<label class="col-sm-2 control-label">Course Name (Short)</label>
-		<div class="col-sm-8">
-	<input type="text" class="form-control" name="cns" id="cns" value="<?php echo $row->course_sn;?>" required="required">
-						 </div>
-						</div>
-<div class="form-group">
-									<label class="col-sm-2 control-label">Course Name(Full)</label>
-									<div class="col-sm-8">
-									<input type="text" class="form-control" name="cnf" value="<?php echo $row->course_fn;?>" >
-												</div>
+										
+										<?php	
+											$id=$_GET['id'];
+											$ret="select * from courses where id=?";
+											$stmt= $mysqli->prepare($ret) ;
+											$stmt->bind_param('i',$id);
+											$stmt->execute() ;//ok
+											$res=$stmt->get_result();
+											//$cnt=1;
+											while($row=$res->fetch_object())
+											{
+										?>											
+											<div class="hr-dashed">
 											</div>
 
+											<div class="form-group">
+												<label class="col-sm-12 control-label">
+													<div class="col-sm-2">
+														Course Code  <span style="color:red">*</span>
+													</div>
+													<div class="col-sm-8">
+														<input type="text"  name="cc" value="<?php echo $row->course_code;?>"  class="form-control">
+													</div>
+												</label>
+											</div>
 
-<?php } ?>
-												<div class="col-sm-8 col-sm-offset-2">
-													
-													<input class="btn btn-primary" type="submit" name="submit" value="Update Course">
-												</div>
+											<div class="form-group">
+												<label class="col-sm-12 control-label">
+													<div class="col-sm-2">
+														Course Name (Short)  <span style="color:red">*</span>
+													</div>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="cns" id="cns" value="<?php echo $row->course_sn;?>" required="required">
+													</div>
+												</label>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-12 control-label">
+													<div class="col-sm-2">
+														Course Name (Full)  <span style="color:red">*</span>
+													</div>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="cnf" value="<?php echo $row->course_fn;?>" >
+													</div>
+												</label>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-12 control-label">
+													<div class="col-sm-2">
+														Course Duration (weeks)  <span style="color:red">*</span>
+													</div>
+													<div class="col-sm-8">
+														<input type="text" class="form-control" name="cd" value="<?php echo $row->numberOfWeeks;?>" required="required">
+													</div>
+												</label>
+											</div>
+
+										<?php
+											}
+										?>
+
+											<div class="col-sm-8 col-sm-offset-2">
+												<input class="btn btn-primary" type="submit" name="submit" value="Update Course">
 											</div>
 
 										</form>
-
 									</div>
 								</div>
-									
-							
-							</div>
-						
-									
-							
-
 							</div>
 						</div>
-
 					</div>
 				</div> 	
-				
-
 			</div>
 		</div>
 	</div>
