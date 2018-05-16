@@ -56,6 +56,7 @@ if(isset($_GET['del']))
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                            <br/><br/><br/>
                             <h2 class="page-title">Manage Rooms</h2>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
