@@ -23,15 +23,73 @@ check_login();
         <link rel="stylesheet" href="css/fileinput.min.css">
         <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
         <link rel="stylesheet" href="css/style.css">
+        
         <script language="javascript" type="text/javascript">
             var popUpWin=0;
             function popUpWindow(URLStr, left, top, width, height)
-            {
-                if(popUpWin)
+            {	
+                // http://localhost/hostel/admin/full-profile.php?id=$row->id
+                var url = location.href; // entire url including querystring - also: window.location.href;
+                var baseURL = url.substring(0, url.indexOf('/', 14));
+                if (baseURL.indexOf('http://localhost') != -1) 
                 {
-                    if(!popUpWin.closed) popUpWin.close();
+                    // Base Url for localhost
+                    var url = location.href; // window.location.href;
+                    var pathname = location.pathname; // window.location.pathname;
+                    var index1 = url.indexOf(pathname);
+                    var index2 = url.indexOf("/", index1 + 1);
+                    var baseLocalUrl = url.substr(0, index2);
+                    var baseLocalUrl2 = baseLocalUrl.concat(URLStr);
+                    // return baseLocalUrl + "/";
+            
+                    if(popUpWin)
+                    {
+                        if(!popUpWin.closed) popUpWin.close();
+                    }
+                    popUpWin = open(baseLocalUrl2,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
+            
                 }
-                popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
+                else 
+                {
+                    // Root Url for domain name
+                    // return baseURL + "/";
+                    var baseURL2 = baseURL.concat(URLStr);
+                    if(popUpWin)
+                    {
+                        if(!popUpWin.closed) popUpWin.close();
+                    }
+                    popUpWin = open(baseURL2,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
+            
+                }
+            
+                // if(popUpWin)
+                // {
+                // 	if(!popUpWin.closed) popUpWin.close();
+                // }
+                // popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
+            }
+            
+            function getBaseURL() // dynamic url for localhost
+            {
+                var url = location.href; // entire url including querystring - also: window.location.href;
+                var baseURL = url.substring(0, url.indexOf('/', 14));
+                if (baseURL.indexOf('http://localhost') != -1) 
+                {
+                    // Base Url for localhost
+                    var url = location.href; // window.location.href;
+                    var pathname = location.pathname; // window.location.pathname;
+                    var index1 = url.indexOf(pathname);
+                    var index2 = url.indexOf("/", index1 + 1);
+                    var baseLocalUrl = url.substr(0, index2);
+                    
+                    return baseLocalUrl + "/";
+                }
+                else 
+                {
+                    // Root Url for domain name
+                    return baseURL + "/";
+                }
+                
             }
 
         </script>
@@ -83,12 +141,11 @@ check_login();
                                             ?>
 
                                             <tr>
-                                                <td colspan="4"><h4>Room Realted Info</h4></td>
-                                                <td><a href="javascript:void(0);"  onClick="popUpWindow('http://localhost/Swinburne%20hostel%20webstie17/hostel/full-profile.php?id=<?php echo $row->emailid;?>');" title="View Full Details">Print Data</a></td>
+                                                <td colspan="4"><h4>Room Related Info</h4></td>
+                                                <td><a href="javascript:void(0);"  onClick="popUpWindow('/hostel/full-profile.php?id=<?php echo $row->emailid;?>');" title="View Full Details">Print Data</a></td>
                                             </tr>
-                                            
                                             <tr>
-                                                <td colspan="6"><b>Reg Date. :<?php echo $row->postingDate;?></b></td>
+                                                <td colspan="6"><b>Reg no. :<?php echo $row->postingDate;?></b></td>
                                             </tr>
 
 
@@ -118,11 +175,11 @@ check_login();
                                                     ?></b></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="6"><h4>Personal Info Info</h4></td>
+                                                <td colspan="6"><h4>Personal Info</h4></td>
                                             </tr>
 
                                             <tr>
-                                                <td><b>Student ID. :</b></td>
+                                                <td><b>Reg No. :</b></td>
                                                 <td><?php echo $row->studentid;?></td>
                                                 <td><b>Full Name :</b></td>
                                                 <td><?php echo $row->firstName;?>&nbsp;<?php echo $row->middleName;?>&nbsp;<?php echo $row->lastName;?></td>
