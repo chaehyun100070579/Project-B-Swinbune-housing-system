@@ -84,10 +84,11 @@ check_login();
 
                                             <tr>
                                                 <td colspan="4"><h4>Room Realted Info</h4></td>
-                                                <td><a href="javascript:void(0);"  onClick="popUpWindow('http://localhost/hostel/full-profile.php?id=<?php echo $row->emailid;?>');" title="View Full Details">Print Data</a></td>
+                                                <td><a href="javascript:void(0);"  onClick="popUpWindow('http://localhost/Swinburne%20hostel%20webstie17/hostel/full-profile.php?id=<?php echo $row->emailid;?>');" title="View Full Details">Print Data</a></td>
                                             </tr>
+                                            
                                             <tr>
-                                                <td colspan="6"><b>Reg no. :<?php echo $row->postingDate;?></b></td>
+                                                <td colspan="6"><b>Reg Date. :<?php echo $row->postingDate;?></b></td>
                                             </tr>
 
 
@@ -121,7 +122,7 @@ check_login();
                                             </tr>
 
                                             <tr>
-                                                <td><b>Reg No. :</b></td>
+                                                <td><b>Student ID. :</b></td>
                                                 <td><?php echo $row->studentid;?></td>
                                                 <td><b>Full Name :</b></td>
                                                 <td><?php echo $row->firstName;?>&nbsp;<?php echo $row->middleName;?>&nbsp;<?php echo $row->lastName;?></td>
