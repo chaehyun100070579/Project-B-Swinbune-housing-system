@@ -37,6 +37,8 @@ if(isset($_POST['submit']))
     {
         $studentid=$row->studentid;
         $email = $row->emailid;
+        $TotalPaymentStatus = $row->TotalPaymentStatus;
+
         //$CheckoutStatus="1";
         //$CheckinStatus="0";
         $CheckoutDate = $_POST['CheckoutDate'];
@@ -48,43 +50,62 @@ if(isset($_POST['submit']))
             $CheckoutStatus="1";
             $CheckinStatus="0";
             //echo"<script>alert('Semester Break Notification');</script>";
-
-            $chkSameRoom = $_POST['chkSameRoom'];
-
+            
+           
+            $chkSameRoom = $_POST['chkSameRoom']; 
+          
+            
             if ($chkSameRoom =='')
             {
-                echo"<script>alert('You Must choose Room option to Renwal Yes or No!');</script>";
+                "<script>alert('You Must choose Room option to Renwal Yes or No!');</script>";
                 exit();
+               
             }
             else
             {
-                if($chkSameRoom == "YesSameRoom")
+
+                if($TotalPaymentStatus == "0")
                 {
-                    $query = "update registration SET TotalPaymentStatus = '0' WHERE studentid = '$studentid' ";
-                    $stmt = $mysqli->prepare($query);
-                    $stmt->execute();
+                    echo"<script>alert('You Must pay total rental fee before checkout !');</script>";
+                    exit();
                 }
                 else
                 {
-                    $roomno=$_POST['room'];
-                    $seater=$_POST['seater'];
-                    $feespm=$_POST['fpm'];
-                    $duration=$_POST['duration'];
-                    $course=$_POST['course'];
-
-                    if($roomno=='' or $course=='' )
+                    if($chkSameRoom == "YesSameRoom")
                     {
-                        echo"<script>alert('You Must choose which room to continue and Course!');</script>";
-                        exit ();
-                    }
-                    else
-                    {
-                        $query = "update registration SET TotalPaymentStatus = '0', roomno ='$roomno', seater='$seater', feespm='$feespm', course='$course' WHERE studentid = '$studentid' ";
+                        $query = "update registration SET TotalPaymentStatus = '0' WHERE studentid = '$studentid' ";
                         $stmt = $mysqli->prepare($query);
                         $stmt->execute();
                     }
+                    else
+                    {
+                        $roomno=$_POST['room'];
+                        $seater=$_POST['seater'];
+                        $feespm=$_POST['fpm'];
+                        $duration=$_POST['duration'];
+                        $course=$_POST['course'];
+
+                        if($roomno=='' or $course=='' )
+                        {
+                            echo"<script>alert('You Must choose which room to continue and Course!');</script>";
+                            exit ();
+                        }
+                        else
+                        {
+                            $query = "update registration SET TotalPaymentStatus = '0', roomno ='$roomno', seater='$seater', feespm='$feespm', duration='$duration', course='$course' WHERE studentid = '$studentid' ";
+                            $stmt = $mysqli->prepare($query);
+                            $stmt->execute();
+                        }
+                    }
+
                 }
+
+
             }
+
+
+
+
         }
         elseif($CheckoutOption == "2")
         {
@@ -244,8 +265,11 @@ if(isset($_POST['submit']))
                                             </tr>
                                         </tbody>
                                     </table>
-                    ";
-                    
+                    ".
+            "You can pay renewed total fee at the Room Details & Payment Section!";
+            
+         
+
         $mail->Subject = 'Email from  Swinbune housing';
         $mail->Body    = $bodyContent;
         $mail->smtpConnect([
@@ -629,15 +653,15 @@ YB
                                                         <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" > 
                                                         <option value="" disabled selected hidden>Select Room</option>
                                         ';                                    
-                                                            $query ="SELECT DISTINCT RoomType FROM rooms";
-                                                            $stmt2 = $mysqli->prepare($query);
-                                                            $stmt2->execute();
-                                                            $res=$stmt2->get_result();
-                                                            while($row=$res->fetch_object())
-                                                            {
-                                                                echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
-                                                            }
-                                        echo '
+                                    $query ="SELECT DISTINCT RoomType FROM rooms";
+                                    $stmt2 = $mysqli->prepare($query);
+                                    $stmt2->execute();
+                                    $res=$stmt2->get_result();
+                                    while($row=$res->fetch_object())
+                                    {
+                                        echo "<option value=\"".$row->RoomType."\">".$row->RoomType."</option>";
+                                    }
+                                    echo '
                                                         </select> 
                                                         <span id="room-availability-status" style="font-size:12px;color:red"></span>
                                                     </div>
@@ -668,10 +692,10 @@ YB
                                                             <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  > 
                                                                 <option value="" disabled selected hidden>Select Course</option>
                                             '; 
-                                                                    while($row2=$res2->fetch_object()) {
-                                                                        echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
-                                                                    }
-                                            echo '
+                                    while($row2=$res2->fetch_object()) {
+                                        echo "<option value=\"".$row2->course_code."\">".$row2->course_code."</option>";
+                                    }
+                                    echo '
                                                             </select>
                                                         </div>
 
@@ -714,7 +738,7 @@ YB
                                                 <input type="radio" name="Checkout" value="4" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getCheckout(4,this.form.Checkout)" required/>
                                                 <b>Moving out to private accommodation</b>
                                             </label>
-                                            
+
                                             <span id="checkout-new-address">
                                                 <label>
                                                     <b>New Address: </b>
@@ -991,14 +1015,14 @@ YB
         </div>
 
         <!-- 
-            <script>
-                $('#myCheck').change(function() {
-                    if (!$(this).is(':checked')) {
-                        alert('unchecked');
-                    }
-                });
-            </script>
-        -->
+<script>
+$('#myCheck').change(function() {
+if (!$(this).is(':checked')) {
+alert('unchecked');
+}
+});
+</script>
+-->
         <!-- Loading Scripts -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
@@ -1011,7 +1035,7 @@ YB
         <script src="js/main.js"></script>
 
         <!--<script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
-        -->
+-->
 
 
         <script type="text/javascript">
