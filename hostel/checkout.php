@@ -51,19 +51,15 @@ if(isset($_POST['submit']))
             $CheckinStatus="0";
             //echo"<script>alert('Semester Break Notification');</script>";
             
-           
-            $chkSameRoom = $_POST['chkSameRoom']; 
-          
+            $chkSameRoom = $_POST['chkSameRoom'];          
             
             if ($chkSameRoom =='')
             {
                 "<script>alert('You Must choose Room option to Renwal Yes or No!');</script>";
-                exit();
-               
+                exit();               
             }
             else
             {
-
                 if($TotalPaymentStatus == "0")
                 {
                     echo"<script>alert('You Must pay total rental fee before checkout !');</script>";
@@ -97,15 +93,8 @@ if(isset($_POST['submit']))
                             $stmt->execute();
                         }
                     }
-
                 }
-
-
             }
-
-
-
-
         }
         elseif($CheckoutOption == "2")
         {
@@ -178,7 +167,7 @@ if(isset($_POST['submit']))
                     <table border='1' id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
                      <tbody>
                                             <tr>
-                                                <td colspan='6'><h4>Room Realted Info</h4></td>
+                                                <td colspan='6'><h4>Room Related Info</h4></td>
                                             </tr>
                                             <tr>
                                                 <td><b>Room no :</b></td>
@@ -319,10 +308,6 @@ if(isset($_POST['submit']))
         <link href="../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
         <link href="../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
 
-        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-
-        <title>Room Transfer Request Form</title>
-
         <script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
 
         <script>
@@ -412,15 +397,15 @@ if(isset($_POST['submit']))
 
 
         <!--
-<link media="only screen and (max-device-width: 480px)" href="local/css/iphone.css" type="text/css" rel="stylesheet" />
--->
+        <link media="only screen and (max-device-width: 480px)" href="local/css/iphone.css" type="text/css" rel="stylesheet" />
+        -->
         <!--
-YB
-<link href="http://global.swinburne.edu.au/template/css/whats_on.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.coda-slider-2.0.js"></script>
-<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
--->
+        YB
+        <link href="http://global.swinburne.edu.au/template/css/whats_on.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.coda-slider-2.0.js"></script>
+        <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="http://global.swinburne.edu.au/js/whats_on/slider-initiate.js"></script><link href="http://global.swinburne.edu.au/template/css/news.css" rel="stylesheet" type="text/css" />
+        -->
 
         <style type="text/css">
             /*
@@ -598,12 +583,12 @@ YB
                                         <td class="content_black1">Location</td>
                                         <td colspan="5" class="content_black1">
                                             <label>
-                                                <input type="radio" id="gender" value="male" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(1,this.form.Location)" disabled="disabled" '; if($gender=="male") echo "checked='checked'"; echo'/>
+                                                <input type="radio" id="gender" value="male" name="Location" onclick="getLocation(1,this.form.Location)" '; if($gender=="male") echo "checked='checked'"; else echo "disabled='disabled'"; echo'/>
                                                 Male Hostel
                                                 &nbsp;&nbsp;&nbsp;
                                             </label>
                                             <label>
-                                                <input type="radio" id="gender" value="female" name="Location"  style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" disabled="disabled" '; if($gender=="female") echo "checked='checked'"; echo'/>
+                                                <input type="radio" id="gender" value="female" name="Location" onclick="getLocation(2,this.form.Location)" '; if($gender=="female") echo "checked='checked'"; else echo "disabled='disabled'"; echo'/>
                                                 Female Hostel
                                                 &nbsp;&nbsp;&nbsp;
                                             </label>
@@ -828,7 +813,9 @@ YB
                                             </table>
                                             <table border="0" width="580" cellpadding="0" cellspacing="1" align="center">
                                                 <tr>
-                                                    <td width="30" valign="top"><input type="checkbox" name="Refund_Bank_FName" value="Payee Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(1,this.form.Refund_Bank_FName)" disabled="disabled" /></td>
+                                                    <td width="30" valign="top">
+                                                        <input type="checkbox" name="Refund_Bank_FName" id="Payee_Name" value="Payee Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(1,this.form.Refund_Bank_FName)" disabled="disabled" />
+                                                    </td>
                                                     <td width="280" valign="top" class="content_black1"><b>Payee Name</b><br />
                                                         <span class="content_black_small">
                                                             (<b><u>Student\'s name</u></b> stated as in their Own bank book)
@@ -844,7 +831,9 @@ YB
                                                         </center></td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="30" valign="top"><input type="checkbox" name="Refund_Bank_FName" value="Parent Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(2,this.form.Refund_Bank_FName)" disabled="disabled" /></td>
+                                                    <td width="30" valign="top">
+                                                        <input type="checkbox" name="Refund_Bank_FName" id="Parent_Name" value="Parent Name" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getRefund_Bank_FName(2,this.form.Refund_Bank_FName)" disabled="disabled" />
+                                                    </td>
                                                     <td width="280" valign="top" class="content_black1"><b>Please prepare the cheque under my <u><i>Father\'s / Mother\'s</i></u> Name</b><br />
                                                         <span class="content_black_small">
                                                             (As stated in their bank book)
@@ -912,9 +901,12 @@ YB
                                                     </td>
                                                 </tr>
                                             </table>
+                                            <br/>
                                             <table border="0" width="580" cellpadding="0" cellspacing="2" align="center">
                                                 <tr>
-                                                    <td width="20"><input type="checkbox" name="Agree_Refund_Term" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" required /></td>
+                                                    <td width="30" valign="top">
+                                                        <input type="checkbox" name="Agree_Refund_Term" style="zoom:1.3;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" disabled="disabled" required />
+                                                    </td>
                                                     <td colspan="2" class="content_black1"> 
                                                         I understand that the process of refund is subject to the reasons below, and agree
                                                         not to hold the University liable for late payment of refund should the conditions
@@ -983,7 +975,7 @@ YB
                                             <input type="text" name="Submission_Date" style="width:80px" value='.date('Y/m/d').' readonly="readonly" /></td>
                                     </tr>
                                 </table>
-                                <input type="hidden" name="Location_field" value="" />
+                                <input type="text" name="Location_field" value="" />
                                 <input type="hidden" name="Checkout_field" value="" />
                                 <input type="hidden" name="Refund_MOP_field" value="" />
                                 <input type="hidden" name="Refund_Name_field" value="" />
@@ -1000,13 +992,9 @@ YB
                                 }
                                 ?>	<!-- enclose table(form) in php to hide if already checked out (and also escape \') -->
                             </form>
-
-
-
+                            
                         </div>
-
                     </div>
-
 
                     <div class="clearing"></div>     
 
@@ -1015,14 +1003,14 @@ YB
         </div>
 
         <!-- 
-<script>
-$('#myCheck').change(function() {
-if (!$(this).is(':checked')) {
-alert('unchecked');
-}
-});
-</script>
--->
+        <script>
+            $('#myCheck').change(function() {
+                if (!$(this).is(':checked')) {
+                    alert('unchecked');
+                }
+            });
+        </script>
+        -->
         <!-- Loading Scripts -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
@@ -1033,10 +1021,6 @@ alert('unchecked');
         <script src="js/fileinput.js"></script>
         <script src="js/chartData.js"></script>
         <script src="js/main.js"></script>
-
-        <!--<script language="JavaScript" type="text/javascript" src="Checkout.js"></script>
--->
-
 
         <script type="text/javascript">
             var checkbox = document.getElementById('chkRenewal');
@@ -1133,24 +1117,16 @@ alert('unchecked');
                 })});
         </script>
 
-        <!--
-<script>
-if (document.getElementById('chkRenewal').checked == true)
-{
-if( (document.getElementById('showYesSameRoom').checked ==false) && (document.getElementById('showNoSameRoom').checked ==false)  )
-{
-alert('You MUST Choose Renewal Option (Yes or No)');
-
-}
-
-}
-</script>
--->
-
-
+    <!--
+    <script>
+        if (document.getElementById('chkRenewal').checked == true)
+        {
+            if( (document.getElementById('showYesSameRoom').checked ==false) && (document.getElementById('showNoSameRoom').checked ==false)  )
+            {
+                alert('You MUST Choose Renewal Option (Yes or No)');
+            }
+        }
+    </script>
+    -->
     </body>
-
-
-
-
 </html>
