@@ -16,9 +16,10 @@ if(isset($_POST['submit']))
     
     $query="update rooms set seater=?,room_no=?,fees=?,RoomType=?,block=? where id=?";
     $stmt = $mysqli->prepare($query);
-    $rc=$stmt->bind_param('isisis',$seater,$rmno,$fees,$RoomType,$block,$id);
+    $rc=$stmt->bind_param('isissi',$seater,$rmno,$fees,$RoomType,$block,$id);
     $stmt->execute();
-    echo"<script>alert('Room Details has been Updated successfully');</script>";
+    echo"<script>alert('Room Details has been Updated successfully');window.location = './manage-rooms.php';</script>";
+    die();
 }
 
 ?>
@@ -86,29 +87,11 @@ if(isset($_POST['submit']))
                                                 {
                                                 ?>
                                                 <div class="hr-dashed"></div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Single or Sharing (Seater) <span style="color:red">*</span></label>
-                                                    <div class="col-sm-8">
-                                                        <select name="seater" id="seater" class="form-control" style="font-size:smaller;" > 
-                                                            <option value="<?php echo $row->seater;?>" selected hidden><?php echo $row->seater;?></option>
-                                                            <?php $query ="SELECT DISTINCT seater FROM rooms order by seater";
-                                                            $stmt2 = $mysqli->prepare($query);
-                                                            $stmt2->execute();
-                                                            $res2=$stmt2->get_result();
-                                                            while($row2=$res2->fetch_object())
-                                                            {
-                                                            ?>
-                                                            <option value="<?php echo $row2->seater;?>"><?php echo $row2->seater;?></option>
-    
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
+
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Room No. <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control" name="rmno" id="rmno" value="<?php echo $row->room_no;?>" >
-                                                      
+                                                        <input type="text" class="form-control" name="rmno" id="rmno" value="<?php echo $row->room_no;?>" >                                                      
                                                     </div>
                                                 </div>
 
@@ -125,6 +108,25 @@ if(isset($_POST['submit']))
                                                             {
                                                             ?>
                                                             <option value="<?php echo $row2->RoomType;?>"><?php echo $row2->RoomType;?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Single or Sharing (Seater) <span style="color:red">*</span></label>
+                                                    <div class="col-sm-8">
+                                                        <select name="seater" id="seater" class="form-control" style="font-size:smaller;" > 
+                                                            <option value="<?php echo $row->seater;?>" selected hidden><?php echo $row->seater;?></option>
+                                                            <?php $query ="SELECT DISTINCT seater FROM rooms order by seater";
+                                                            $stmt2 = $mysqli->prepare($query);
+                                                            $stmt2->execute();
+                                                            $res2=$stmt2->get_result();
+                                                            while($row2=$res2->fetch_object())
+                                                            {
+                                                            ?>
+                                                            <option value="<?php echo $row2->seater;?>"><?php echo $row2->seater;?></option>
+    
                                                             <?php } ?>
                                                         </select>
                                                     </div>
