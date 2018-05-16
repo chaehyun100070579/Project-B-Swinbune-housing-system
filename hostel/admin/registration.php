@@ -173,7 +173,7 @@ if($_POST['submit'])
                     <div class="row">
                         <div class="col-md-12">
 
-                            <h2 class="page-title">Registr Student to a room</h2>
+                            <h2 class="page-title">Register Student to a room</h2>
 
                             <div class="row">
                                 <div class="col-md-12">
