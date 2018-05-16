@@ -58,7 +58,7 @@ $udate=date('Y-m-d');
 	<title>Admin Profile</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-social.css">
 	<link rel="stylesheet" href="css/bootstrap-select.css">
 	<link rel="stylesheet" href="css/fileinput.min.css">
@@ -105,6 +105,7 @@ $udate=date('Y-m-d');
 				<div class="row">
 					<div class="col-md-12">
 					
+						<br/><br/><br/>
 						<h2 class="page-title">Admin Profile</h2>
 						<?php	
 						$aid=$_SESSION['id'];
@@ -188,7 +189,7 @@ $udate=date('Y-m-d');
 												<label class="col-sm-4 control-label">Old Password </label>
 												<div class="col-sm-8">
 													<input type="password" value="" name="oldpassword" id="oldpassword" class="form-control" onBlur="checkpass()" required="required">
-													<span id="password-availability-status" class="help-block m-b-none" style="font-size:12px;"></span>
+													<span id="password-availability-status" class="help-block m-b-none" style="font-size:12px;display:none;"></span>
 												</div>
 											</div>
 
@@ -261,6 +262,7 @@ $udate=date('Y-m-d');
 		data:'oldpassword='+$("#oldpassword").val(),
 		type: "POST",
 		success:function(data){
+		$("#password-availability-status").show();
 		$("#password-availability-status").html(data);
 		$("#loaderIcon").hide();
 		},
