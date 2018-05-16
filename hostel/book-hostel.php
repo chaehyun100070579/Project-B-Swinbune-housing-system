@@ -135,7 +135,7 @@ if(isset($_POST['submit']))
 
                                             <tr>
                                                 <td colspan='6'><b>Total Fee : 
-                                                    $totalfee                                        
+                                                    ".$feespm*$duration."
                                             </b></td>
                                             </tr>
                                             <tr>
