@@ -38,9 +38,9 @@ if(isset($_POST['submit']))
     {
         echo"<script>alert('You cant check-in more than an one time! You are already CHECKED in!');</script>";
     }
-    elseif($row->CheckoutStatus == true)
+    elseif($row->CheckoutStatus == true && $row->CheckinStatus == true)
     {
-        echo"<script>alert('You are already Checked out! you can\'t check in anymore');</script>";
+        echo"<script>alert('You are already permanently Checked out! you can\'t check in anymore');</script>";
     }
 
 
@@ -348,6 +348,7 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
                                 $res=$stmt->get_result();
                                 //$cnt=1;
                                 $row=$res->fetch_object();
+                                $gender=$row->gender;
 
                                 if(isset($row))
                                 {
@@ -469,14 +470,17 @@ href="local/css/iphone.css" type="text/css" rel="stylesheet" />-->
 
                                     <tr>
                                         <td class="content_black1">Building</td>
-                                        <td colspan="5" class="content_black1" required>
-                                            <input type="checkbox" name="Location" value="Male Hostel" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(1,this.form.Location)" />
-                                            Male Hostel
-                                            &nbsp;&nbsp;&nbsp;
-                                            <input type="checkbox" name="Location" value="Female Hostel" style="background-color:#FFFFAA;" onfocus="changeInColor(this);" onblur="changeColorBack(this);" onclick="getLocation(2,this.form.Location)" />
-                                            Female Hostel
-                                            &nbsp;&nbsp;&nbsp;
-
+                                        <td colspan="5" class="content_black1">
+                                            <label>
+                                                <input type="checkbox" name="Location" value="Male Hostel" '; if($gender=="male") echo "checked='checked'"; else echo "disabled='disabled'"; echo 'onclick="getLocation(1,this.form.Location)" />
+                                                Male Hostel
+                                                &nbsp;&nbsp;&nbsp;
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="Location" value="Female Hostel" '; if($gender=="female") echo "checked='checked'"; else echo "disabled='disabled'"; echo 'onclick="getLocation(2,this.form.Location)" />
+                                                Female Hostel
+                                                &nbsp;&nbsp;&nbsp;
+                                            </label>
                                         </td>
                                     </tr>
 
