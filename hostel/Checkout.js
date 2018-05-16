@@ -63,16 +63,14 @@ function getCheckout(option,field)
 
         document.CheckoutForm.Cheque.disabled = true;
         document.CheckoutForm.Cheque.checked = false;
-        
-        //document.CheckoutForm.Bank_Swift_Code.disabled = false;
-        
+                
         document.CheckoutForm.Refund_Deposit.disabled = true;
         document.CheckoutForm.Refund_Deposit.checked = false;
         document.CheckoutForm.Refund_Others.disabled = true;
         document.CheckoutForm.Refund_Others.checked = false;
         document.CheckoutForm.RefundDetail.disabled = true;
         document.CheckoutForm.RefundDetail.value="";
-        document.CheckoutForm.RefundDetail.style.background="EBEBE4";
+        document.CheckoutForm.RefundDetail.style.background="#EBEBE4";
 
         //document.CheckoutForm.Refund_MOP.disabled = true;
         disabledAll(document.CheckoutForm.Refund_MOP);
@@ -80,16 +78,40 @@ function getCheckout(option,field)
         document.getElementById('Refund_MOP2').checked = false;
         document.CheckoutForm.TT_Currency.disabled = true;
         document.CheckoutForm.TT_Currency.value="";
-        document.CheckoutForm.TT_Currency.style.background="EBEBE4";
+        document.CheckoutForm.TT_Currency.style.background="#EBEBE4";
         
         document.CheckoutForm.NewAddress.disabled = true;
         document.CheckoutForm.OwnerName.disabled = true;
         document.CheckoutForm.OwnerContact.disabled = true;
+        
+        // DISABLE EVERYTHING FOR REFUND
+        disabledAll(document.CheckoutForm.Refund_Bank_FName);
+        document.getElementById('Payee_Name').checked = false;
+        document.getElementById('Parent_Name').checked = false;
+        
+        document.CheckoutForm.Bank_FullName.value = '';
+        document.CheckoutForm.Bank_FullName.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_FullName.disabled = true;
+        document.CheckoutForm.Bank_ParentName.value = '';
+        document.CheckoutForm.Bank_ParentName.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_ParentName.disabled = true;
 
-        disabledAll(document.CheckoutForm.Refund_Bank_FName); //HAVE TO ADD MORE DISABLE
+        document.CheckoutForm.Payee_ID.value = '';
+        document.CheckoutForm.Payee_ID.disabled = true;        
+        document.CheckoutForm.Payee_ID.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_AcctNo.value = '';
         document.CheckoutForm.Bank_AcctNo.disabled = true;
+        document.CheckoutForm.Bank_AcctNo.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_Name.value = '';
         document.CheckoutForm.Bank_Name.disabled = true;
+        document.CheckoutForm.Bank_Name.style.background="#EBEBE4";
+        document.CheckoutForm.Bank_Address.value = '';
         document.CheckoutForm.Bank_Address.disabled = true;
+        document.CheckoutForm.Bank_Address.style.background="#EBEBE4";
+
+        document.CheckoutForm.Bank_Swift_Code.value = '';
+        document.CheckoutForm.Bank_Swift_Code.disabled = true;
+        document.CheckoutForm.Bank_Swift_Code.style.background="#EBEBE4";
 
         document.CheckoutForm.Agree_Refund_Term.disabled = false;
 
@@ -233,7 +255,7 @@ function getRefund_MOP(option,field)
     document.CheckoutForm.TT_Currency.value = '';
     document.CheckoutForm.TT_Currency.style.background="#EBEBE4";
     document.CheckoutForm.TT_Currency.disabled = true;	
-    enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX	
+    enabledAll(document.CheckoutForm.Refund_Bank_FName); // ENABLE PAYEE/PARENT TICK BOX
     document.CheckoutForm.Payee_ID.disabled = false;
     document.CheckoutForm.Payee_ID.style.background="#FFFFAA";
     document.CheckoutForm.Bank_AcctNo.disabled = false;
@@ -477,7 +499,12 @@ function checkEmpty()
      return false;
     }
 
-
+    // if (document.CheckoutForm.Location_field.value=='')
+    // {   alert('You MUST fill in your Buildings.');
+    //  document.CheckoutForm.Location[0].focus();
+    //  pass=false;
+    //  return false;
+    // }
 
     if (document.CheckoutForm.FullName.value=='')
     {   alert('You MUST fill in your NAME.');
@@ -486,47 +513,40 @@ function checkEmpty()
      return false;
     }
 
-    if (document.CheckoutForm.StudID.value=='')
-    {   alert('You MUST fill in your STUDENT ID.');
-     document.CheckoutForm.StudID.focus();
-     pass=false;
-     return false;
-    }
+    // if (document.CheckoutForm.StudID.value=='')
+    // {   alert('You MUST fill in your STUDENT ID.');
+    //  document.CheckoutForm.StudID.focus();
+    //  pass=false;
+    //  return false;
+    // }
 
-    if (document.CheckoutForm.ContactNo.value=='')
-    {   alert('You MUST fill in your CONTACT NO.');
-     document.CheckoutForm.ContactNo.focus();
-     pass=false;
-     return false;
-    }
+    // if (document.CheckoutForm.ContactNo.value=='')
+    // {   alert('You MUST fill in your CONTACT NO.');
+    //  document.CheckoutForm.ContactNo.focus();
+    //  pass=false;
+    //  return false;
+    // }
 
-    if (document.CheckoutForm.Email.value=='')
-    {   alert('You MUST fill in your E-MAIL.');
-     document.CheckoutForm.Email.focus();
-     pass=false;
-     return false;
-    }
-    else
-    {   if (emailCheck(document.CheckoutForm.Email.value)==false)
-    {   document.CheckoutForm.Email.focus();
-     pass=false;
-     return false;
-    } 
-    }
+    // if (document.CheckoutForm.Email.value=='')
+    // {   alert('You MUST fill in your E-MAIL.');
+    //  document.CheckoutForm.Email.focus();
+    //  pass=false;
+    //  return false;
+    // }
+    // else
+    // {   if (emailCheck(document.CheckoutForm.Email.value)==false)
+    // {   document.CheckoutForm.Email.focus();
+    //  pass=false;
+    //  return false;
+    // } 
+    // }
 
-    if (document.CheckoutForm.Location_field.value=='')
-    {   alert('You MUST fill in your Buildings.');
-     document.CheckoutForm.Location[0].focus();
-     pass=false;
-     return false;
-    }
-
-    if (document.CheckoutForm.House_Flat.value=='')
-    {   alert('You MUST fill in the HOUSE / FLAT.');
-     document.CheckoutForm.House_Flat.focus();
-     pass=false;
-     return false;
-    }
+    // if (document.CheckoutForm.House_Flat.value=='')
+    // {   alert('You MUST fill in the HOUSE / FLAT.');
+    //  document.CheckoutForm.House_Flat.focus();
+    //  pass=false;
+    //  return false;
+    // }
 
     if (document.CheckoutForm.RoomNo.value=='')
     {   alert('You MUST fill in the ROOM NO.');
