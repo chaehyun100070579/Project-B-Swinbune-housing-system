@@ -35,25 +35,26 @@ if(isset($_GET['del']))
 	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link href="../../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/fonts/font-awesome.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/style.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/menus.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/responsive.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/slider.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
-        <link href="../../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/fonts/font-awesome.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/style.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/menus.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/responsive.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/slider.css" media="screen" rel="stylesheet" type="text/css" />
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
+	<link href="../../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 	<?php include('includes/header.php');?>
 
 	<div class="ts-main-content">
-			<?php include('includes/sidebar.php');?>
+		<?php include('includes/sidebar.php');?>
 		<div class="content-wrapper">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
+						<br/><br/><br/>
 						<h2 class="page-title">Manage Course</h2>
 						<div class="panel panel-default">
 							<div class="panel-heading">All Courses Details</div>
@@ -72,31 +73,33 @@ if(isset($_GET['del']))
 									</thead>
 							
 									<tbody>
-                                        <?php	
-                                            $aid=$_SESSION['id'];
-                                            $ret="select * from courses";
-                                            $stmt= $mysqli->prepare($ret) ;
-                                            //$stmt->bind_param('i',$aid);
-                                            $stmt->execute() ;//ok
-                                            $res=$stmt->get_result();
-                                            $cnt=1;
-                                            while($row=$res->fetch_object())
-                                            {
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $cnt;;?></td>
-                                                <td><?php echo $row->course_code;?></td>
-                                                <td><?php echo $row->course_sn;?></td>
-                                                <td><?php echo $row->course_fn;?></td>
-                                                <td><?php echo $row->numberOfWeeks;?></td>
-                                                <td><?php echo $row->posting_date;?></td>
-                                                <td><a href="edit-course.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>
-												&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a href="manage-courses.php?del=<?php echo $row->id;?>" onclick="return confirm('Do you want to delete this course?');"><i class="fa fa-close"></i></a></td>
-                                            </tr>
-									    <?php
-                                            $cnt=$cnt+1;    
-									       } ?>
+									<?php	
+										$aid=$_SESSION['id'];
+										$ret="select * from courses";
+										$stmt= $mysqli->prepare($ret) ;
+										//$stmt->bind_param('i',$aid);
+										$stmt->execute() ;//ok
+										$res=$stmt->get_result();
+										$cnt=1;
+										while($row=$res->fetch_object())
+										{
+									?>
+										<tr>
+											<td><?php echo $cnt;;?></td>
+											<td><?php echo $row->course_code;?></td>
+											<td><?php echo $row->course_sn;?></td>
+											<td><?php echo $row->course_fn;?></td>
+											<td><?php echo $row->numberOfWeeks;?></td>
+											<td><?php echo $row->posting_date;?></td>
+											<td><a href="edit-course.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="manage-courses.php?del=<?php echo $row->id;?>" onclick="return confirm('Do you want to delete this course?');"><i class="fa fa-close"></i></a></td>
+										</tr>
+
+									<?php
+										$cnt=$cnt+1;
+										} 
+									?>
 										
 									</tbody>
 								</table>
