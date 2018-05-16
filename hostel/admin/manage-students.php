@@ -124,6 +124,7 @@ if(isset($_GET['del']))
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                            <br/><br/><br/>
                             <h2 class="page-title">Manage Students</h2>
                             <div class="panel panel-default">
                                 <div class="panel-heading">All Room Details</div>
@@ -131,25 +132,25 @@ if(isset($_GET['del']))
                                     <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Sno.</th>
+                                                <th>No.</th>
                                                 <th>Student Name</th>
                                                 <th>Student ID</th>
-                                                <th>Contact no </th>
-                                                <th>room no  </th>
-                                                <th>Seater </th>
-                                                <th>Staying From </th>
+                                                <th>Contact No.</th>
+                                                <th>Room No.</th>
+                                                <th>Seater</th>
+                                                <th>Staying From</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Sno.</th>
+                                                <th>No.</th>
                                                 <th>Student Name</th>
                                                 <th>Student ID</th>
-                                                <th>Contact no </th>
-                                                <th>Room no  </th>
-                                                <th>Seater </th>
-                                                <th>Staying From </th>
+                                                <th>Contact No.</th>
+                                                <th>Room No.</th>
+                                                <th>Seater</th>
+                                                <th>Staying From</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
