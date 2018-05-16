@@ -37,12 +37,13 @@ if($_POST['submit'])
     $pcity=$_POST['pcity'];
     $pstate=$_POST['pstate'];
     $ppincode=$_POST['ppincode'];
-    $query="update registration set roomno=?,seater=?,feespm=?,stayfrom=?,duration=?,course=?,studentid=?,firstName=?,middleName=?,lastName=?,gender=?,contactno=?,emailid=?,egycontactno=?,guardianName=?,guardianRelation=?,guardianContactno=?,corresAddress=?,corresCIty=?,corresState=?,corresPincode=?,pmntAddress=?,pmntCity=?,pmnatetState=?,pmntPincode=? where id=?";
+    $PreferPerson=$_POST['PreferPerson'];
+    $query="update registration set roomno=?,seater=?,feespm=?,stayfrom=?,duration=?,course=?,studentid=?,firstName=?,middleName=?,lastName=?,gender=?,contactno=?,emailid=?,egycontactno=?,guardianName=?,guardianRelation=?,guardianContactno=?,corresAddress=?,corresCIty=?,corresState=?,corresPincode=?,pmntAddress=?,pmntCity=?,pmnatetState=?,pmntPincode=?, PreferPerson=? where id=?";
 
     if ( $stmt = $mysqli->prepare($query) )
     {
 
-        $rc=$stmt->bind_param('iiisisissssisississsisssii',$roomno,$seater,$feespm,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode,$id);
+        $rc=$stmt->bind_param('siisisissssisississsisssisi',$roomno,$seater,$feespm,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode,$PreferPerson,$id);
 
         $stmt->execute();
         $stmt->close();
@@ -218,9 +219,11 @@ if($_POST['submit'])
                                                 $stmt->execute() ;//ok
                                                 $res=$stmt->get_result();
                                                 //$cnt=1;
+                                            
 
                                                 while($row=$res->fetch_object())
                                                 {
+                                                    $TotalFee = $row->duration * $row->feespm;
                                                 ?>
 
                                                 <div class="form-group">
@@ -231,19 +234,20 @@ if($_POST['submit'])
 
 
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Room Type : <span style="color:red">*</span></label>
+                                                    <label class="col-sm-2 control-label">Room No(Type) : <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
                                                         <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
-                                                            <option value="" disabled selected hidden>Select Room</option>
+                                                            <option value="" disabled selected hidden><?php echo $row->roomno;?></option>
                                                             <?php $query ="SELECT DISTINCT RoomType FROM rooms";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res=$stmt2->get_result();
-                                                    while($row=$res->fetch_object())
+                                                    $res2=$stmt2->get_result();
+                                                    while($row2=$res2->fetch_object())
                                                     {
                                                             ?>
+                                                            
                                                             <!-- <option value="<?php //echo $row->room_no;?>"> <?php //echo $row->RoomType;?></option> -->
-                                                            <option value="<?php echo $row->RoomType;?>"><?php echo $row->RoomType;?></option> 
+                                                            <option value="<?php echo $row2->RoomType;?>"><?php echo $row2->RoomType;?></option> 
                                                             <?php } ?>
                                                         </select> 
                                                         <span id="room-availability-status" style="font-size:12px;color:red"></span>
@@ -256,14 +260,14 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Single or Sharing (Seater) :</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="seater" id="seater"  class="form-control"  readonly>
+                                                            <input type="text" name="seater" id="seater"  value="<?php echo $row->seater;?>" class="form-control"  readonly>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Fees Per Week (RM) :</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="fpm" id="fpm"  class="form-control" readonly>
+                                                            <input type="text" name="fpm" id="fpm" value="<?php echo $row->feespm;?>" class="form-control" readonly>
 
                                                         </div>
                                                     </div>
@@ -272,15 +276,15 @@ if($_POST['submit'])
                                                         <label class="col-sm-2 control-label">Course : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="course" id="course" class="form-control"  onChange="getCourse(this.value);"  required> 
-                                                                <option value="" disabled selected hidden>Select Course</option>
+                                                                <option value="<?php echo $row->course;?>"><?php echo $row->course;?></option>
                                                                 <?php $query ="SELECT * FROM courses";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res=$stmt2->get_result();
-                                                    while($row=$res->fetch_object())
+                                                    $res2=$stmt2->get_result();
+                                                    while($row2=$res2->fetch_object())
                                                     {
                                                                 ?>
-                                                                <option value="<?php echo $row->course_code;?>"><?php echo $row->course_code;?></option>
+                                                                <option value="<?php echo $row2->course_code;?>"><?php echo $row2->course_code;?></option>
 
                                                                 <?php } ?>
                                                             </select>
@@ -291,14 +295,14 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Duration (Weeks) :</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text"  name="duration" id="duration"  class="form-control" onChange="getTotalFee(this.value);"  readonly>
+                                                            <input type="text"  name="duration" id="duration"  class="form-control" value="<?php echo $row->duration;?>" onChange="getTotalFee(this.value);"  readonly>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Total Rental (RM) :</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="ta" id="ta" value=""  class="result form-control" readonly>
+                                                            <input type="text" name="ta" id="ta" value="<?php echo $TotalFee;?>"  class="result form-control" readonly>
                                                         </div>
                                                     </div>
 
@@ -374,28 +378,28 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Emergency Contact : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="econtact" id="econtact"  class="form-control" required="required">
+                                                            <input type="text" name="econtact" id="econtact"  class="form-control" value="<?php echo $row->egycontactno;?>" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Guardian  Name : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="gname" id="gname"  class="form-control" required="required">
+                                                            <input type="text" name="gname" id="gname"  class="form-control" value="<?php echo $row->guardianName;?>" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Guardian  Relation : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
+                                                            <input type="text" name="grelation" id="grelation"  class="form-control" value="<?php echo $row->guardianRelation;?>" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Guardian Contact No : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
+                                                            <input type="text" name="gcontact" id="gcontact"  class="form-control" value="<?php echo $row->guardianContactno;?>" required="required">
                                                         </div>
                                                     </div>	
 
@@ -406,14 +410,14 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Address : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <textarea  rows="5" name="address"  id="address" class="form-control" required="required"></textarea>
+                                                            <input type="text"  rows="5" name="address"  id="address" class="form-control" value="<?php echo $row->corresAddress;?>"  required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">City : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="city" id="city"  class="form-control" required="required">
+                                                            <input type="text" name="city" id="city"  class="form-control"  value="<?php echo $row->corresCIty;?>" required="required">
                                                         </div>
                                                     </div>	
 
@@ -421,15 +425,16 @@ if($_POST['submit'])
                                                         <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="state" id="state"class="form-control" required> 
-                                                                <option value="" disabled selected hidden>Select State</option>
+                                                                
+                                                                <option value="<?php echo $row->corresState;?>"><?php echo $row->corresState;?></option>
                                                                 <?php $query ="SELECT * FROM states";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res=$stmt2->get_result();
-                                                    while($row=$res->fetch_object())
+                                                    $res2=$stmt2->get_result();
+                                                    while($row2=$res2->fetch_object())
                                                     {
                                                                 ?>
-                                                                <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+                                                                <option value="<?php echo $row2->State;?>"><?php echo $row2->State;?></option>
                                                                 <?php } ?>
                                                             </select> </div>
                                                     </div>							
@@ -437,7 +442,7 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Postcode : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
+                                                            <input type="text" name="pincode" id="pincode"  class="form-control" value="<?php echo $row->corresPincode;?>" required="required">
                                                         </div>
                                                     </div>	
 
@@ -457,14 +462,14 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Address : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <textarea  rows="5" name="paddress"  id="paddress" class="form-control" required="required"></textarea>
+                                                            <input type="text"  rows="5" name="paddress"  id="paddress" class="form-control" value="<?php echo $row->pmntAddress;?>" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">City : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="pcity" id="pcity"  class="form-control" required="required">
+                                                            <input type="text" name="pcity" id="pcity"  class="form-control"  value="<?php echo $row->pmntCity;?>" required="required">
                                                         </div>
                                                     </div>	
 
@@ -472,15 +477,15 @@ if($_POST['submit'])
                                                         <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="pstate" id="pstate"class="form-control" required> 
-                                                                <option value="" disabled selected hidden>Select State</option>
+                                                                <option value="<?php echo $row->pmnatetState;?>"><?php echo $row->pmnatetState;?></option>
                                                                 <?php $query ="SELECT * FROM states";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
-                                                    $res=$stmt2->get_result();
-                                                    while($row=$res->fetch_object())
+                                                    $res2=$stmt2->get_result();
+                                                    while($row2=$res2->fetch_object())
                                                     {
                                                                 ?>
-                                                                <option value="<?php echo $row->State;?>"><?php echo $row->State;?></option>
+                                                                <option value="<?php echo $row2->State;?>"><?php echo $row2->State;?></option>
                                                                 <?php } ?>
                                                             </select> </div>
                                                     </div>							
@@ -488,7 +493,7 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Postcode : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
+                                                            <input type="text" name="ppincode" id="ppincode"  class="form-control" value="<?php echo $row->pmntPincode;?>" required="required">
                                                         </div>
                                                     </div>	
 
@@ -499,7 +504,7 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">I would prefer to share with: </label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="PreferPerson" id="PreferPerson"  class="form-control">
+                                                            <input type="text" name="PreferPerson" id="PreferPerson" class="form-control" value="<?php echo $row->PreferPerson;?>" required="required" >
                                                         </div>
                                                     </div>	
 
