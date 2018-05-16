@@ -975,7 +975,7 @@ if(isset($_POST['submit']))
                                             <input type="text" name="Submission_Date" style="width:80px" value='.date('Y/m/d').' readonly="readonly" /></td>
                                     </tr>
                                 </table>
-                                <input type="text" name="Location_field" value="" />
+                                <input type="hidden" name="Location_field" value="" />
                                 <input type="hidden" name="Checkout_field" value="" />
                                 <input type="hidden" name="Refund_MOP_field" value="" />
                                 <input type="hidden" name="Refund_Name_field" value="" />
