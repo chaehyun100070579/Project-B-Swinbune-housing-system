@@ -23,7 +23,7 @@ check_login();
         <link rel="stylesheet" href="css/fileinput.min.css">
         <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
         <link rel="stylesheet" href="css/style.css">
-        
+
         <script language="javascript" type="text/javascript">
             var popUpWin=0;
             function popUpWindow(URLStr, left, top, width, height)
@@ -145,7 +145,7 @@ check_login();
                                                 <td><a href="javascript:void(0);"  onClick="popUpWindow('/hostel/full-profile.php?id=<?php echo $row->emailid;?>');" title="View Full Details">Print Data</a></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="6"><b>Reg no. :<?php echo $row->postingDate;?></b></td>
+                                                <td colspan="6"><b>Reg Date :<?php echo $row->postingDate;?></b></td>
                                             </tr>
 
 
@@ -179,7 +179,7 @@ check_login();
                                             </tr>
 
                                             <tr>
-                                                <td><b>Reg No. :</b></td>
+                                                <td><b>Student ID :</b></td>
                                                 <td><?php echo $row->studentid;?></td>
                                                 <td><b>Full Name :</b></td>
                                                 <td><?php echo $row->firstName;?>&nbsp;<?php echo $row->middleName;?>&nbsp;<?php echo $row->lastName;?></td>
