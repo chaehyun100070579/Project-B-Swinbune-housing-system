@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2018 at 05:37 PM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+-- Generation Time: May 19, 2018 at 05:50 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -69,34 +69,35 @@ CREATE TABLE `courses` (
   `course_sn` varchar(255) NOT NULL,
   `course_fn` varchar(255) NOT NULL,
   `numberOfWeeks` int(11) NOT NULL,
-  `posting_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `posting_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `renewalNotice` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `numberOfWeeks`, `posting_date`) VALUES
-(9, '(MBA&MHRM)-Term 2', '(MBA&MHRM)-Term 2', '(MBA&MHRM)-Term 2', 11, '2017-11-10 04:57:04'),
-(10, '(MBA&MHRM)-Term 3', '(MBA&MHRM)-Term 3', '(MBA&MHRM)-Term 3', 10, '2017-11-10 04:57:27'),
-(11, '(MBA&MHRM)-Term 4', '(MBA&MHRM)-Term 4', '(MBA&MHRM)-Term 4', 10, '2017-11-10 04:57:35'),
-(12, '(MA TESOL)-Sem 1', '(MA TESOL)-Sem 1', '(MA TESOL)-Sem 1', 16, '2017-11-10 04:57:46'),
-(13, '(MA TESOL)-Sem 2', '(MA TESOL)-Sem 2', '(MA TESOL)-Sem 2', 16, '2017-11-10 04:57:54'),
-(14, '(Deg.,Dip.,MEng)-Summer', '(Deg.,Dip.,MEng)-Summer', '(Deg.,Dip.,MEng)-Summer', 8, '2017-11-10 04:58:35'),
-(15, '(Deg,Dip,MEng)-Sem 1 (New&Cont.)', '(Deg,Dip,MEng)-Sem 1 (New&Cont.)', '(Deg,Dip,MEng)-Sem 1 (New&Cont.)', 17, '2017-11-10 04:58:53'),
-(16, '(Deg,Dip,MEng)-Sem 1 (If taking Summer Semester)', '(Deg,Dip,MEng)-Sem 1 (If taking Summer Semester)', '(Deg,Dip,MEng)-Sem 1 (If taking Summer Semester)', 16, '2017-11-10 04:59:05'),
-(17, '(Deg,Dip,MEng)-Winter-(New)', '(Deg,Dip,MEng)-Winter-(New)', '(Deg,Dip,MEng)-Winter-(New)', 8, '2017-11-10 04:59:12'),
-(18, '(Deg,Dip,MEng)-Winter-(From Sem 1)', '(Deg,Dip,MEng)-Winter-(From Sem 1)', '(Deg,Dip,MEng)-Winter-(From Sem 1)', 7, '2017-11-10 04:59:21'),
-(19, '(Deg,Dip,MEng)-Sem 2 (New&Cont.)', '(Deg,Dip,MEng)-Sem 2 (New&Cont.)', '(Deg,Dip,MEng)-Sem 2 (New&Cont.)', 17, '2017-11-10 04:59:32'),
-(20, 'Bachelor Degree (Bus. Oct.) - Sem 1', 'Bachelor Degree (Bus. Oct.) - Sem 1', 'Bachelor Degree (Bus. Oct.) - Sem 1', 9, '2017-11-10 05:00:04'),
-(21, 'Bachelor Degree (Eng.Oct.) - Sem 1', 'Bachelor Degree (Eng.Oct.) - Sem 1', 'Bachelor Degree (Eng.Oct.) - Sem 1', 17, '2017-11-10 05:00:12'),
-(22, 'Foundation - Summer Semester', 'Foundation - Summer Semester', 'Foundation - Summer Semester', 8, '2017-11-10 05:00:30'),
-(23, 'Foundation - Semester 1', 'Foundation - Semester 1', 'Foundation - Semester 1', 16, '2017-11-10 05:00:37'),
-(24, 'Foundation - Semester 2', 'Foundation - Semester 2', 'Foundation - Semester 2', 16, '2017-11-10 05:00:45'),
-(25, 'Foundation - October', 'Foundation - October', 'Foundation - October', 11, '2017-11-10 05:00:57'),
-(26, 'Intensive English - Semester 1', 'Intensive English - Semester 1', 'Intensive English - Semester 1', 11, '2017-11-10 05:01:05'),
-(27, 'Intensive English - Semester 2', 'Intensive English - Semester 2', 'Intensive English - Semester 2', 11, '2017-11-10 05:01:13'),
-(28, 'Intensive English - Semester 3', 'Intensive English - Semester 3', 'Intensive English - Semester 3', 11, '2017-11-10 05:01:19');
+INSERT INTO `courses` (`id`, `course_code`, `course_sn`, `course_fn`, `numberOfWeeks`, `posting_date`, `renewalNotice`) VALUES
+(9, '(MBA&MHRM)-Term 2', '(MBA&MHRM)-Term 2', '(MBA&MHRM)-Term 2', 11, '2017-11-10 04:57:04', '2018-05-01'),
+(10, '(MBA&MHRM)-Term 3', '(MBA&MHRM)-Term 3', '(MBA&MHRM)-Term 3', 10, '2017-11-10 04:57:27', '2018-05-01'),
+(11, '(MBA&MHRM)-Term 4', '(MBA&MHRM)-Term 4', '(MBA&MHRM)-Term 4', 10, '2017-11-10 04:57:35', '2018-05-01'),
+(12, '(MA TESOL)-Sem 1', '(MA TESOL)-Sem 1', '(MA TESOL)-Sem 1', 16, '2017-11-10 04:57:46', '2018-05-01'),
+(13, '(MA TESOL)-Sem 2', '(MA TESOL)-Sem 2', '(MA TESOL)-Sem 2', 16, '2017-11-10 04:57:54', '2018-05-01'),
+(14, '(Deg.,Dip.,MEng)-Summer', '(Deg.,Dip.,MEng)-Summer', '(Deg.,Dip.,MEng)-Summer', 8, '2017-11-10 04:58:35', '2018-05-01'),
+(15, '(Deg,Dip,MEng)-Sem 1 (New&Cont.)', '(Deg,Dip,MEng)-Sem 1 (New&Cont.)', '(Deg,Dip,MEng)-Sem 1 (New&Cont.)', 17, '2017-11-10 04:58:53', '2018-05-01'),
+(16, '(Deg,Dip,MEng)-Sem 1 (If taking Summer Semester)', '(Deg,Dip,MEng)-Sem 1 (If taking Summer Semester)', '(Deg,Dip,MEng)-Sem 1 (If taking Summer Semester)', 16, '2017-11-10 04:59:05', '2018-05-01'),
+(17, '(Deg,Dip,MEng)-Winter-(New)', '(Deg,Dip,MEng)-Winter-(New)', '(Deg,Dip,MEng)-Winter-(New)', 8, '2017-11-10 04:59:12', '2018-05-01'),
+(18, '(Deg,Dip,MEng)-Winter-(From Sem 1)', '(Deg,Dip,MEng)-Winter-(From Sem 1)', '(Deg,Dip,MEng)-Winter-(From Sem 1)', 7, '2017-11-10 04:59:21', '2018-05-01'),
+(19, '(Deg,Dip,MEng)-Sem 2 (New&Cont.)', '(Deg,Dip,MEng)-Sem 2 (New&Cont.)', '(Deg,Dip,MEng)-Sem 2 (New&Cont.)', 17, '2017-11-10 04:59:32', '2018-05-01'),
+(20, 'Bachelor Degree (Bus. Oct.) - Sem 1', 'Bachelor Degree (Bus. Oct.) - Sem 1', 'Bachelor Degree (Bus. Oct.) - Sem 1', 9, '2017-11-10 05:00:04', '2018-05-01'),
+(21, 'Bachelor Degree (Eng.Oct.) - Sem 1', 'Bachelor Degree (Eng.Oct.) - Sem 1', 'Bachelor Degree (Eng.Oct.) - Sem 1', 17, '2017-11-10 05:00:12', '2018-05-01'),
+(22, 'Foundation - Summer Semester', 'Foundation - Summer Semester', 'Foundation - Summer Semester', 8, '2017-11-10 05:00:30', '2018-05-01'),
+(23, 'Foundation - Semester 1', 'Foundation - Semester 1', 'Foundation - Semester 1', 16, '2017-11-10 05:00:37', '2018-05-01'),
+(24, 'Foundation - Semester 2', 'Foundation - Semester 2', 'Foundation - Semester 2', 16, '2017-11-10 05:00:45', '2018-05-01'),
+(25, 'Foundation - October', 'Foundation - October', 'Foundation - October', 11, '2017-11-10 05:00:57', '2018-05-01'),
+(26, 'Intensive English - Semester 1', 'Intensive English - Semester 1', 'Intensive English - Semester 1', 11, '2017-11-10 05:01:05', '2018-05-01'),
+(27, 'Intensive English - Semester 2', 'Intensive English - Semester 2', 'Intensive English - Semester 2', 11, '2017-11-10 05:01:13', '2018-05-01'),
+(28, 'Intensive English - Semester 3', 'Intensive English - Semester 3', 'Intensive English - Semester 3', 11, '2017-11-10 05:01:19', '2018-05-01');
 
 -- --------------------------------------------------------
 
@@ -148,11 +149,10 @@ CREATE TABLE `registration` (
 
 INSERT INTO `registration` (`id`, `roomno`, `seater`, `feespm`, `stayfrom`, `duration`, `course`, `studentid`, `firstName`, `middleName`, `lastName`, `gender`, `contactno`, `emailid`, `egycontactno`, `guardianName`, `guardianRelation`, `guardianContactno`, `corresAddress`, `corresCIty`, `corresState`, `corresPincode`, `pmntAddress`, `pmntCity`, `pmnatetState`, `pmntPincode`, `PreferPerson`, `postingDate`, `updateDate`, `AcessCardNum`, `CheckinStatus`, `CheckinDate`, `CheckoutStatus`, `CheckoutDate`, `TotalPaymentStatus`) VALUES
 (16, '1', 2, 95, '0001-01-01', 0, 'Intensive English - Semester 1', 4330111, 'vic', 'asd', 'chin', 'male', 2131, '11111@11111', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11', 0),
-(17, '4', 1, 232, '2018-04-11', 17, 'Foundation - Semester 2', 123, 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 123123, 'asdasd', 'asd', 123, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', '2018-04-24 07:04:49', '', 0, 0, '0000-00-00', 0, '0000-00-00', 0),
+(17, '4', 1, 232, '2018-04-11', 17, 'Foundation - Semester 2', 123, 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 123123, 'asdasd', 'asd', 123, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', 'asd', 'Federal Territory of Labuan', 132, 'asd', '2018-04-24 07:04:49', '', 0, 1, '0000-00-00', 0, '0000-00-00', 0),
 (18, '2', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308701, 'vic1', 'asd1', 'chin1', 'male', 2131, '1111111@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11', 0),
 (19, '5', 1, 95, '0001-01-01', 9, 'Intensive English - Semester 1', 43308702, 'vic2', 'asd2', 'chin2', 'male', 2131, '222222@ooo.my', 123, 'asd', 'asd', 123, 'sa', 'asd', 'Others', 123, 'sa', 'asd', 'Others', 123, 'sda', '2018-04-17 07:20:50', '', 123, 1, '2018-04-13', 0, '2018-04-11', 0),
-(30, '', 0, 0, '0000-00-00', 0, '', 0, '', '', '', '', 0, '', 0, '', '', 0, '', '', '', 0, '', '', '', 0, '', '2018-05-09 13:31:48', '', 0, 0, '0000-00-00', 0, '0000-00-00', 0),
-(31, '1', 2, 95, '0000-00-00', 11, 'Intensive English - Semester 1', 10007059, 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', 12312, 'asd', 'asd', 0, 'asd', '213', 'Terengganu', 123, 'asd', '213', 'Terengganu', 123, '123132', '2018-05-09 15:03:07', '', 123, 1, '2018-05-22', 0, '0000-00-00', 1);
+(29, 'H001test', 1, 255, '0000-00-00', 11, 'Intensive English - Semester 2', 4330870, 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 0, 'asd', 'asd', 0, 'asd', 'das', 'Perak', 0, 'asd', 'das', 'Perak', 0, '', '2018-05-16 09:29:03', '', 1, 1, '2018-05-09', 0, '2018-05-03', 0);
 
 -- --------------------------------------------------------
 
@@ -184,7 +184,7 @@ INSERT INTO `rooms` (`id`, `seater`, `room_no`, `fees`, `RoomType`, `posting_dat
 (38, 1, 'HM001', 323, 'B- Single with fan', '2018-04-24 07:51:02', 'H'),
 (39, 2, 'hm54', 444, 'A- Twin with fan', '2018-04-24 07:52:09', 'HL'),
 (40, 1, '5', 95, 'Free Room for Test 2', '2017-11-03 09:28:49', 'HL'),
-(41, 1, 'H000test', 255, 'Female Room', '2017-11-03 09:28:49', 'HM'),
+(41, 1, 'H000test1', 225, 'Female Room', '2017-11-03 09:28:49', 'HM'),
 (42, 1, 'H001test', 255, '1 Male and 1 Female Room', '2017-11-03 09:28:49', 'H'),
 (43, 1, 'H002test', 255, '1 Male and 1 Female Room', '2017-11-03 09:28:49', 'HM');
 
@@ -251,42 +251,11 @@ INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`,
 (88, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:26:08'),
 (89, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 10:37:07'),
 (90, 34, 'hcz931030@gmail.com', 0x3132372e302e302e31, '', '', '2017-11-10 11:48:04'),
-(91, 34, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 12:05:16'),
-(92, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-10 12:06:55'),
-(93, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 07:52:10'),
-(94, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 07:54:04'),
-(95, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:29'),
-(96, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:30'),
-(97, 37, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:17:36'),
-(98, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:19:45'),
-(99, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 12:42:22'),
-(100, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 13:50:54'),
-(101, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-11 14:11:54'),
-(102, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 08:30:01'),
-(103, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:34:06'),
-(104, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:37:14'),
-(105, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 10:40:10'),
-(106, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:21:21'),
-(107, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:21:43'),
-(108, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:24:45'),
-(109, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:31:35'),
-(110, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 14:34:33'),
-(111, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 15:48:14'),
-(112, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 16:39:19'),
-(113, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-12 16:56:20'),
-(114, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:42:58'),
-(115, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:44:00'),
-(116, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 06:54:38'),
 (117, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2017-11-13 07:01:26'),
 (118, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-06 06:00:23'),
 (119, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-19 17:59:21'),
 (120, 40, 'asd@asd.com', 0x3132372e302e302e31, '', '', '2018-03-20 06:04:38'),
 (121, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-27 01:52:20'),
-(122, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:00:04'),
-(123, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:00:27'),
-(124, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:01:22'),
-(125, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-30 05:02:12'),
-(126, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-03-31 03:23:55'),
 (127, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-04-17 06:13:05'),
 (128, 40, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 06:44:16'),
 (129, 40, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-17 07:05:42'),
@@ -297,14 +266,9 @@ INSERT INTO `userlog` (`id`, `userId`, `userEmail`, `userIp`, `city`, `country`,
 (134, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-04-24 07:32:24'),
 (135, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-05-02 13:40:47'),
 (136, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 05:59:50'),
-(137, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-05 10:45:58'),
-(138, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-07 20:49:06'),
 (139, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-08 05:58:16'),
-(140, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 09:05:23'),
-(141, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 09:23:11'),
-(142, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 09:30:17'),
-(143, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 13:47:59'),
-(144, 38, 'hcz931030@gmail.com', 0x3a3a31, '', '', '2018-05-09 13:49:07');
+(140, 40, 'asd@asd.com', 0x3a3a31, '', '', '2018-05-09 14:35:47'),
+(141, 42, '4330870@students.swinburne.edu.my', 0x3a3a31, '', '', '2018-05-16 09:23:30');
 
 -- --------------------------------------------------------
 
@@ -340,10 +304,10 @@ INSERT INTO `userregistration` (`id`, `studentid`, `firstName`, `middleName`, `l
 (30, '1231', '2asd', 'asd', 'asd', 'female', 213, '5@gmail.com', '5', '2017-11-07 10:44:39', '', '', 0, 0),
 (35, 'sd', 'asd', 'adas', 'dasd', 'female', 123, '10@gmail.com', '10', '2017-11-08 18:40:57', '', '', 0, 0),
 (36, '100063362', 'jin', 'asd', 'lee', 'male', 1231231234, '100063362@students.swinburne.edu.my', 'jin', '2017-11-10 04:05:37', '', '', 0, 0),
-(38, '10007059', 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '09-05-2018 02:52:37', '', 1, 1),
+(38, '10007059', 'chaehyun', 'test', 'hwang', 'male', 21321, 'hcz931030@gmail.com', '123', '2017-11-11 12:19:26', '12-11-2017 11:10:32', '', 1, 1),
 (39, '231231', 'samuel', '', 'tion', 'male', 12312321, 'samuel@gmail.com', '1234', '2017-11-13 06:42:18', '', '', 0, 0),
 (40, '123', 'chaehyun', 'asd', 'w\\hwang', 'male', 123, 'asd@asd.com', 'asd', '2018-03-06 06:00:13', '', '', 1, 1),
-(42, '4330870', 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 'asd', '2018-04-17 07:19:56', '', '', 1, 0);
+(42, '4330870', 'vic', 'asd', 'chin', 'male', 2131, '4330870@students.swinburne.edu.my', 'asd', '2018-04-17 07:19:56', '', '', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -400,44 +364,36 @@ ALTER TABLE `userregistration`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
 --
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
 --
 -- AUTO_INCREMENT for table `userlog`
 --
 ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 --
 -- AUTO_INCREMENT for table `userregistration`
 --
 ALTER TABLE `userregistration`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
