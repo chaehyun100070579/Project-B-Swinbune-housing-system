@@ -10,10 +10,11 @@ if(isset($_POST['submit']))
 	$coursesn=$_POST['cns'];
 	$coursefn=$_POST['cnf'];
 	$numberOfWeeks=$_POST['cd'];
+	$renewal=$_POST['rn'];
 		
-	$query="insert into courses (course_code,course_sn,course_fn,numberOfWeeks) values(?,?,?,?)";
+	$query="insert into courses (course_code,course_sn,course_fn,numberOfWeeks,renewalNotice) values(?,?,?,?,?)";
 	$stmt = $mysqli->prepare($query);
-	$rc=$stmt->bind_param('sssi',$coursecode,$coursesn,$coursefn,$numberOfWeeks);
+	$rc=$stmt->bind_param('sssis',$coursecode,$coursesn,$coursefn,$numberOfWeeks,$renewal);
 	$stmt->execute();
 	echo"<script>alert('Course has been added successfully');</script>";
 }
@@ -113,6 +114,17 @@ if(isset($_POST['submit']))
 													</div>
 													<div class="col-sm-8">
 														<input type="text" class="form-control" name="cd" value="" required="required">
+													</div>
+												</label>
+											</div>
+                                            
+                                            <div class="form-group">
+												<label class="col-sm-12 control-label">
+													<div class="col-sm-2">
+														Renewal Notice  <span style="color:red">*</span>
+													</div>
+													<div class="col-sm-8">
+														<input type="date" class="form-control" name="rn" value="" required="required">
 													</div>
 												</label>
 											</div>
