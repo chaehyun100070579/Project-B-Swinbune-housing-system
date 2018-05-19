@@ -63,11 +63,12 @@ if(isset($_GET['del']))
 									<thead>
 										<tr>
 											<th>No.</th>
-											<th>Course Code</th>
-											<th>Course Name(Short)</th>
-											<th>Course Name(Full)</th>
+											<th>Semester Code</th>
+											<th>Short Code</th>
+											<th>Postgraduate Programs</th>
                                             <th>Course Duration (weeks)</th>
 											<th>Last Update</th>
+											<th>Renewal Notice</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -91,6 +92,7 @@ if(isset($_GET['del']))
 											<td><?php echo $row->course_fn;?></td>
 											<td><?php echo $row->numberOfWeeks;?></td>
 											<td><?php echo $row->posting_date;?></td>
+											<td><?php echo $row->renewalNotice;?></td>
 											<td><a href="edit-course.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>
 											&nbsp;&nbsp;&nbsp;&nbsp;
 											<a href="manage-courses.php?del=<?php echo $row->id;?>" onclick="return confirm('Do you want to delete this course?');"><i class="fa fa-close"></i></a></td>
