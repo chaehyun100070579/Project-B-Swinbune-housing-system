@@ -19,6 +19,7 @@
             <ul>
                 <li><a href="registration.php"><i class="fa fa-user"></i>Add a Student to room</a></li>
                 <li><a href="manage-students.php"><i class="fa fa-users"></i>Manage Students</a></li>
+                <li><a href="tenant-renewal-notice.php"><i class="fa fa-users"></i>Tenant Renewal Notice</a></li>
             </ul>
         </li>
 
