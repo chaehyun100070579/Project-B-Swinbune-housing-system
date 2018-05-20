@@ -91,15 +91,15 @@ if(isset($_POST['btn_Transfer'])){
 
 
                                             <tr>
-                                                <td colspan='6'><h4>Room Realted Info</h4></td>
+                                                <td colspan='6'><h4>Room Related Info</h4></td>
                                             </tr>
 
 
                                             <tr>
                                                 <td><b>Room no :</b></td>
-                                                <td>$row->roomno</td>
+                                                <td colspan='2'>$row->roomno</td>
                                                 <td><b>Room type(single or sharing):</b></td>
-                                                <td>$row->seater</td>
+                                                <td colspan='2'>$row->seater</td>
 
                                             </tr>
 
@@ -111,41 +111,42 @@ if(isset($_POST['btn_Transfer'])){
 
                                             <tr>
                                                 <td><b>Student ID :</b></td>
-                                                <td>$studentid</td>
+                                                <td colspan='2'>$studentid</td>
                                                 <td><b>Full Name :</b></td>
-                                                <td>$row->firstName&nbsp;$row->middleName&nbsp;$row->lastName</td>
-                                                <td><b>IC/Passport No :</b></td>
-                                                <td>$PassportNo</td>
-
+                                                <td colspan='2'>$row->firstName&nbsp;$row->middleName&nbsp;$row->lastName</td>
                                             </tr>
 
-                                             <tr>
+                                            <tr>
                                                 <td><b>Tel(HP) :</b></td>
-                                                <td>$TelNo</td>
+                                                <td colspan='2'>$TelNo</td>
                                                 <td><b>Email :</b></td>
-                                                <td>$email</td>
+                                                <td colspan='2'>$email</td>
                                             </tr>
-
+                                            
+                                            <tr>
+                                                <td><b>IC/Passport No :</b></td>
+                                                <td colspan='5'>$PassportNo</td>
+                                            </tr>
+                                            
                                             <tr>
                                                 <td colspan='6'><h4>Reason</h4></td>
                                             </tr>
 
                                             <tr>
-                                                <td><b> Change To Room Below:</b></td>
-                                                <td>$RoomType</td>
-                                               <td><b>Reason for request :</b></td>
-                                                <td>$reason</td>
+                                                <td><b>Change To Room :</b></td>
+                                                <td colspan='5'>$RoomType</td>
                                             </tr>
-
-
+                                            
+                                            <tr>
+                                                <td><b>Reason for request :</b></td>
+                                                <td colspan='5'>$reason</td>
+                                            </tr>
+                                            
 
                                         </tbody>
                                     </table>
 
                     ";
-
-
-
 
 
             $mail->Subject = 'Email from Swinbune housing';
@@ -165,17 +166,8 @@ if(isset($_POST['btn_Transfer'])){
             } else {
                 echo 'Message has been sent';
             }
-
-
         }
-
-
-
-
-
 }
-
-
 
 
 
@@ -280,7 +272,6 @@ if(isset($_POST['btn_Transfer'])){
                     <form method="post" action=""  name="frmTransfer" onSubmit="return ValInput();" >
 
                         <table border="0" style="border-collapse: collapse; font-family:Verdana" width="95%" id="table1" cellpadding="0">
-                            <br>
                             <br>
                             <br>
                             <tr>
@@ -477,10 +468,10 @@ if(isset($_POST['btn_Transfer'])){
                                             <td style="border-style:none; border-width:medium; font-family:Verdana; font-size:9pt; " height="22" colspan="2">&nbsp;<font FACE="GillSansMT" style="font-size: 9pt">
                                                 <select size="1" name="Tr_Choice" style="font-family: Calibri; font-size: 11pt" tabindex="31">				
 
-                                                    <OPTION VALUE="Single Room Fan RM550/person/month">Single Room Fan RM550/person/month
-                                                        <OPTION VALUE="Single Room Air-Conditioned RM600/person/month">Single Room Air-Conditioned RM600/person/month
-                                                            <OPTION VALUE="Twin-Sharing Fan RM340/person/month">Twin-Sharing Fan RM340/person/month
-                                                                <OPTION VALUE="Twin-Sharing Air-Conditioned RM420/person/month">Twin-Sharing Air-Conditioned RM420/person/month
+                                                    <OPTION VALUE="Option A - Twin with Fan RM340/person/month">Option A - Twin with Fan RM340/person/month</option>
+                                                        <OPTION VALUE="Option B - Single Room Fan RM550/person/month">Option B - Single Room Fan RM550/person/month</option>
+                                                            <OPTION VALUE="Option C - Twin with Air-Cond RM420/person/month">Option C - Twin with Air-Cond RM420/person/month</option>
+                                                                <OPTION VALUE="Option D - Single with Air-Cond RM600/person/month">Option D - Single with Air-Cond RM600/person/month</option>
                                                                     </select></font>
                                                             </td>
                                                         </tr>
@@ -607,7 +598,6 @@ if(isset($_POST['btn_Transfer'])){
                 </body>
 
             </html>
-
 
 
 
