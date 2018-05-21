@@ -3,16 +3,75 @@ session_start();
 include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
+include('../PHPMailer/PHPMailerAutoload.php');
 
-if(isset($_GET['del']))
+if(isset($_GET['send']))
 {
-	$id=intval($_GET['del']);
-	$adn="delete from courses where id=?";
-		$stmt= $mysqli->prepare($adn);
-		$stmt->bind_param('i',$id);
-        $stmt->execute();
-        $stmt->close();	   
-        echo "<script>alert('Data Deleted');</script>" ;
+	$eid=$_GET['send'];
+	$ret="SELECT * 
+	from registration
+	inner join courses
+	on registration.course = courses.course_fn
+	where emailid=?
+	";
+	$stmt= $mysqli->prepare($ret);
+	$stmt->bind_param('s',$eid);
+	$stmt->execute();//ok
+	$res=$stmt->get_result();
+	//$cnt=1;
+	
+	while($row=$res->fetch_object())
+	{  
+		$student_id = $row->studentid;
+		$student_email = $row->emailid;
+		$student_room = $row->roomno;
+		$student_name = $row->firstName;
+		$reminder = $row->renewalNotice;
+	}
+
+	$checkout_date = date('Y-m-d', strtotime($reminder. ' + 30 days'));
+
+	$mail = new PHPMailer;
+	
+	// $mail->SMTPDebug = 3;  showing debug output
+
+	$mail->isSMTP();                                   // Set mailer to use SMTP
+	$mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
+	$mail->SMTPAuth = true;                            // Enable SMTP authentication
+	$mail->Username = 'swinhousingtest@gmail.com';     // SMTP username
+	$mail->Password = 'swinburne123'; // SMTP password
+	$mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
+	$mail->Port = 587;                                 // TCP port to connect to
+
+	$mail->setFrom('test@test.com', 'SwinburneHousing');
+	$mail->addReplyTo('test@test.com', 'SwinburneHousing');
+	$mail->addAddress($student_email);   // Add a recipient
+	//$mail->addCC('admin@admin.com'); //student's claim details will send to admin as well
+	//$mail->addBCC('bcc@example.com');
+
+	$mail->isHTML(true);  // Set email format to HTML
+
+	$bodyContent = '<h1>Swinburne Housing System <br/> You are reminded of the Check Out date</h1>';
+	$bodyContent .= "<p>Your checkout date will be $checkout_date. Please do not forget to checkout.</p>";
+
+	$mail->Subject = 'Swinbune Housing - Room Transfer Request';
+	$mail->Body    = $bodyContent;
+
+	$mail->smtpConnect([
+		'ssl' => [
+		'verify_peer' => false,
+		'verify_peer_name' => false,
+		'allow_self_signed' => true
+	]
+	]);
+	
+	if(!$mail->send()) {
+		echo 'Message could not be sent.';
+		echo 'Mailer Error: ' . $mail->ErrorInfo;
+	} else {
+		//echo 'Message has been sent';
+	}
+	
 }
 ?>
 <!doctype html>
@@ -66,7 +125,7 @@ if(isset($_GET['del']))
 											<th>Room No.</th>
 											<th>Tenant Name</th>
 											<th>Postgraduate Programs</th>
-                                            <th>Course Duration (weeks)</th>
+											<th>Course Duration (weeks)</th>
 											<th>Renewal Notice</th>
 											<th>Actions</th>
 										</tr>
@@ -95,9 +154,14 @@ if(isset($_GET['del']))
 											<td><?php echo $row->course_fn;?></td>
 											<td><?php echo $row->numberOfWeeks;?></td>
 											<td><?php echo $row->renewalNotice;?></td>
-											<td><a href="edit-course.php?id=<?php echo $row->id;?>"><i class="fa fa-edit"></i></a>
+											<td>
+											<a href="javascript:void(0);" onClick="popUpWindow('/hostel/admin/full-profile.php?id=$row->id');" title="View Full Details">
+												<i class='fa fa-desktop'></i>
+											</a>
 											&nbsp;&nbsp;&nbsp;&nbsp;
-											<a href="manage-courses.php?del=<?php echo $row->id;?>" onclick="return confirm('Do you want to delete this course?');"><i class="fa fa-close"></i></a></td>
+											<a href="tenant-renewal-notice.php?send=<?php echo $row->emailid;?>" onclick="return confirm('Send renewal notice to this student?');" title="Send Renewal Notice">
+												<i class="fa fa-envelope"></i></a>
+											</td>
 										</tr>
 
 									<?php
@@ -107,7 +171,6 @@ if(isset($_GET['del']))
 										
 									</tbody>
 								</table>
-	
 							</div>
 						</div>
 
