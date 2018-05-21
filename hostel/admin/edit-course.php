@@ -9,11 +9,12 @@ if(isset($_POST['submit']))
 	$coursecode=$_POST['cc'];
 	$coursesn=$_POST['cns'];
 	$coursefn=$_POST['cnf'];
-	$weeks=$POST['cd'];
+	$weeks=$_POST['cd'];
+	$renewal=$_POST['rn'];
 	$id=$_GET['id'];
-	$query="update courses set course_code=?,course_sn=?,course_fn=?,numberOfWeeks=? where id=?";
+	$query="update courses set course_code=?,course_sn=?,course_fn=?,numberOfWeeks=?,renewalNotice=? where id=?";
 	$stmt = $mysqli->prepare($query);
-	$rc=$stmt->bind_param('sssii',$coursecode,$coursesn,$coursefn,$weeks,$id);
+	$rc=$stmt->bind_param('sssisi',$coursecode,$coursesn,$coursefn,$weeks,$renewal,$id);
 	$stmt->execute();
 	echo"<script>alert('Course has been Updated successfully');</script>";
 }
@@ -126,6 +127,17 @@ if(isset($_POST['submit']))
 													</div>
 													<div class="col-sm-8">
 														<input type="text" class="form-control" name="cd" value="<?php echo $row->numberOfWeeks;?>" required="required">
+													</div>
+												</label>
+											</div>
+                                            
+                                            <div class="form-group">
+												<label class="col-sm-12 control-label">
+													<div class="col-sm-2">
+														Renewal Notice  <span style="color:red">*</span>
+													</div>
+													<div class="col-sm-2">
+														<input type="date" class="form-control" name="rn" value="<?php echo $row->renewalNotice;?>" required="required">
 													</div>
 												</label>
 											</div>
