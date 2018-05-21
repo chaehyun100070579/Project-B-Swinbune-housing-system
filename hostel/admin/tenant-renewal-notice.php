@@ -5,6 +5,8 @@ include('includes/checklogin.php');
 check_login();
 include('../PHPMailer/PHPMailerAutoload.php');
 
+$msg = '';
+
 if(isset($_GET['send']))
 {
 	$eid=$_GET['send'];
@@ -70,6 +72,7 @@ if(isset($_GET['send']))
 		echo 'Mailer Error: ' . $mail->ErrorInfo;
 	} else {
 		//echo 'Message has been sent';
+		$msg = "Renewal notice has been sent to student {$student_name}, {$student_email}";
 	}
 	
 }
@@ -102,6 +105,65 @@ if(isset($_GET['send']))
 	<link href="../../wp-content/themes/swinburne-sarawak-byhds/slider.css" media="screen" rel="stylesheet" type="text/css" />
 	<link href="../../wp-content/themes/swinburne-sarawak-byhds/isotope.css" media="screen" rel="stylesheet" type="text/css">
 	<link href="../../wp-content/themes/swinburne-sarawak-byhds/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
+        
+	<script language="javascript" type="text/javascript">
+            var popUpWin=0;
+            function popUpWindow(URLStr, left, top, width, height)
+            {
+                // http://localhost/hostel/admin/full-profile.php?id=$row->id
+                var url = location.href; // entire url including querystring - also: window.location.href;
+                var baseURL = url.substring(0, url.indexOf('/', 14));
+                if (baseURL.indexOf('http://localhost') != -1) 
+                {
+                    // Base Url for localhost
+                    var url = location.href; // window.location.href;
+                    var pathname = location.pathname; // window.location.pathname;
+                    var index1 = url.indexOf(pathname);
+                    var index2 = url.indexOf("/", index1 + 1);
+                    var baseLocalUrl = url.substr(0, index2);
+                    var baseLocalUrl2 = baseLocalUrl.concat(URLStr);
+                    // return baseLocalUrl + "/";
+            
+                    if(popUpWin)
+                    {
+                        if(!popUpWin.closed) popUpWin.close();
+                    }
+                    popUpWin = open(baseLocalUrl2,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
+                }
+                else 
+                {
+                    var baseURL2 = baseURL.concat(URLStr);
+                    if(popUpWin)
+                    {
+                        if(!popUpWin.closed) popUpWin.close();
+                    }
+                    popUpWin = open(baseURL2,'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=no,copyhistory=yes,width='+510+',height='+430+',left='+left+', top='+top+',screenX='+left+',screenY='+top+'');
+                }
+			}
+            
+            function getBaseURL() // dynamic url for localhost
+            {
+                var url = location.href; // entire url including querystring - also: window.location.href;
+                var baseURL = url.substring(0, url.indexOf('/', 14));
+                if (baseURL.indexOf('http://localhost') != -1) 
+                {
+                    // Base Url for localhost
+                    var url = location.href; // window.location.href;
+                    var pathname = location.pathname; // window.location.pathname;
+                    var index1 = url.indexOf(pathname);
+                    var index2 = url.indexOf("/", index1 + 1);
+                    var baseLocalUrl = url.substr(0, index2);
+                    
+                    return baseLocalUrl + "/";
+                }
+                else 
+                {
+                    // Root Url for domain name
+                    return baseURL + "/";
+                }
+            }
+        </script>
+
 </head>
 
 <body>
@@ -115,6 +177,11 @@ if(isset($_GET['send']))
 					<div class="col-md-12">
 						<br/><br/><br/>
 						<h2 class="page-title">Tenant Renewal Notice</h2>
+						<?php if(isset($_GET['send']))
+						{ ?>
+						<p style="color: red"><?php echo htmlentities($msg); ?></p>
+						<?php 
+						} ?>
 						<div class="panel panel-default">
 							<div class="panel-heading">All Tenants with Renewal Notice Date</div>
 							<div class="panel-body">
@@ -138,28 +205,29 @@ if(isset($_GET['send']))
 										from registration
 										inner join courses
 										on registration.course = courses.course_fn
+										order by registration.id
 										";
 										$stmt= $mysqli->prepare($ret) ;
 										//$stmt->bind_param('i',$aid);
 										$stmt->execute() ;//ok
 										$res=$stmt->get_result();
 										$cnt=1;
-										while($row=$res->fetch_object())
+										while($row=mysqli_fetch_array($res))
 										{
 									?>
 										<tr>
 											<td><?php echo $cnt;?></td>
-											<td><?php echo $row->roomno;?></td>
-											<td><?php echo $row->firstName." ".$row->middleName." ".$row->lastName;?></td>
-											<td><?php echo $row->course_fn;?></td>
-											<td><?php echo $row->numberOfWeeks;?></td>
-											<td><?php echo $row->renewalNotice;?></td>
+											<td><?php echo $row['roomno'];?></td>
+											<td><?php echo $row['firstName']." ".$row['middleName']." ".$row['lastName'];?></td>
+											<td><?php echo $row['course_fn'];?></td>
+											<td><?php echo $row['numberOfWeeks'];?></td>
+											<td><?php echo $row['renewalNotice'];?></td>
 											<td>
-											<a href="javascript:void(0);" onClick="popUpWindow('/hostel/admin/full-profile.php?id=$row->id');" title="View Full Details">
+											<a href="javascript:void(0);" onClick="popUpWindow('/hostel/admin/full-profile.php?id=<?php echo $row[0];?>');" title="View Full Details">
 												<i class='fa fa-desktop'></i>
 											</a>
 											&nbsp;&nbsp;&nbsp;&nbsp;
-											<a href="tenant-renewal-notice.php?send=<?php echo $row->emailid;?>" onclick="return confirm('Send renewal notice to this student?');" title="Send Renewal Notice">
+											<a href="tenant-renewal-notice.php?send=<?php echo $row['emailid'];?>" onclick="return confirm('Send renewal notice to this student?');" title="Send Renewal Notice">
 												<i class="fa fa-envelope"></i></a>
 											</td>
 										</tr>
