@@ -38,6 +38,7 @@ if(isset($_POST['submit']))
         $studentid=$row->studentid;
         $email = $row->emailid;
         $TotalPaymentStatus = $row->TotalPaymentStatus;
+        
 
         //$CheckoutStatus="1";
         //$CheckinStatus="0";
@@ -88,7 +89,7 @@ if(isset($_POST['submit']))
                         }
                         else
                         {
-                            $query = "update registration SET TotalPaymentStatus = '0', roomno ='$roomno', seater='$seater', feespm='$feespm', duration='$duration', course='$course' WHERE studentid = '$studentid' ";
+                            $query = "update registration SET TotalPaymentStatus = '0', roomno ='$roomno', seater='$seater', feespm='$feespm', duration='$duration', course='$course', Continuing='1' WHERE studentid = '$studentid' ";
                             $stmt = $mysqli->prepare($query);
                             $stmt->execute();
                         }
