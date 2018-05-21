@@ -24,6 +24,7 @@
         </li>
 
 
+        <li><a href="tenant-charts.php"><i class="fa fa-bar-chart"></i>Tenancy Statistics</a></li>
 
         <li><a href="access-log.php"><i class="fa fa-file"></i>User Access logs</a></li>
 
