@@ -12,6 +12,9 @@ $stmt->bind_param('i',$aid);
 $stmt->execute() ;//ok
 $res=$stmt->get_result();
 //$cnt=1;
+
+$adminemail = "swinhousingtest@gmail.com";
+
 while($row=$res->fetch_object())
 {  
     $_SESSION['studentid'] = $row->studentid;
@@ -68,7 +71,7 @@ if(isset($_POST['btn_Transfer'])){
             $mail->isSMTP();                                   // Set mailer to use SMTP
             $mail->Host = 'smtp.gmail.com';                    // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                            // Enable SMTP authentication
-            $mail->Username = 'swinhousingtest@gmail.com';          // SMTP username
+            $mail->Username = $adminemail;     // swinhousingtest@gmail.com // SMTP username
             $mail->Password = 'swinburne123'; // SMTP password
             $mail->SMTPSecure = 'tls';                         // Enable TLS encryption, `ssl` also accepted
             $mail->Port = 587;                                 // TCP port to connect to
@@ -149,7 +152,7 @@ if(isset($_POST['btn_Transfer'])){
                     ";
 
 
-            $mail->Subject = 'Email from Swinbune housing';
+            $mail->Subject = 'Swinbune Housing - Room Transfer Request';
             $mail->Body    = $bodyContent;
 
             $mail->smtpConnect([
@@ -166,6 +169,87 @@ if(isset($_POST['btn_Transfer'])){
             } else {
                 echo 'Message has been sent';
             }
+
+
+            //message for admin 
+
+            // Remove previous recipients
+            $mail->ClearAllRecipients();
+            // alternative in this case (only addresses, no cc, bcc): 
+            // $mail->ClearAddresses();
+
+            //$mail->Body     =$message2;
+            $bodyContent = '<h1>Swinburne Housing System - You have a request for room-transfer  </h1>';
+            $bodyContent .= "A Student has requested for room transfer. ".
+                " Here are the details".
+                "
+                <table border='1'  id='zctb' class='table table-bordered' cellspacing='0' width='90%'>
+                    <tbody>
+                        <tr>
+                            <td colspan='6'><h4>Room Related Info</h4></td>
+                        </tr>
+                        <tr>
+                            <td><b>Room no :</b></td>
+                            <td colspan='2'>$row->roomno</td>
+                            <td><b>Room type(single or sharing):</b></td>
+                            <td colspan='2'>$row->seater</td>
+
+                        </tr>
+                        <tr>
+                            <td colspan='6'><h4>Personal Info</h4></td>
+                        </tr>
+                        <tr>
+                            <td><b>Student ID :</b></td>
+                            <td colspan='2'>$studentid</td>
+                            <td><b>Full Name :</b></td>
+                            <td colspan='2'>$row->firstName&nbsp;$row->middleName&nbsp;$row->lastName</td>
+                        </tr>
+                        <tr>
+                            <td><b>Tel(HP) :</b></td>
+                            <td colspan='2'>$TelNo</td>
+                            <td><b>Email :</b></td>
+                            <td colspan='2'>$email</td>
+                        </tr>
+                        <tr>
+                            <td><b>IC/Passport No :</b></td>
+                            <td colspan='5'>$PassportNo</td>
+                        </tr>
+                        <tr>
+                            <td colspan='6'><h4>Reason</h4></td>
+                        </tr>
+                        <tr>
+                            <td><b>Change To Room :</b></td>
+                            <td colspan='5'>$RoomType</td>
+                        </tr>
+                        <tr>
+                            <td><b>Reason for request :</b></td>
+                            <td colspan='5'>$reason</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    ";
+            $mail->Subject = 'Room Transfer Request';
+            $mail->Body    = $bodyContent;
+            //$adminemail = $generalsettings[0]["admin_email"]; 
+
+            // Add the admin address
+            $mail->AddAddress($adminemail);
+            
+            $mail->smtpConnect([
+                'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+            ]);
+            
+            if(!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+                echo 'Message has been sent';
+            }
+
         }
 }
 
@@ -469,7 +553,7 @@ if(isset($_POST['btn_Transfer'])){
                                                 <select size="1" name="Tr_Choice" style="font-family: Calibri; font-size: 11pt" tabindex="31">				
 
                                                     <OPTION VALUE="Option A - Twin with Fan RM340/person/month">Option A - Twin with Fan RM340/person/month</option>
-                                                        <OPTION VALUE="Option B - Single Room Fan RM550/person/month">Option B - Single Room Fan RM550/person/month</option>
+                                                        <OPTION VALUE="Option B - Single with Fan RM550/person/month">Option B - Single with Fan RM550/person/month</option>
                                                             <OPTION VALUE="Option C - Twin with Air-Cond RM420/person/month">Option C - Twin with Air-Cond RM420/person/month</option>
                                                                 <OPTION VALUE="Option D - Single with Air-Cond RM600/person/month">Option D - Single with Air-Cond RM600/person/month</option>
                                                                     </select></font>
