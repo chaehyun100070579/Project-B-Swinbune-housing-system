@@ -5,8 +5,7 @@ include('includes/checklogin.php');
 check_login();
 //code for add courses
 
-
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
 
     $id=$_GET['id'];
@@ -59,7 +58,8 @@ if($_POST['submit'])
     $stmt2= $mysqli->prepare($query2);
     $rc2 = $stmt2->bind_param('ssssiss',$fname,$mname,$lname,$gender,$contactno,$emailid,$studentid);
     $stmt2->execute();
-    echo"<script>alert('Student Details has been Updated successfully');</script>";
+    echo"<script>alert('Student Details has been Updated successfully');window.location = './manage-students.php';</script>";
+    die();
 
 }
 
@@ -79,7 +79,7 @@ if($_POST['submit'])
         <title>Edit Room Details</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-social.css">
         <link rel="stylesheet" href="css/bootstrap-select.css">
         <link rel="stylesheet" href="css/fileinput.min.css">
@@ -201,7 +201,7 @@ if($_POST['submit'])
 
                     <div class="row">
                         <div class="col-md-12">
-                            <br>
+                            <br/><br/><br/>
                             <h2 class="page-title">Edit Student Details </h2>
 
                             <div class="row">
@@ -236,8 +236,8 @@ if($_POST['submit'])
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Room No(Type) : <span style="color:red">*</span></label>
                                                     <div class="col-sm-8">
-                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur="" required> 
-                                                            <option value="" disabled selected hidden><?php echo $row->roomno;?></option>
+                                                        <select name="room" id="room"class="form-control"  onChange="checkAvailability();getSeater(this.value)" onBlur=""> 
+                                                            <option value="<?php echo $row->roomno;?>" selected hidden><?php echo $row->roomno;?></option>
                                                             <?php $query ="SELECT DISTINCT RoomType FROM rooms";
                                                     $stmt2 = $mysqli->prepare($query);
                                                     $stmt2->execute();
@@ -504,7 +504,7 @@ if($_POST['submit'])
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">I would prefer to share with: </label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" name="PreferPerson" id="PreferPerson" class="form-control" value="<?php echo $row->PreferPerson;?>" required="required" >
+                                                            <input type="text" name="PreferPerson" id="PreferPerson" class="form-control" value="<?php echo $row->PreferPerson;?>" >
                                                         </div>
                                                     </div>	
 
