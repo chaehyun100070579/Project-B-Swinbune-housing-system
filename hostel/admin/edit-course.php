@@ -16,7 +16,8 @@ if(isset($_POST['submit']))
 	$stmt = $mysqli->prepare($query);
 	$rc=$stmt->bind_param('sssisi',$coursecode,$coursesn,$coursefn,$weeks,$renewal,$id);
 	$stmt->execute();
-	echo"<script>alert('Course has been Updated successfully');</script>";
+	echo"<script>alert('Course has been Updated successfully');window.location = './manage-courses.php';</script>";
+    die();
 }
 
 ?>
