@@ -4,12 +4,11 @@ include('includes/config.php');
 include('includes/checklogin.php');
 check_login();
 //code for registration
-if($_POST['submit'])
+if(isset($_POST['submit']))
 {
     $roomno=$_POST['room'];
     $seater=$_POST['seater'];
     $feespm=$_POST['fpm'];
-    $foodstatus=$_POST['foodstatus'];
     $stayfrom="";
     $duration=$_POST['duration'];
     $course=$_POST['course'];
@@ -32,9 +31,9 @@ if($_POST['submit'])
     $pcity=$_POST['pcity'];
     $pstate=$_POST['pstate'];
     $ppincode=$_POST['ppincode'];
-    $query="insert into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,studentid,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $query="insert into  registration(roomno,seater,feespm,stayfrom,duration,course,studentid,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresState,corresPincode,pmntAddress,pmntCity,pmnatetState,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = $mysqli->prepare($query);
-    $rc=$stmt->bind_param('iiiisisissssisississsisssi',$roomno,$seater,$feespm,$foodstatus,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode);
+    $rc=$stmt->bind_param('siisisissssisississsisssi',$roomno,$seater,$feespm,$stayfrom,$duration,$course,$studentid,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cstate,$cpincode,$paddress,$pcity,$pstate,$ppincode);
     $stmt->execute();
     $stmt->close();
 
@@ -59,12 +58,14 @@ if($_POST['submit'])
         <title>Student Hostel Registration</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">>
+        <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-social.css">
         <link rel="stylesheet" href="css/bootstrap-select.css">
         <link rel="stylesheet" href="css/fileinput.min.css">
         <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
         <link rel="stylesheet" href="css/style.css">
+        <link href="../../wp-content/themes/swinburne-sarawak-byhds/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
+        <link href="../../wp-content/themes/swinburne-sarawak-byhds/fonts/font-awesome.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/style.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/menus.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="../../wp-content/themes/swinburne-sarawak-byhds/responsive.css" media="screen" rel="stylesheet" type="text/css" />
@@ -161,6 +162,12 @@ if($_POST['submit'])
             }   
 
         </script>
+        
+        <style>
+            /* FOR BEAUTIFY DROPDOWN LIST */
+            select:invalid { color: gray; }
+            option { color: black; }
+        </style>
 
     </head>
     <body>
@@ -172,7 +179,7 @@ if($_POST['submit'])
 
                     <div class="row">
                         <div class="col-md-12">
-
+                            <br/><br/><br/>
                             <h2 class="page-title">Register Student to a room</h2>
 
                             <div class="row">
@@ -190,8 +197,8 @@ if($_POST['submit'])
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">Gender(Building Type): </label>
                                                     <div class="col-sm-8">
-                                                        <select name="gender"  class="form-control" required="required" id="gender">
-                                                            <option value="">Select Gender</option>
+                                                        <select name="gender"  class="form-control" required="required" id="gender" onChange="checkAvailability();getSeater(this.value)">
+                                                            <option value="" disabled selected hidden>Select Gender</option>
                                                             <option value="male" >Male</option>
                                                             <option value="female" >Female</option>
 
@@ -281,7 +288,7 @@ if($_POST['submit'])
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Student ID : </label>
+                                                        <label class="col-sm-2 control-label">Student ID :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="studentid" id="studentid"  class="form-control" required="required" >
                                                         </div>
@@ -289,7 +296,7 @@ if($_POST['submit'])
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">First Name : </label>
+                                                        <label class="col-sm-2 control-label">First Name :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="fname" id="fname"  class="form-control" required="required" >
                                                         </div>
@@ -303,7 +310,7 @@ if($_POST['submit'])
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Last Name : </label>
+                                                        <label class="col-sm-2 control-label">Last Name :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="lname" id="lname"  class="form-control" required="required">
                                                         </div>
@@ -312,7 +319,7 @@ if($_POST['submit'])
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Contact No : </label>
+                                                        <label class="col-sm-2 control-label">Contact No :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="contact" id="contact"  class="form-control" required="required">
                                                         </div>
@@ -320,61 +327,61 @@ if($_POST['submit'])
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Email id : </label>
+                                                        <label class="col-sm-2 control-label">Email Address :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="email" name="email" id="email"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Emergency Contact: </label>
+                                                        <label class="col-sm-2 control-label">Emergency Contact:  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="econtact" id="econtact"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Guardian  Name : </label>
+                                                        <label class="col-sm-2 control-label">Guardian  Name :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="gname" id="gname"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Guardian  Relation : </label>
+                                                        <label class="col-sm-2 control-label">Guardian  Relation :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="grelation" id="grelation"  class="form-control" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Guardian Contact no : </label>
+                                                        <label class="col-sm-2 control-label">Guardian Contact No. :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="gcontact" id="gcontact"  class="form-control" required="required">
                                                         </div>
                                                     </div>	
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Correspondense Address </h4> </label>
+                                                        <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Correspondence Address </h4> </label>
                                                     </div>
 
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Address : </label>
+                                                        <label class="col-sm-2 control-label">Address :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <textarea  rows="5" name="address"  id="address" class="form-control" required="required"></textarea>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">City : </label>
+                                                        <label class="col-sm-2 control-label">City :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="city" id="city"  class="form-control" required="required">
                                                         </div>
                                                     </div>	
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">State </label>
+                                                        <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="state" id="state"class="form-control" required> 
                                                                 <option value="">Select State</option>
@@ -391,7 +398,7 @@ if($_POST['submit'])
                                                     </div>							
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Pincode : </label>
+                                                        <label class="col-sm-2 control-label">Pincode :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="pincode" id="pincode"  class="form-control" required="required">
                                                         </div>
@@ -401,31 +408,29 @@ if($_POST['submit'])
                                                         <label class="col-sm-3 control-label"><h4 style="color: green" align="left">Permanent Address </h4> </label>
                                                     </div>
 
-
-                                                    <div class="form-group">
-                                                        <label class="col-sm-5 control-label">Permanent Address same as Correspondense address : </label>
-                                                        <div class="col-sm-4">
-                                                            <input type="checkbox" name="adcheck" value="1"/>
-                                                        </div>
+                                                    <div class="form-group text-sm-left">
+                                                        <label class="checkbox-inline col-sm-4 control-label" ><b>Permanent Address same as Current Address : </b>
+                                                            &nbsp;
+                                                            <input class="col-sm-2" type="checkbox" name="adcheck" value="1" style="transform: scale(1.3);"/>
+                                                        </label>
                                                     </div>
 
-
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Address : </label>
+                                                        <label class="col-sm-2 control-label">Address :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <textarea  rows="5" name="paddress"  id="paddress" class="form-control" required="required"></textarea>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">City : </label>
+                                                        <label class="col-sm-2 control-label">City :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="pcity" id="pcity"  class="form-control" required="required">
                                                         </div>
                                                     </div>	
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">State </label>
+                                                        <label class="col-sm-2 control-label">State : <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <select name="pstate" id="pstate"class="form-control" required> 
                                                                 <option value="">Select State</option>
@@ -442,7 +447,7 @@ if($_POST['submit'])
                                                     </div>							
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Pincode : </label>
+                                                        <label class="col-sm-2 control-label">Pincode :  <span style="color:red">*</span></label>
                                                         <div class="col-sm-8">
                                                             <input type="text" name="ppincode" id="ppincode"  class="form-control" required="required">
                                                         </div>
@@ -450,7 +455,7 @@ if($_POST['submit'])
 
 
                                                     <div class="col-sm-6 col-sm-offset-4">
-                                                        <button class="btn btn-default" type="submit">Cancel</button>
+                                                        <button class="btn btn-default" type="reset">Cancel</button>
                                                         <input type="submit" name="submit" Value="Register" class="btn btn-primary">
                                                     </div>
                                                 </span>
