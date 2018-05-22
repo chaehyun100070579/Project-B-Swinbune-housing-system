@@ -19,7 +19,7 @@ $stmt3 = $mysqli->prepare($hl_m);
 $stmt3->execute();
 $hl_m_num=$stmt3->get_result()->fetch_object();
 
-$hm_o ="SELECT count(*) AS total FROM registration inner join rooms on registration.roomno = rooms.room_no where corresState = 'Others' AND block='HL'";
+$hm_o ="SELECT count(*) AS total FROM registration inner join rooms on registration.roomno = rooms.room_no where corresState = 'Others' AND block='HM'";
 $stmt1 = $mysqli->prepare($hm_o);
 $stmt1->execute();
 $hm_o_num=$stmt1->get_result()->fetch_object();
@@ -99,12 +99,14 @@ $hl_students=$stmt11->get_result()->fetch_object();
 		#container, #sliders {
 			min-width: 310px; 
 			max-width: 600px;
-			margin: 0;
+			margin: 0 auto;
 		}
 		#container {
 		}
 		th {
 			padding: 5px;
+			padding-left:15px;
+			padding-right:15px;
 		}
 		td {
 			padding-left: 0px;
@@ -138,7 +140,7 @@ $hl_students=$stmt11->get_result()->fetch_object();
 								<div class="col-md-5">
 									<table border="1" style="text-align: center;margin:auto;">
 										<tr>
-											<th colspan="4" bgcolor="#95B3D7" style="text-align: center;">Tenancy Ratio (New vs Continuing)</th>
+											<th colspan="4" bgcolor="#95B3D7" style="text-align: center;">Nationality Ratio (Malaysian vs International)</th>
 										</tr>
 										<tr>
 											<th bgcolor="#FFC000">Building</th>
@@ -167,7 +169,7 @@ $hl_students=$stmt11->get_result()->fetch_object();
 									</table>
 								</div>
 								
-								<div class="col-md-6">
+								<div class="col-md-7">
 									<div id="container"></div>
 									<br/>
 									<div id="sliders">
@@ -195,7 +197,7 @@ $hl_students=$stmt11->get_result()->fetch_object();
 											</tr>
 										</table>
 									</div>
-								</div> <!-- col-md-6 div -->
+								</div> <!-- col-md-7 div -->
 
 							</div>
 						</div>
